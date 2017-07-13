@@ -26,10 +26,12 @@ public class LibraryUI extends UI implements ViewDisplay {
     protected void init(VaadinRequest request) {
         final  HorizontalLayout root = new HorizontalLayout();
         root.setSizeFull();
+        root.setSpacing(true);
         setContent(root);
 
         final GridLayout navigationBar = new GridLayout();
         navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+        navigationBar.setSpacing(true);
 
         List<String> inventory = new ArrayList<>();
         inventory.add("All");
