@@ -8,7 +8,6 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-
 import java.util.ArrayList;
 import java.util.List;
 
