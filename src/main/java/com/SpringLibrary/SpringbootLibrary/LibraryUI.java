@@ -32,9 +32,9 @@ public class LibraryUI extends UI implements ViewDisplay {
         navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
         List<String> inventory = new ArrayList<>();
-        inventory.add("AllBooks");
-        inventory.add("Checked In");
-        inventory.add("Checked Out");
+        inventory.add("All");
+        inventory.add("Checked-In");
+        inventory.add("Checked-Out");
 
         ComboBox<String> selectInv =
                 new ComboBox<>();
