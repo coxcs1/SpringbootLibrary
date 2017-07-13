@@ -19,7 +19,7 @@ public class CheckIn extends VerticalLayout implements View {
 
     @PostConstruct
     void init() {
-        addComponent(new Label("Check In Page"));
+        addComponent(new Label("Roar!!!!!!!!!!!!!!!!!!!!!!!!!"));
 
 
         Button CheckOut = new Button("Check Out");
