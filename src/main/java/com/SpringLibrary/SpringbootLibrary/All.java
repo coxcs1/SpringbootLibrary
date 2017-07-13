@@ -22,9 +22,6 @@ public class All extends HorizontalLayout implements View {
         addComponent(new Label("<h2>Author</h2>", ContentMode.HTML));
         addComponent(new Label("<h2>Checked In/Out</h2>", ContentMode.HTML));
 
-
-
-
     }
 
 
