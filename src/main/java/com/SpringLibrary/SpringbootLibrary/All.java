@@ -35,6 +35,7 @@ public class All extends VerticalLayout implements View {
 
 // Create a grid bound to the list
         grid = new Grid<>();
+        grid.setWidth(100, Unit.PERCENTAGE);
         grid.setItems(guys);
         grid.addColumn(Guy::getName).setCaption("Name");
         grid.addColumn(Guy::getBirthYear).setCaption("Year of birth");
@@ -45,6 +46,7 @@ public class All extends VerticalLayout implements View {
 
     public void FilteredGridLayout() {
         titleFilter = new TextField();
+        titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
         titleFilter.addValueChangeListener(this::onNameFilterTextChange);
         addComponent(titleFilter);
