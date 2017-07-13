@@ -33,8 +33,8 @@ public class LibraryUI extends UI implements ViewDisplay {
 
         List<String> inventory = new ArrayList<>();
         inventory.add("All");
-        inventory.add("Checked-In");
-        inventory.add("Checked-Out");
+        inventory.add("CheckIn");
+        inventory.add("CheckOut");
 
         ComboBox<String> selectInv =
                 new ComboBox<>();
@@ -51,7 +51,9 @@ public class LibraryUI extends UI implements ViewDisplay {
 
         root.setComponentAlignment(navigationBar, Alignment.MIDDLE_CENTER);
 
+
         selectInv.addValueChangeListener(event -> getUI().getNavigator().navigateTo(event.getValue()));
+
 
         LibraryViewDisplay = new Panel();
         LibraryViewDisplay.setSizeFull();
