@@ -4,7 +4,6 @@ package com.SpringLibrary.SpringbootLibrary;
  * Created by ricky.clevinger on 7/13/2017.
  */
 import Model.Member;
-import Model.Person;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;

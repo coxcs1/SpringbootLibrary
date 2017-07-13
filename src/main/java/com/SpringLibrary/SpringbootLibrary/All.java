@@ -19,7 +19,7 @@ import java.util.List;
 @SpringView(name = All.VIEW_NAME)
 public class All extends VerticalLayout implements View {
     public static final String VIEW_NAME = "All";
-    private TextField nameFilter;
+    private TextField titleFilter;
     Grid<Guy> grid;
 
     @PostConstruct
@@ -29,9 +29,9 @@ public class All extends VerticalLayout implements View {
       //  addComponent(new Label("<h2>Checked In/Out</h2>", ContentMode.HTML));
 
         List<Guy> guys = Arrays.asList(
-                new Guy("Nicolaus Copernicus", 1543),
-                new Guy("Galileo Galilei", 1564),
-                new Guy("Johannes Kepler", 1571));
+                new Guy("Nicolaus Copernicus", "1543"),
+                new Guy("Galileo Galilei", "1564"),
+                new Guy("Johannes Kepler", "1571"));
 
 // Create a grid bound to the list
         grid = new Grid<>();
@@ -44,10 +44,11 @@ public class All extends VerticalLayout implements View {
     }
 
     public void FilteredGridLayout() {
-        nameFilter = new TextField();
-        nameFilter.setPlaceholder("Title...");
-        nameFilter.addValueChangeListener(this::onNameFilterTextChange);
-        addComponent(nameFilter);
+        titleFilter = new TextField();
+        titleFilter.setPlaceholder("Title...");
+        titleFilter.addValueChangeListener(this::onNameFilterTextChange);
+        addComponent(titleFilter);
+
 
     }
 
@@ -55,6 +56,7 @@ public class All extends VerticalLayout implements View {
         ListDataProvider<Guy> dataProvider = (ListDataProvider<Guy>) grid.getDataProvider();
         dataProvider.setFilter(Guy::getName, s -> caseInsensitiveContains(s, event.getValue()));
     }
+
 
     private Boolean caseInsensitiveContains(String where, String what) {
         return where.toLowerCase().contains(what.toLowerCase());

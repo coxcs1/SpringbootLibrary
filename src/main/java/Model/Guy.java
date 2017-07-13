@@ -11,10 +11,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Guy {
     String Name;
-    int BirthYear;
+    String BirthYear;
 
 
-    public Guy(String name, int birthYear) {
+    public Guy(String name, String birthYear) {
         Name = name;
         BirthYear = birthYear;
     }
@@ -27,11 +27,11 @@ public class Guy {
         Name = name;
     }
 
-    public int getBirthYear() {
+    public String getBirthYear() {
         return BirthYear;
     }
 
-    public void setBirthYear(int birthYear) {
+    public void setBirthYear(String birthYear) {
         BirthYear = birthYear;
     }
 }
