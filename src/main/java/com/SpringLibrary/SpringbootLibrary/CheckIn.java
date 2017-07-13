@@ -3,6 +3,7 @@ package com.SpringLibrary.SpringbootLibrary;
 /**
  * Created by ricky.clevinger on 7/13/2017.
  */
+import Model.Member;
 import Model.Person;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -28,12 +29,12 @@ public class CheckIn extends VerticalLayout implements View {
         addComponent(CheckOut);
 
         RestTemplate restTemplate = new RestTemplate();
-        Person[] persons = restTemplate.getForObject("http://localhost:8090/persons/all", Person[].class);
+        Member[] members = restTemplate.getForObject("http://localhost:8090/members/all", Member[].class);
 
-        TextArea people = new TextArea();
-        people.setValue("First name is "+persons[0].getFirstName() + " and second is "+persons[1].getFirstName());
+        TextArea area = new TextArea();
+        area.setValue("First name is "+members[0].getFName() + " and second is "+members[1].getFName());
 
-        addComponent(people);
+        addComponent(area);
     }
 
 

@@ -24,9 +24,9 @@ public class All extends VerticalLayout implements View {
 
     @PostConstruct
     void init() {
-        addComponent(new Label("<h2>Title</h2>", ContentMode.HTML));
-        addComponent(new Label("<h2>Author</h2>", ContentMode.HTML));
-        addComponent(new Label("<h2>Checked In/Out</h2>", ContentMode.HTML));
+      //  addComponent(new Label("<h2>Title</h2>", ContentMode.HTML));
+      //  addComponent(new Label("<h2>Author</h2>", ContentMode.HTML));
+      //  addComponent(new Label("<h2>Checked In/Out</h2>", ContentMode.HTML));
 
         List<Guy> guys = Arrays.asList(
                 new Guy("Nicolaus Copernicus", 1543),
