@@ -44,6 +44,8 @@ public class LibraryUI extends UI implements ViewDisplay {
         navigationBar.addComponent(selectInv);
         root.addComponent(navigationBar);
 
+        navigationBar.addComponent(createNavigationButton("Home",
+                DefaultView.VIEW_NAME));
         navigationBar.addComponent(createNavigationButton("Check In",
                 CheckIn.VIEW_NAME));
         navigationBar.addComponent(createNavigationButton("Check Out",
