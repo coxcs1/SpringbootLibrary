@@ -14,9 +14,17 @@ import javax.annotation.PostConstruct;
 public class DefaultView extends VerticalLayout implements View {
     public static final String VIEW_NAME = "";
 
+    /**
+     * Constructs the Default view for display
+     *
+     * Adds Horizontal layout containing buttons
+     * Adjusts alignment/spacing
+     *
+     */
     @PostConstruct
     void init() {
 
+        setSpacing(true);
         HorizontalLayout horizontalLayout = addButtons();
 
         addComponent(horizontalLayout);
@@ -24,16 +32,29 @@ public class DefaultView extends VerticalLayout implements View {
 
     }
 
+    /**
+     * Sets a listener that automatically changes the default view when a selection is made
+     * @param event on view change
+     */
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         // This view is constructed in the init() method()
     }
 
+    /**
+     * Creates the button layout
+     * Sets Buttons returned from respective methods
+     * Sets spacing for readability/usability
+     *
+     * @return Horizontal layout containing primary buttons
+     */
     private HorizontalLayout addButtons(){
+        //Create layout and buttons
         HorizontalLayout layout = new HorizontalLayout();
         Button checkIn = addCheckInButton();
         Button checkOut = addCheckOutButton();
 
+        //add buttons to layout and adjust spacing
         layout.addComponent(checkIn);
         layout.setSpacing(true);
         layout.addComponent(checkOut);
@@ -41,6 +62,13 @@ public class DefaultView extends VerticalLayout implements View {
         return layout;
     }
 
+    /**
+     * Creates Check In button
+     * Sets button Theme
+     * Adds listener and points it to the Check In View
+     *
+     * @return the completed Check In button
+     */
     private Button addCheckInButton(){
 
         Button CheckIn = new Button("Check In");
@@ -50,6 +78,13 @@ public class DefaultView extends VerticalLayout implements View {
         return CheckIn;
     }
 
+    /**
+     * Creates Check Out button
+     * Sets button Theme
+     * Adds listener and points it to the Check Out View
+     *
+     * @return the completed Check Out button
+     */
     private Button addCheckOutButton(){
 
         Button checkOut = new Button("Check Out");
