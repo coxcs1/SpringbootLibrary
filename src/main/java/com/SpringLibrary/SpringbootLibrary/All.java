@@ -38,8 +38,8 @@ public class All extends VerticalLayout implements View {
         grid.setWidth(100, Unit.PERCENTAGE);
         grid.setItems(books);
         grid.addColumn(Book::getTitle).setCaption("Title");
-       // grid.addColumn(Book::getAuthFName).setCaption("Author First Name");
-       // grid.addColumn(Book::getAuthLName).setCaption("Author Last Name");
+        grid.addColumn(Book::getAuthFName).setCaption("Author First Name");
+        grid.addColumn(Book::getAuthLName).setCaption("Author Last Name");
 
         FilteredGridLayout();
         addComponent(grid);
