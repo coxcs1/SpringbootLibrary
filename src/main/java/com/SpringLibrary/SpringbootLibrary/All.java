@@ -26,14 +26,11 @@ public class All extends VerticalLayout implements View {
     @PostConstruct
     void init() {
 
-
         RestTemplate restTemplate = new RestTemplate();
         Book[] books = restTemplate.getForObject("http://localhost:8090/books/all", Book[].class);
 
 
-
-
-// Create a grid bound to the list
+        // Create a grid bound to the list
         grid = new Grid<>();
         grid.setWidth(100, Unit.PERCENTAGE);
         grid.setItems(books);
@@ -64,7 +61,7 @@ public class All extends VerticalLayout implements View {
         return where.toLowerCase().contains(what.toLowerCase());
     }
 
-    
+
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
