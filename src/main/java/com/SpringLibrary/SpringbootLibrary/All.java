@@ -52,7 +52,6 @@ public class All extends VerticalLayout implements View {
         titleFilter.addValueChangeListener(this::onNameFilterTextChange);
         addComponent(titleFilter);
 
-
     }
 
     private void onNameFilterTextChange(HasValue.ValueChangeEvent<String> event) {
@@ -65,8 +64,7 @@ public class All extends VerticalLayout implements View {
         return where.toLowerCase().contains(what.toLowerCase());
     }
 
-
-
+    
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
