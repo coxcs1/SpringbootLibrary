@@ -11,10 +11,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.springframework.web.client.RestTemplate;
-
 import javax.annotation.PostConstruct;
-
-import static jdk.nashorn.internal.objects.NativeArray.length;
 
 
 @SpringView(name = All.VIEW_NAME)
@@ -56,7 +53,12 @@ public class All extends VerticalLayout implements View {
         dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
     }
 
-
+    /**
+     *Returns a boolean telling whether the lowercase form of text input into the filter is contain by any of the lowercase vesions of the book titles.
+     * @param where the books titles its comparing to
+     * @param what  the filter wood being compared to the book titles
+     * @return Boolean telling if the lower case value of the filter input and the book titles match
+     */
     private Boolean caseInsensitiveContains(String where, String what) {
         return where.toLowerCase().contains(what.toLowerCase());
     }
