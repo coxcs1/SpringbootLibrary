@@ -1,12 +1,18 @@
 package Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by ricky.clevinger on 7/13/2017.
  */
+@XmlRootElement
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Member {
-    String id;
-    String FName;
-    String LName;
+    private String id;
+    private String FName;
+    private String LName;
 
     public String getId() {
         return id;
