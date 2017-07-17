@@ -14,25 +14,84 @@ import javax.annotation.PostConstruct;
 public class DefaultView extends VerticalLayout implements View {
     public static final String VIEW_NAME = "";
 
+    /**
+     * Constructs the Default view for display
+     *
+     * Adds Horizontal layout containing buttons
+     * Adjusts alignment/spacing
+     *
+     */
     @PostConstruct
     void init() {
 
-        Button CheckIn = new Button("Check In");
-        CheckIn.addStyleName(ValoTheme.BUTTON_LARGE);
-        CheckIn.addClickListener(event -> getUI().getNavigator().navigateTo("CheckIn"));
-        addComponent(CheckIn);
-        setComponentAlignment(CheckIn, Alignment.MIDDLE_CENTER);
+        setSpacing(true);
+        HorizontalLayout horizontalLayout = addButtons();
 
-        Button CheckOut = new Button("Check Out");
-        CheckOut.addStyleName(ValoTheme.BUTTON_LARGE);
-        CheckOut.addClickListener(event -> getUI().getNavigator().navigateTo("CheckOut"));
-        addComponent(CheckOut);
-
+        addComponent(horizontalLayout);
+        setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
 
     }
 
+    /**
+     * Sets a listener that automatically changes the default view when a selection is made
+     * @param event on view change
+     */
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         // This view is constructed in the init() method()
     }
+
+    /**
+     * Creates the button layout
+     * Sets Buttons returned from respective methods
+     * Sets spacing for readability/usability
+     *
+     * @return Horizontal layout containing primary buttons
+     */
+    private HorizontalLayout addButtons(){
+        //Create layout and buttons
+        HorizontalLayout layout = new HorizontalLayout();
+        Button checkIn = addCheckInButton();
+        Button checkOut = addCheckOutButton();
+
+        //add buttons to layout and adjust spacing
+        layout.addComponent(checkIn);
+        layout.setSpacing(true);
+        layout.addComponent(checkOut);
+
+        return layout;
+    }
+
+    /**
+     * Creates Check In button
+     * Sets button Theme
+     * Adds listener and points it to the Check In View
+     *
+     * @return the completed Check In button
+     */
+    private Button addCheckInButton(){
+
+        Button CheckIn = new Button("Check In");
+        CheckIn.addStyleName(ValoTheme.BUTTON_LARGE);
+        CheckIn.addClickListener(event -> getUI().getNavigator().navigateTo("CheckIn"));
+
+        return CheckIn;
+    }
+
+    /**
+     * Creates Check Out button
+     * Sets button Theme
+     * Adds listener and points it to the Check Out View
+     *
+     * @return the completed Check Out button
+     */
+    private Button addCheckOutButton(){
+
+        Button checkOut = new Button("Check Out");
+        checkOut.addStyleName(ValoTheme.BUTTON_LARGE);
+        checkOut.addClickListener(event -> getUI().getNavigator().navigateTo("CheckOut"));
+
+        return checkOut;
+    }
+
 }
