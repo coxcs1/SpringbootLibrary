@@ -17,17 +17,10 @@ public class DefaultView extends VerticalLayout implements View {
     @PostConstruct
     void init() {
 
-        Button CheckIn = new Button("Check In");
-        CheckIn.addStyleName(ValoTheme.BUTTON_LARGE);
-        CheckIn.addClickListener(event -> getUI().getNavigator().navigateTo("CheckIn"));
-        addComponent(CheckIn);
-        setComponentAlignment(CheckIn, Alignment.MIDDLE_CENTER);
+        HorizontalLayout horizontalLayout = addButtons();
 
-        Button CheckOut = new Button("Check Out");
-        CheckOut.addStyleName(ValoTheme.BUTTON_LARGE);
-        CheckOut.addClickListener(event -> getUI().getNavigator().navigateTo("CheckOut"));
-        addComponent(CheckOut);
-
+        addComponent(horizontalLayout);
+        setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
 
     }
 
@@ -35,4 +28,35 @@ public class DefaultView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         // This view is constructed in the init() method()
     }
+
+    private HorizontalLayout addButtons(){
+        HorizontalLayout layout = new HorizontalLayout();
+        Button checkIn = addCheckInButton();
+        Button checkOut = addCheckOutButton();
+
+        layout.addComponent(checkIn);
+        layout.setSpacing(true);
+        layout.addComponent(checkOut);
+
+        return layout;
+    }
+
+    private Button addCheckInButton(){
+
+        Button CheckIn = new Button("Check In");
+        CheckIn.addStyleName(ValoTheme.BUTTON_LARGE);
+        CheckIn.addClickListener(event -> getUI().getNavigator().navigateTo("CheckIn"));
+
+        return CheckIn;
+    }
+
+    private Button addCheckOutButton(){
+
+        Button checkOut = new Button("Check Out");
+        checkOut.addStyleName(ValoTheme.BUTTON_LARGE);
+        checkOut.addClickListener(event -> getUI().getNavigator().navigateTo("CheckOut"));
+
+        return checkOut;
+    }
+
 }
