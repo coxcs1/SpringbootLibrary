@@ -2,6 +2,8 @@ package com.SpringLibrary.SpringbootLibrary;
 
 /**
  * Created by ricky.clevinger on 7/13/2017.
+ *
+ * Modified by coalsonc 7/17/17
  */
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -20,13 +22,13 @@ public class DefaultView extends VerticalLayout implements View {
      * Adds Horizontal layout containing buttons
      * Adjusts alignment/spacing
      *
+     * last modified by coalsonc 7/17/17
      */
     @PostConstruct
     void init() {
 
         setSpacing(true);
         HorizontalLayout horizontalLayout = addButtons();
-
         addComponent(horizontalLayout);
         setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
 
@@ -47,6 +49,7 @@ public class DefaultView extends VerticalLayout implements View {
      * Sets spacing for readability/usability
      *
      * @return Horizontal layout containing primary buttons
+     * last modified by coalsonc 7/17/17
      */
     private HorizontalLayout addButtons(){
         //Create layout and buttons
@@ -59,6 +62,7 @@ public class DefaultView extends VerticalLayout implements View {
         layout.setSpacing(true);
         layout.addComponent(checkOut);
 
+
         return layout;
     }
 
@@ -68,6 +72,7 @@ public class DefaultView extends VerticalLayout implements View {
      * Adds listener and points it to the Check In View
      *
      * @return the completed Check In button
+     * last modified by coalsonc 7/17/17
      */
     private Button addCheckInButton(){
 
@@ -84,6 +89,7 @@ public class DefaultView extends VerticalLayout implements View {
      * Adds listener and points it to the Check Out View
      *
      * @return the completed Check Out button
+     * last modified by coalsonc 7/17/17
      */
     private Button addCheckOutButton(){
 
