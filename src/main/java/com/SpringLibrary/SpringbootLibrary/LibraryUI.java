@@ -13,6 +13,7 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +124,7 @@ public class LibraryUI extends UI implements ViewDisplay {
         accordion.setWidth("20%");
 
         accordion.addTab(addAccordionNavigationButtons(), "Navigation");
-        accordion.addTab(addAccordionAdminButtons(), "Admin");
+        accordion.addTab(addAdminAccordion(), "Admin");
         layout.addComponent(accordion);
 
 
@@ -155,28 +156,73 @@ public class LibraryUI extends UI implements ViewDisplay {
     }//end addAccordionNavigationButtons
 
     /**
-     * Method used by CreateAccordion to make the admin activity buttons
-     * Creates the buttons and the layout to add to the accordion
-     * Adds listeners to the buttons for navigation to the admin pages
-     * Adds the buttons to the layout and returns it to the CreateAccordion method
+     * Method used by CreateAccordion to make the admin activity Accordion
+     * Creates the admin accordion and the layout to add to the accordion
+     * Adds listeners to the buttons for admin input.
+     * Adds the inputs and buttons to the layout and returns it to the CreateAccordion method
      *
-     * last modified by coalsonc 7/17/17
+     * last modified by ricky.clevinger 7/18/17
      */
-    private Layout addAccordionAdminButtons(){
+    private Component addAdminAccordion(){
 
-        Layout tab          = new VerticalLayout();
-        Button addUser      = new Button("Add User");
-        Button addBook      = new Button("Add Book");
-        Button removeUser   = new Button("Remove User");
-        Button removeBook   = new Button("Remove Book");
+        Accordion accordion = new Accordion();
+        accordion.addStyleName(ValoTheme.ACCORDION_BORDERLESS);
+        accordion.setWidth("100%");
 
-        addUser.addClickListener(event -> getUI().getNavigator().navigateTo("AddUser"));
-        addBook.addClickListener(event -> getUI().getNavigator().navigateTo("AddBook"));
-        removeUser.addClickListener(event -> getUI().getNavigator().navigateTo("RemoveUser"));
-        removeBook.addClickListener(event -> getUI().getNavigator().navigateTo("RemoveBook"));
+        accordion.addTab(addUserInput(), "Add User");
+        accordion.addTab(addBookInput(), "Add Book");
+        accordion.addTab(addAccordionNavigationButtons(), "Remove User");
+        accordion.addTab(addAccordionNavigationButtons(), "Remove Book");
 
-        tab.addComponents(addBook, addUser, removeBook, removeUser);
+        return accordion;
+    }// end addAdminAccordion
 
+
+    /**
+     * Method used by AddAdminAccordion to create the add user functionality
+     * Creates the textFields, button, and the layout to pin them to
+     * Adds listeners to the buttons to allow navigation
+     * Adds textFields and a button to layout and returns it to add to accordion for add user
+     *
+     * last modified by ricky.clevinger 7/18/17
+     */
+    private Layout addUserInput(){
+
+        Layout tab      = new VerticalLayout();
+        com.vaadin.ui.TextField fName  = new com.vaadin.ui.TextField("First Name");
+        com.vaadin.ui.TextField lName  = new com.vaadin.ui.TextField("Last Name");
+        Button submit  = new Button("Submit");
+
+      //  checkIn.addClickListener(event -> getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME));
+      //  checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
+      //  home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+
+        tab.addComponents(fName,lName, submit);
         return tab;
-    }// end addAccordionAdminButtons
+    }//end addUserInput
+
+
+    /**
+     * Method used by AddAdminAccordion to create the add user functionality
+     * Creates the textFields, button, and the layout to pin them to
+     * Adds listeners to the buttons to allow navigation
+     * Adds textFields and a button to layout and returns it to add to accordion for add user
+     *
+     * last modified by ricky.clevinger 7/18/17
+     */
+    private Layout addBookInput(){
+
+        Layout tab      = new VerticalLayout();
+        com.vaadin.ui.TextField title  = new com.vaadin.ui.TextField("Title");
+        com.vaadin.ui.TextField fName  = new com.vaadin.ui.TextField("Author: First Name");
+        com.vaadin.ui.TextField lName  = new com.vaadin.ui.TextField("Author: Last Name");
+        Button submit  = new Button("Submit");
+
+        //  checkIn.addClickListener(event -> getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME));
+        //  checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
+        //  home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+
+        tab.addComponents(title,fName,lName, submit);
+        return tab;
+    }//end addBookInput
 }
