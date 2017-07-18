@@ -9,14 +9,8 @@ import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
-import javafx.scene.control.*;
-import javafx.scene.control.TextField;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -171,8 +165,8 @@ public class LibraryUI extends UI implements ViewDisplay {
 
         accordion.addTab(addUserInput(), "Add User");
         accordion.addTab(addBookInput(), "Add Book");
-        accordion.addTab(addAccordionNavigationButtons(), "Remove User");
-        accordion.addTab(addAccordionNavigationButtons(), "Remove Book");
+        accordion.addTab(removeUser(), "Remove User");
+        accordion.addTab(removeBook(), "Remove Book");
 
         return accordion;
     }// end addAdminAccordion
@@ -203,10 +197,10 @@ public class LibraryUI extends UI implements ViewDisplay {
 
 
     /**
-     * Method used by AddAdminAccordion to create the add user functionality
+     * Method used by AddAdminAccordion to create the add book functionality
      * Creates the textFields, button, and the layout to pin them to
      * Adds listeners to the buttons to allow navigation
-     * Adds textFields and a button to layout and returns it to add to accordion for add user
+     * Adds textFields and a button to layout and returns it to add to accordion for add book
      *
      * last modified by ricky.clevinger 7/18/17
      */
@@ -225,4 +219,46 @@ public class LibraryUI extends UI implements ViewDisplay {
         tab.addComponents(title,fName,lName, submit);
         return tab;
     }//end addBookInput
+
+    /**
+     * Method used by AddAdminAccordion to create the remove user functionality
+     * Creates the button and the layout to pin them to
+     * Adds listeners to the buttons to allow navigation
+     * Adds textFields and a button to layout and returns it to add to accordion for remove user
+     *
+     * last modified by ricky.clevinger 7/18/17
+     */
+    private Layout removeUser(){
+
+        Layout tab  = new VerticalLayout();
+        Button all  = new Button("AllBooks Users");
+
+      //    all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
+        //  checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
+        //  home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+
+        tab.addComponents(all);
+        return tab;
+    }//end removeUser
+
+    /**
+     * Method used by AddAdminAccordion to create the remove book functionality
+     * Creates the button and the layout to pin them to
+     * Adds listeners to the buttons to allow navigation
+     * Adds textFields and a button to layout and returns it to add to accordion for remove book
+     *
+     * last modified by ricky.clevinger 7/18/17
+     */
+    private Layout removeBook(){
+
+        Layout tab  = new VerticalLayout();
+        Button all  = new Button("All Books");
+
+          all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
+        //  checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
+        //  home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+
+        tab.addComponents(all);
+        return tab;
+    }//end removeBook
 }

@@ -15,9 +15,9 @@ import javax.annotation.PostConstruct;
  * Created by ricky.clevinger on 7/12/2017.
  */
 
-@SpringView(name = All.VIEW_NAME)
-public class All extends VerticalLayout implements View {
-    public static final String VIEW_NAME = "All";  // Name of the View, or "Page".
+@SpringView(name = AllBooks.VIEW_NAME)
+public class AllBooks extends VerticalLayout implements View {
+    public static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     Grid<Book> grid;  // Grid that will display and organize books on the all.java page.
 
