@@ -24,8 +24,8 @@ public class CheckOut extends VerticalLayout implements View {
 
         Button Checkin = new Button("Check In");
         Checkin.addStyleName(ValoTheme.BUTTON_SMALL);
-        // If you didn't choose Java 8 when creating the project, convert this
-        // to an anonymous listener class
+
+
         Checkin.addClickListener(event -> getUI().getNavigator().navigateTo("CheckIn"));
         addComponent(Checkin);
 

@@ -28,7 +28,7 @@ public class CheckIn extends VerticalLayout implements View {
         addComponent(CheckOut);
 
         RestTemplate restTemplate = new RestTemplate();
-        Member[] members = restTemplate.getForObject("http://localhost:8090/members/all", Member[].class);
+        Member[] members = restTemplate.getForObject("http://localhost:8091/members/all", Member[].class);
 
         TextArea area = new TextArea();
         area.setValue("First name is "+members[0].getFName() + " and second is "+members[1].getFName());
