@@ -25,7 +25,7 @@ import java.util.Set;
 @SpringView(name = AllBooks.VIEW_NAME)
 public class AllBooks extends VerticalLayout implements View {
     public static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
-    private TextField titleFilter;   // TextField will be used to filter the results on the grid.
+    private TextField searchFilter;   // TextField will be used to filter the results on the grid.
     Grid<Book> grid;  // Grid that will display and organize books on the all.java page.
     String id;  // Id used to determine which item is selected in the grid.
     RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
@@ -41,9 +41,8 @@ public class AllBooks extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/19/17
      */
     void init() {
-
         createFilter();
-        createGrid();
+        createBookGrid();
         createDeleteButton();
     }//end init
 
@@ -72,7 +71,7 @@ public class AllBooks extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createGrid() {
+    public void createBookGrid() {
 
         // Retrieves the data from the book micro-service.
         books = Arrays.asList(restTemplate.getForObject("http://localhost:8090/books/all", Book[].class));
@@ -103,11 +102,11 @@ public class AllBooks extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/19/17
      */
     public void createFilter() {
-        titleFilter = new TextField();
-        titleFilter.setWidth(100, Unit.PERCENTAGE);
-        titleFilter.setPlaceholder("Book Title...");
-        titleFilter.addValueChangeListener(this::titleFilterGridChange);
-        addComponent(titleFilter);
+        searchFilter = new TextField();
+        searchFilter.setWidth(100, Unit.PERCENTAGE);
+        searchFilter.setPlaceholder("Book Title...");
+        searchFilter.addValueChangeListener(this::searchFilterGridChange);
+        addComponent(searchFilter);
     }//end createFilter
 
     /**
@@ -116,7 +115,7 @@ public class AllBooks extends VerticalLayout implements View {
      * @param event
      * last modified by ricky.clevinger 7/19/17
      */
-    private void titleFilterGridChange(HasValue.ValueChangeEvent<String> event) {
+    private void searchFilterGridChange(HasValue.ValueChangeEvent<String> event) {
         ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
         dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
     }//end titleFilterGridChange
