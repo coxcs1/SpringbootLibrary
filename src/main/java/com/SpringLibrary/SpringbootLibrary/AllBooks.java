@@ -64,9 +64,9 @@ public class AllBooks extends VerticalLayout implements View {
 
         Button delete = new Button("Delete");
         delete.addClickListener(event -> {
-                System.out.print(this.id + "");
             this.restTemplate.getForObject("http://localhost:8090/books/delete/" + this.id, String.class);
-            
+            getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME);
+
         });
         // Add Filter box and the grid to the view.
         FilteredGridLayout();

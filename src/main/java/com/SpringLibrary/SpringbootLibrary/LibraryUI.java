@@ -11,6 +11,7 @@ import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -21,7 +22,7 @@ import com.vaadin.ui.themes.ValoTheme;
 @SpringUI
 @SpringViewDisplay
 public class LibraryUI extends UI implements ViewDisplay {
-
+    RestTemplate restTemplate = new RestTemplate();
     private  Panel LibraryViewDisplay;
     private final VerticalLayout layout = new VerticalLayout();
 
@@ -187,9 +188,14 @@ public class LibraryUI extends UI implements ViewDisplay {
         com.vaadin.ui.TextField lName  = new com.vaadin.ui.TextField("Last Name");
         Button submit  = new Button("Submit");
 
-      //  checkIn.addClickListener(event -> getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME));
-      //  checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
-      //  home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+        submit.addClickListener(clickEvent -> {
+            this.restTemplate.getForObject("http://localhost:8091/members/insert/" + fName.getValue() + "/"
+                    + lName.getValue(), String.class);
+            Notification.show( fName.getValue() + " "
+                    + lName.getValue() + " has been added as a member.");
+            fName.setValue("");
+            lName.setValue("");
+        });
 
         tab.addComponents(fName,lName, submit);
         return tab;
@@ -212,9 +218,16 @@ public class LibraryUI extends UI implements ViewDisplay {
         com.vaadin.ui.TextField lName  = new com.vaadin.ui.TextField("Author: Last Name");
         Button submit  = new Button("Submit");
 
-        //  checkIn.addClickListener(event -> getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME));
-        //  checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
-        //  home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+
+        submit.addClickListener(clickEvent -> {
+                        this.restTemplate.getForObject("http://localhost:8090/books/insert/" + title.getValue() + "/"
+                                + fName.getValue() + "/" + lName.getValue() + "/1", String.class);
+                        Notification.show(title.getValue() + " By " + fName.getValue() + " "
+                                + lName.getValue() + " has been added to the library");
+                        title.setValue("");
+                        fName.setValue("");
+                        lName.setValue("");
+        });
 
         tab.addComponents(title,fName,lName, submit);
         return tab;
@@ -231,7 +244,7 @@ public class LibraryUI extends UI implements ViewDisplay {
     private Layout removeUser(){
 
         Layout tab  = new VerticalLayout();
-        Button all  = new Button("AllBooks Users");
+        Button all  = new Button("All Users");
 
       //    all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
         //  checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
@@ -254,9 +267,7 @@ public class LibraryUI extends UI implements ViewDisplay {
         Layout tab  = new VerticalLayout();
         Button all  = new Button("All Books");
 
-          all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
-        //  checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
-        //  home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+        all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
 
         tab.addComponents(all);
         return tab;
