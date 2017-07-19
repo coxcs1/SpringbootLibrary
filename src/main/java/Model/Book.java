@@ -14,6 +14,7 @@ public class Book {
     private String authFName;
     private String authLName;
     private String libId;
+    private String inOut;
 
     //Getters and Setters
     public String getBookId() {
@@ -54,5 +55,13 @@ public class Book {
 
     public void setLibId(String libId) {
         this.libId = libId;
+    }
+
+    public String getInOut() {
+        return inOut;
+    }
+
+    public void setInOut(String inOut) {
+        this.inOut = inOut;
     }
 }
