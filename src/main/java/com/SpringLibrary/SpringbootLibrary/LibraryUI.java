@@ -242,6 +242,7 @@ public class LibraryUI extends UI implements ViewDisplay {
 
         Layout tab  = new VerticalLayout();
         Button all  = new Button("All Users");
+        all.addClickListener(event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
         tab.addComponents(all);
         return tab;
     }//end removeUser
