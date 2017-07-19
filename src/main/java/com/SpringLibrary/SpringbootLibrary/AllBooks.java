@@ -11,6 +11,7 @@ import com.vaadin.ui.components.grid.MultiSelectionModel;
 import com.vaadin.ui.components.grid.SingleSelectionModel;
 import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.TextRenderer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
@@ -31,6 +32,9 @@ public class AllBooks extends VerticalLayout implements View {
     String id;  // Id used to determine which item is selected in the grid.
     RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
+
+    @Value("${my.bookUrl}")
+    private String bookUrl;
 
     @PostConstruct
     /**
@@ -58,7 +62,7 @@ public class AllBooks extends VerticalLayout implements View {
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
         delete.addClickListener(event -> {
-            this.restTemplate.getForObject("http://localhost:8090/books/delete/" + this.id, String.class);
+            this.restTemplate.getForObject(bookUrl + "/books/delete/" + this.id, String.class);
             getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME);
         });
         // Add delete button to the view.
@@ -75,7 +79,7 @@ public class AllBooks extends VerticalLayout implements View {
     public void createBookGrid() {
 
         // Retrieves the data from the book micro-service.
-        books = Arrays.asList(restTemplate.getForObject("http://localhost:8090/books/all", Book[].class));
+        books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/all", Book[].class));
 
         // Create a grid and adds listener to record selected item.
         grid = new Grid<>();
