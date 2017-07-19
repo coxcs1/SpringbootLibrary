@@ -13,13 +13,6 @@ public class Member {
     private String FName;
     private String LName;
 
-    //Constructor
-    public Member(String id, String FName, String LName) {
-        this.id = id;
-        this.FName = FName;
-        this.LName = LName;
-    }
-
 
     //Getters and Setters
     public String getId() {
