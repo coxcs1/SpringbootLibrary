@@ -9,15 +9,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Book {
-
     private String bookId;
     private String title;
     private String authFName;
     private String authLName;
     private String libId;
 
-
-
+    //Getters and Setters
     public String getBookId() {
         return bookId;
     }

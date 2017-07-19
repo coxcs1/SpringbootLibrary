@@ -123,7 +123,6 @@ public class LibraryUI extends UI implements ViewDisplay {
         accordion.addTab(addAdminAccordion(), "Admin");
         layout.addComponent(accordion);
 
-
     }//end createAccordion
 
     /**

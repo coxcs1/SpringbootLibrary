@@ -1,6 +1,5 @@
 package com.SpringLibrary.SpringbootLibrary;
 
-
 import Model.Book;
 import com.vaadin.data.HasValue;
 import com.vaadin.data.provider.ListDataProvider;
