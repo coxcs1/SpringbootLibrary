@@ -35,6 +35,7 @@ public class LibraryUI extends UI implements ViewDisplay {
      * Calls method that sets the default panel in the page which will change depending on function
      * Adds an Accordion for navigation
      *
+     * @param request
      * last modified by coalsonc 7/18/17
      */
     @Override
@@ -96,7 +97,7 @@ public class LibraryUI extends UI implements ViewDisplay {
 
     /**
      * Method that Vaadin/Spring Boot use to display the page
-     *
+     * @param view
      * last modified by coalsonc 7/17/17
      */
     @Override
@@ -146,7 +147,6 @@ public class LibraryUI extends UI implements ViewDisplay {
 
         tab.addComponents(checkIn, checkOut, home);
 
-
         return tab;
     }//end addAccordionNavigationButtons
 
@@ -179,7 +179,7 @@ public class LibraryUI extends UI implements ViewDisplay {
      * Adds listeners to the buttons to allow navigation
      * Adds textFields and a button to layout and returns it to add to accordion for add user
      *
-     * last modified by ricky.clevinger 7/18/17
+     * last modified by ricky.clevinger 7/19/17
      */
     private Layout addUserInput(){
 
@@ -208,7 +208,7 @@ public class LibraryUI extends UI implements ViewDisplay {
      * Adds listeners to the buttons to allow navigation
      * Adds textFields and a button to layout and returns it to add to accordion for add book
      *
-     * last modified by ricky.clevinger 7/18/17
+     * last modified by ricky.clevinger 7/19/17
      */
     private Layout addBookInput(){
 
@@ -217,7 +217,6 @@ public class LibraryUI extends UI implements ViewDisplay {
         com.vaadin.ui.TextField fName  = new com.vaadin.ui.TextField("Author: First Name");
         com.vaadin.ui.TextField lName  = new com.vaadin.ui.TextField("Author: Last Name");
         Button submit  = new Button("Submit");
-
 
         submit.addClickListener(clickEvent -> {
                         this.restTemplate.getForObject("http://localhost:8090/books/insert/" + title.getValue() + "/"
@@ -228,7 +227,6 @@ public class LibraryUI extends UI implements ViewDisplay {
                         fName.setValue("");
                         lName.setValue("");
         });
-
         tab.addComponents(title,fName,lName, submit);
         return tab;
     }//end addBookInput
@@ -245,11 +243,6 @@ public class LibraryUI extends UI implements ViewDisplay {
 
         Layout tab  = new VerticalLayout();
         Button all  = new Button("All Users");
-
-      //    all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
-        //  checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
-        //  home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
-
         tab.addComponents(all);
         return tab;
     }//end removeUser
@@ -266,9 +259,7 @@ public class LibraryUI extends UI implements ViewDisplay {
 
         Layout tab  = new VerticalLayout();
         Button all  = new Button("All Books");
-
         all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
-
         tab.addComponents(all);
         return tab;
     }//end removeBook
