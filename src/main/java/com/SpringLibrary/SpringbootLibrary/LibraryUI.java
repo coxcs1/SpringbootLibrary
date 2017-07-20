@@ -11,6 +11,7 @@ import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -25,6 +26,12 @@ public class LibraryUI extends UI implements ViewDisplay {
     RestTemplate restTemplate = new RestTemplate();
     private  Panel LibraryViewDisplay;
     private final VerticalLayout layout = new VerticalLayout();
+
+    @Value("${my.bookUrl}")
+    private String bookUrl;
+
+    @Value("${my.memberUrl}")
+    private String memUrl;
 
     /**
      * Creates the web page and sets the elements within it
@@ -187,13 +194,13 @@ public class LibraryUI extends UI implements ViewDisplay {
         Button submit  = new Button("Submit");
 
         submit.addClickListener(clickEvent -> {
-            this.restTemplate.getForObject("http://localhost:8091/members/insert/" + fName.getValue() + "/"
+            this.restTemplate.getForObject(memUrl + "/members/insert/" + fName.getValue() + "/"
                     + lName.getValue(), String.class);
             Notification.show( fName.getValue() + " "
                     + lName.getValue() + " has been added as a member.");
             fName.setValue("");
             lName.setValue("");
-            
+
         });
 
         tab.addComponents(fName,lName, submit);
@@ -218,7 +225,7 @@ public class LibraryUI extends UI implements ViewDisplay {
         Button submit  = new Button("Submit");
 
         submit.addClickListener(clickEvent -> {
-                        this.restTemplate.getForObject("http://localhost:8090/books/insert/" + title.getValue() + "/"
+                        this.restTemplate.getForObject(bookUrl + "/books/insert/" + title.getValue() + "/"
                                 + fName.getValue() + "/" + lName.getValue() + "/1", String.class);
                         Notification.show(title.getValue() + " By " + fName.getValue() + " "
                                 + lName.getValue() + " has been added to the library");

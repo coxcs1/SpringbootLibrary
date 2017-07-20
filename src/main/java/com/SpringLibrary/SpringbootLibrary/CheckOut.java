@@ -57,7 +57,7 @@ public class CheckOut extends VerticalLayout implements View {
         //    this.restTemplate.getForObject(memUrl + "/members/delete/" + this.id, String.class);
        //     getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
       //  });
-        
+
         addComponent(checkOut);
 
     }
