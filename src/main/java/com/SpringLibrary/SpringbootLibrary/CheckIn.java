@@ -3,6 +3,7 @@ package com.SpringLibrary.SpringbootLibrary;
 /**
  * Created by ricky.clevinger on 7/13/2017.
  */
+import Model.BookReturn;
 import Model.Member;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -17,8 +18,54 @@ import javax.annotation.PostConstruct;
 public class CheckIn extends VerticalLayout implements View {
     public static final String VIEW_NAME = "CheckIn";
 
+    private VerticalLayout      primaryPanel;
+    private HorizontalLayout    gridPanel;
+
+
     @PostConstruct
     void init() {
+
+        //rickySetupLayout();
+
+        setupPrimaryPanel();
+        addFilters();
+        setupGridPanel();
+        //addGrid();
+        addCheckInButton();
+
+    }
+
+    private void addFilters() {
+        //TODO
+    }
+
+    private void addCheckInButton() {
+        VerticalLayout holdsButton = new VerticalLayout();
+        Button checkIn = new Button ("Check In");
+        holdsButton.addComponent(checkIn);
+        addComponent(holdsButton);
+    }
+
+    private void setupGridPanel() {
+
+        gridPanel = new HorizontalLayout();
+        Grid<BookReturn> bookReturnGrid = new Grid<>();
+        bookReturnGrid.setWidth("100%");
+        gridPanel.addComponent(bookReturnGrid);
+        primaryPanel.addComponent(gridPanel);
+    }
+
+    private void setupPrimaryPanel() {
+
+        primaryPanel = new VerticalLayout();
+        primaryPanel.setSpacing(true);
+
+        addComponent(primaryPanel);
+    }
+
+    private void rickySetupLayout() {
+
+
         addComponent(new Label("Check In"));
 
 
@@ -35,8 +82,6 @@ public class CheckIn extends VerticalLayout implements View {
 
         addComponent(area);
     }
-
-
 
 
     @Override
