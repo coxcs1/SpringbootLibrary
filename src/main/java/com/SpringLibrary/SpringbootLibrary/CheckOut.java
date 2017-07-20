@@ -53,10 +53,11 @@ public class CheckOut extends VerticalLayout implements View {
 
         checkOut = new Button ("Check Out");
 
-        //checkOut.addClickListener(event -> {
-        //    this.restTemplate.getForObject(memUrl + "/members/delete/" + this.id, String.class);
-       //     getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
-      //  });
+        checkOut.addClickListener(event -> {
+            this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 2 + "/" + memberId, String.class);
+            this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 2 + "/" + memberId, String.class);
+            getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
+        });
 
         addComponent(checkOut);
 
@@ -89,7 +90,7 @@ public class CheckOut extends VerticalLayout implements View {
 
     private void createBookGrid() {
 
-        books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/all", Book[].class));
+        books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
         Grid<Book> bookGrid = new Grid<>();
 
         bookGrid.addSelectionListener(event -> {
