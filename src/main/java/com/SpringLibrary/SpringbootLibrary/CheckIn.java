@@ -3,6 +3,7 @@ package com.SpringLibrary.SpringbootLibrary;
 /**
  * Created by ricky.clevinger on 7/13/2017.
  */
+import Model.BookReturn;
 import Model.Member;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -17,23 +18,69 @@ import javax.annotation.PostConstruct;
 public class CheckIn extends VerticalLayout implements View {
     public static final String VIEW_NAME = "CheckIn";
 
+    private VerticalLayout      primaryPanel;
+    private HorizontalLayout    gridPanel;
+
+
     @PostConstruct
     void init() {
-        addComponent(new Label("Check In"));
 
+        setupPrimaryPanel();
+        addFilters();
+        setupGridPanel();
+        addCheckInButton();
 
-        Button CheckOut = new Button("Check Out");
-        CheckOut.addStyleName(ValoTheme.BUTTON_SMALL);
-        CheckOut.addClickListener(event -> getUI().getNavigator().navigateTo("CheckOut"));
-        addComponent(CheckOut);
+    }
 
-        RestTemplate restTemplate = new RestTemplate();
-        Member[] members = restTemplate.getForObject("http://localhost:8091/members/all", Member[].class);
+    private void addFilters() {
 
-        TextArea area = new TextArea();
-        area.setValue("First name is "+members[0].getFName() + " and second is "+members[1].getFName());
+        HorizontalLayout filterPanel = new HorizontalLayout();
 
-        addComponent(area);
+        TextField titleFilter = new TextField();
+        titleFilter.setWidth(100, Unit.PERCENTAGE);
+        titleFilter.setPlaceholder("Book Title...");
+        titleFilter.setResponsive(true);
+        //titleFilter.addValueChangeListener(this::titleFilterGridChange);
+        filterPanel.addComponent(titleFilter);
+
+        filterPanel.setSpacing(true);
+
+        TextField authorFilter = new TextField();
+        authorFilter.setWidth(100, Unit.PERCENTAGE);
+        authorFilter.setPlaceholder("Last Name...");
+        authorFilter.setResponsive(true);
+        //authorFilter.addValueChangeListener(this::authorFilterGridChange);
+        filterPanel.addComponent(authorFilter);
+
+        primaryPanel.addComponent(filterPanel);
+    }
+
+    private void addCheckInButton() {
+        VerticalLayout holdsButton = new VerticalLayout();
+        Button checkIn = new Button ("Check In");
+        checkIn.setResponsive(true);
+        holdsButton.addComponent(checkIn);
+        holdsButton.setResponsive(true);
+        addComponent(holdsButton);
+    }
+
+    private void setupGridPanel() {
+
+        gridPanel = new HorizontalLayout();
+        Grid<BookReturn> bookReturnGrid = new Grid<>();
+        bookReturnGrid.setWidth("100%");
+        gridPanel.addComponent(bookReturnGrid);
+        gridPanel.setResponsive(true);
+        primaryPanel.addComponent(gridPanel);
+    }
+
+    private void setupPrimaryPanel() {
+
+        primaryPanel = new VerticalLayout();
+        primaryPanel.setSpacing(true);
+        primaryPanel.setResponsive(true);
+
+        addComponent(primaryPanel);
     }
 
 

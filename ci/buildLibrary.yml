@@ -1,0 +1,21 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: maven
+
+inputs:
+- name: 12FactorSpringBootLibrary
+
+outputs:
+- name: built-library
+
+run:
+  path: sh
+  args:
+  - -exc
+  - |
+    cd 12FactorSpringBootLibrary
+    mvn package
+    cp ./target/SpringbootLibrary-0.0.1-SNAPSHOT.jar ../built-library/demo.jar
