@@ -5,6 +5,8 @@ package com.SpringLibrary.SpringbootLibrary;
  */
 import Model.Book;
 import Model.Member;
+import com.vaadin.data.HasValue;
+import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -31,6 +33,8 @@ public class CheckOut extends VerticalLayout implements View {
     RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
     List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
+    Grid<Member> memberGrid;
+    Grid<Book> bookGrid;
 
     @Value("${my.bookUrl}")
     private String bookUrl;
@@ -42,11 +46,10 @@ public class CheckOut extends VerticalLayout implements View {
     void init() {
 
         createLayout();
+        createFilter();
         createBookGrid();
         createMemberGrid();
         addCheckOutButton();
-
-
     }
 
     private void addCheckOutButton() {
@@ -65,7 +68,7 @@ public class CheckOut extends VerticalLayout implements View {
     private void createMemberGrid() {
 
         members = Arrays.asList(restTemplate.getForObject(memUrl + "/members/all", Member[].class));
-        Grid<Member> memberGrid = new Grid<>();
+        memberGrid = new Grid<>();
         memberGrid.setWidth(100, Unit.PERCENTAGE);
 
         // Retrieves the data from the book micro-service.
@@ -91,7 +94,7 @@ public class CheckOut extends VerticalLayout implements View {
     private void createBookGrid() {
 
         books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
-        Grid<Book> bookGrid = new Grid<>();
+        bookGrid = new Grid<>();
 
         bookGrid.addSelectionListener(event -> {
             this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
@@ -119,6 +122,61 @@ public class CheckOut extends VerticalLayout implements View {
         addComponent(hLayout);
 
     }
+
+    /**
+     * Function shall add the search filter to the page.
+     * User shall type in part of a book title and the grid will changed accordingly.
+     *
+     * last modified by ricky.clevinger 7/19/17
+     */
+    public void createFilter() {
+        titleFilter = new TextField();
+        titleFilter.setWidth(100, Unit.PERCENTAGE);
+        titleFilter.setPlaceholder("Title...");
+        titleFilter.addValueChangeListener(this::titleFilterGridChange);
+        addComponent(titleFilter);
+
+        authorFilter = new TextField();
+        authorFilter.setWidth(100, Unit.PERCENTAGE);
+        authorFilter.setPlaceholder("Last Name...");
+        authorFilter.addValueChangeListener(this::lNameFilterGridChange);
+        addComponent(authorFilter);
+    }//end createFilter
+
+    /**
+     * Helper function for the createFilter.
+     * Changes the grid and compares the titles.
+     * @param event
+     * last modified by ricky.clevinger 7/19/17
+     */
+    private void titleFilterGridChange(HasValue.ValueChangeEvent<String> event) {
+        ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) bookGrid.getDataProvider();
+        dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
+    }//end fNameFilterGridChange
+
+    /**
+     * Helper function for the createFilter.
+     * Changes the grid and compares the titles.
+     * @param event
+     * last modified by ricky.clevinger 7/19/17
+     */
+    private void lNameFilterGridChange(HasValue.ValueChangeEvent<String> event) {
+        ListDataProvider<Member> dataProvider = (ListDataProvider<Member>) memberGrid.getDataProvider();
+        dataProvider.setFilter(Member::getLName, s -> caseInsensitiveContains(s, event.getValue()));
+    }//end lNameFilterGridChange
+
+    /**
+     *Returns a boolean telling if the lowercase form of text input into the filter is contain
+     * by any of the lowercase versions of the book titles.
+     * @param where the books titles its comparing to
+     * @param what  the filter wood being compared to the book titles
+     * @return Boolean telling if the lower case value of the filter input and the book titles match
+     *
+     * last modified by ricky.clevinger 7/19/17
+     */
+    private Boolean caseInsensitiveContains(String where, String what) {
+        return where.toLowerCase().contains(what.toLowerCase());
+    }//end caseInsensitiveContains
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
