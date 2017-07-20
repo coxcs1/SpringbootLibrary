@@ -6,6 +6,8 @@ package com.SpringLibrary.SpringbootLibrary;
 import Model.Book;
 import Model.BookReturn;
 import Model.Member;
+import com.vaadin.data.HasValue;
+import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -23,13 +25,15 @@ import java.util.List;
 public class CheckIn extends VerticalLayout implements View {
     public static final String VIEW_NAME = "CheckIn";
 
+    HorizontalLayout hLayout;
     Grid<Book> bookReturnGrid;
     String titleId;  // Id used to determine which item is selected in the grid.
-    private VerticalLayout      primaryPanel;
+    String memberId;  // Id used to determine which item is selected in the grid.
+    private TextField titleFilter;   // TextField will be used to filter the results on the grid.
+    private TextField authorFilter;   // TextField will be used to filter the results on the grid.
     private HorizontalLayout    gridPanel;
     RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
-    List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
 
     @Value("${my.bookUrl}")
     private String bookUrl;
@@ -40,39 +44,30 @@ public class CheckIn extends VerticalLayout implements View {
     @PostConstruct
     void init() {
 
-        setupPrimaryPanel();
+        createLayout();
         addFilters();
         setupGridPanel();
         addCheckInButton();
-
     }
 
     private void addFilters() {
 
-        HorizontalLayout filterPanel = new HorizontalLayout();
-
-        TextField titleFilter = new TextField();
+        titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
-        titleFilter.setPlaceholder("Book Title...");
-        titleFilter.setResponsive(true);
-        //titleFilter.addValueChangeListener(this::titleFilterGridChange);
-        filterPanel.addComponent(titleFilter);
+        titleFilter.setPlaceholder("Title...");
+        titleFilter.addValueChangeListener(this::titleFilterGridChange);
+        addComponent(titleFilter);
 
-        filterPanel.setSpacing(true);
-
-        TextField authorFilter = new TextField();
-        authorFilter.setWidth(100, Unit.PERCENTAGE);
-        authorFilter.setPlaceholder("Last Name...");
-        authorFilter.setResponsive(true);
-        //authorFilter.addValueChangeListener(this::authorFilterGridChange);
-        filterPanel.addComponent(authorFilter);
-
-        primaryPanel.addComponent(filterPanel);
     }
 
     private void addCheckInButton() {
         VerticalLayout holdsButton = new VerticalLayout();
         Button checkIn = new Button ("Check In");
+        checkIn.addClickListener(event -> {
+            this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 1 + "/" + memberId, String.class);
+            this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 1 + "/" + 0, String.class);
+            getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
+        });
         checkIn.setResponsive(true);
         holdsButton.addComponent(checkIn);
         holdsButton.setResponsive(true);
@@ -86,7 +81,13 @@ public class CheckIn extends VerticalLayout implements View {
         gridPanel = new HorizontalLayout();
         bookReturnGrid = new Grid<>();
         bookReturnGrid.addSelectionListener(event -> {
-            this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
+            if (event.getAllSelectedItems().isEmpty()){
+                this.titleId = 0 + "";
+                this.memberId = 0 + "";}
+            else {
+                this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
+                this.memberId = event.getFirstSelectedItem().get().getMid() + "";
+            }
         });
         bookReturnGrid.setItems(books);
         //Specifies what parts of the objects in the grid are shown.
@@ -99,20 +100,42 @@ public class CheckIn extends VerticalLayout implements View {
 
         gridPanel.addComponent(bookReturnGrid);
         gridPanel.setResponsive(true);
-        primaryPanel.addComponent(gridPanel);
+        addComponent(gridPanel);
     }
 
-    private void setupPrimaryPanel() {
+    private void createLayout() {
 
-        primaryPanel = new VerticalLayout();
-        primaryPanel.setSpacing(true);
-        primaryPanel.setResponsive(true);
+        hLayout = new HorizontalLayout();
+        hLayout.setSpacing(true);
+        addComponent(hLayout);
 
-        addComponent(primaryPanel);
     }
 
 
+    /**
+     * Helper function for the createFilter.
+     * Changes the grid and compares the titles.
+     * @param event
+     * last modified by ricky.clevinger 7/19/17
+     */
+    private void titleFilterGridChange(HasValue.ValueChangeEvent<String> event) {
+        ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) bookReturnGrid.getDataProvider();
+        dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
+    }//end fNameFilterGridChange
 
+
+    /**
+     *Returns a boolean telling if the lowercase form of text input into the filter is contain
+     * by any of the lowercase versions of the book titles.
+     * @param where the books titles its comparing to
+     * @param what  the filter wood being compared to the book titles
+     * @return Boolean telling if the lower case value of the filter input and the book titles match
+     *
+     * last modified by ricky.clevinger 7/19/17
+     */
+    private Boolean caseInsensitiveContains(String where, String what) {
+        return where.toLowerCase().contains(what.toLowerCase());
+    }//end caseInsensitiveContains
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
