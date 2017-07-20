@@ -25,12 +25,9 @@ public class CheckIn extends VerticalLayout implements View {
     @PostConstruct
     void init() {
 
-        //rickySetupLayout();
-
         setupPrimaryPanel();
         addFilters();
         setupGridPanel();
-        //addGrid();
         addCheckInButton();
 
     }
@@ -42,12 +39,16 @@ public class CheckIn extends VerticalLayout implements View {
         TextField titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Book Title...");
+        titleFilter.setResponsive(true);
         //titleFilter.addValueChangeListener(this::titleFilterGridChange);
         filterPanel.addComponent(titleFilter);
+
+        filterPanel.setSpacing(true);
 
         TextField authorFilter = new TextField();
         authorFilter.setWidth(100, Unit.PERCENTAGE);
         authorFilter.setPlaceholder("Last Name...");
+        authorFilter.setResponsive(true);
         //authorFilter.addValueChangeListener(this::authorFilterGridChange);
         filterPanel.addComponent(authorFilter);
 
@@ -57,7 +58,9 @@ public class CheckIn extends VerticalLayout implements View {
     private void addCheckInButton() {
         VerticalLayout holdsButton = new VerticalLayout();
         Button checkIn = new Button ("Check In");
+        checkIn.setResponsive(true);
         holdsButton.addComponent(checkIn);
+        holdsButton.setResponsive(true);
         addComponent(holdsButton);
     }
 
@@ -67,6 +70,7 @@ public class CheckIn extends VerticalLayout implements View {
         Grid<BookReturn> bookReturnGrid = new Grid<>();
         bookReturnGrid.setWidth("100%");
         gridPanel.addComponent(bookReturnGrid);
+        gridPanel.setResponsive(true);
         primaryPanel.addComponent(gridPanel);
     }
 
@@ -74,29 +78,12 @@ public class CheckIn extends VerticalLayout implements View {
 
         primaryPanel = new VerticalLayout();
         primaryPanel.setSpacing(true);
+        primaryPanel.setResponsive(true);
 
         addComponent(primaryPanel);
     }
 
-    private void rickySetupLayout() {
 
-
-        addComponent(new Label("Check In"));
-
-
-        Button CheckOut = new Button("Check Out");
-        CheckOut.addStyleName(ValoTheme.BUTTON_SMALL);
-        CheckOut.addClickListener(event -> getUI().getNavigator().navigateTo("CheckOut"));
-        addComponent(CheckOut);
-
-        RestTemplate restTemplate = new RestTemplate();
-        Member[] members = restTemplate.getForObject("http://localhost:8091/members/all", Member[].class);
-
-        TextArea area = new TextArea();
-        area.setValue("First name is "+members[0].getFName() + " and second is "+members[1].getFName());
-
-        addComponent(area);
-    }
 
 
     @Override
