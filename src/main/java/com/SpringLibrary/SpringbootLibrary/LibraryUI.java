@@ -26,7 +26,6 @@ public class LibraryUI extends UI implements ViewDisplay {
     private  Panel LibraryViewDisplay;
     private final VerticalLayout layout = new VerticalLayout();
 
-
     /**
      * Creates the web page and sets the elements within it
      *
@@ -194,6 +193,7 @@ public class LibraryUI extends UI implements ViewDisplay {
                     + lName.getValue() + " has been added as a member.");
             fName.setValue("");
             lName.setValue("");
+            
         });
 
         tab.addComponents(fName,lName, submit);

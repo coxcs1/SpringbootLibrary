@@ -46,7 +46,7 @@ public class AllMembers extends VerticalLayout implements View {
      */
     void init() {
         createFilter();
-        createBookGrid();
+        createMemberGrid();
         createDeleteButton();
     }//end init
 
@@ -78,7 +78,7 @@ public class AllMembers extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createBookGrid() {
+    public void createMemberGrid() {
 
         // Retrieves the data from the book micro-service.
         members = Arrays.asList(restTemplate.getForObject(memUrl + "/members/all", Member[].class));

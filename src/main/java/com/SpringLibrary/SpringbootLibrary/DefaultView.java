@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 public class DefaultView extends VerticalLayout implements View {
     public static final String VIEW_NAME = "";
 
+
     /**
      * Constructs the Default view for display
      *
