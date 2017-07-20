@@ -46,8 +46,6 @@ public class gridHelper {
     }//end fNameFilterGridChange
 
 
-
-
     /**
      * Helper function for the createFilter.
      * Changes the grid and compares the titles.
@@ -59,8 +57,7 @@ public class gridHelper {
         dataProvider.setFilter(Member::getLName, s -> caseInsensitiveContains(s, event.getValue()));
     }//end lNameFilterGridChange
 
-
-
+    
     /**
      *Returns a boolean telling if the lowercase form of text input into the filter is contain
      * by any of the lowercase versions of the book titles.
