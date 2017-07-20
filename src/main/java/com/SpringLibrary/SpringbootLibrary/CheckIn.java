@@ -36,7 +36,22 @@ public class CheckIn extends VerticalLayout implements View {
     }
 
     private void addFilters() {
-        //TODO
+
+        HorizontalLayout filterPanel = new HorizontalLayout();
+
+        TextField titleFilter = new TextField();
+        titleFilter.setWidth(100, Unit.PERCENTAGE);
+        titleFilter.setPlaceholder("Book Title...");
+        //titleFilter.addValueChangeListener(this::titleFilterGridChange);
+        filterPanel.addComponent(titleFilter);
+
+        TextField authorFilter = new TextField();
+        authorFilter.setWidth(100, Unit.PERCENTAGE);
+        authorFilter.setPlaceholder("Last Name...");
+        //authorFilter.addValueChangeListener(this::authorFilterGridChange);
+        filterPanel.addComponent(authorFilter);
+
+        primaryPanel.addComponent(filterPanel);
     }
 
     private void addCheckInButton() {
