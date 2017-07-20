@@ -6,6 +6,7 @@ package com.SpringLibrary.SpringbootLibrary;
 import Model.Book;
 import Model.BookReturn;
 import Model.Member;
+import Resource.gridHelper;
 import com.vaadin.data.HasValue;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
@@ -20,6 +21,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
+
+import static Resource.gridHelper.*;
 
 @SpringView(name = CheckIn.VIEW_NAME)
 public class CheckIn extends VerticalLayout implements View {
@@ -44,7 +47,7 @@ public class CheckIn extends VerticalLayout implements View {
     @PostConstruct
     void init() {
 
-        createLayout();
+        createLayout(this);
         addFilters();
         setupGridPanel();
         addCheckInButton();
@@ -55,7 +58,7 @@ public class CheckIn extends VerticalLayout implements View {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
-        titleFilter.addValueChangeListener(this::titleFilterGridChange);
+        titleFilter.addValueChangeListener(event -> titleFilterGridChange(event, bookReturnGrid));
         addComponent(titleFilter);
 
     }
@@ -103,39 +106,6 @@ public class CheckIn extends VerticalLayout implements View {
         addComponent(gridPanel);
     }
 
-    private void createLayout() {
-
-        hLayout = new HorizontalLayout();
-        hLayout.setSpacing(true);
-        addComponent(hLayout);
-
-    }
-
-
-    /**
-     * Helper function for the createFilter.
-     * Changes the grid and compares the titles.
-     * @param event
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private void titleFilterGridChange(HasValue.ValueChangeEvent<String> event) {
-        ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) bookReturnGrid.getDataProvider();
-        dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
-    }//end fNameFilterGridChange
-
-
-    /**
-     *Returns a boolean telling if the lowercase form of text input into the filter is contain
-     * by any of the lowercase versions of the book titles.
-     * @param where the books titles its comparing to
-     * @param what  the filter wood being compared to the book titles
-     * @return Boolean telling if the lower case value of the filter input and the book titles match
-     *
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private Boolean caseInsensitiveContains(String where, String what) {
-        return where.toLowerCase().contains(what.toLowerCase());
-    }//end caseInsensitiveContains
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {

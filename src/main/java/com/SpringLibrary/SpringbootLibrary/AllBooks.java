@@ -18,6 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import static Resource.gridHelper.caseInsensitiveContains;
+import static Resource.gridHelper.createLayout;
+
 /**
  * Created by ricky.clevinger on 7/12/2017.
  *
@@ -46,6 +49,7 @@ public class AllBooks extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/19/17
      */
     void init() {
+        createLayout(this);
         createFilter();
         createBookGrid();
         createDeleteButton();
@@ -142,18 +146,6 @@ public class AllBooks extends VerticalLayout implements View {
         dataProvider.setFilter(Book::getAuthLName, s -> caseInsensitiveContains(s, event.getValue()));
     }//end titleFilterGridChange
 
-    /**
-     *Returns a boolean telling if the lowercase form of text input into the filter is contain
-     * by any of the lowercase versions of the book titles.
-     * @param where the books titles its comparing to
-     * @param what  the filter wood being compared to the book titles
-     * @return Boolean telling if the lower case value of the filter input and the book titles match
-     *
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private Boolean caseInsensitiveContains(String where, String what) {
-        return where.toLowerCase().contains(what.toLowerCase());
-    }//end caseInsensitiveContains
 
 
     @Override

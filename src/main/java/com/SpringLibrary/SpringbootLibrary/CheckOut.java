@@ -20,6 +20,8 @@ import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 
+import static Resource.gridHelper.*;
+
 @SpringView(name = CheckOut.VIEW_NAME)
 public class CheckOut extends VerticalLayout implements View {
     public static final String VIEW_NAME = "CheckOut";
@@ -45,7 +47,7 @@ public class CheckOut extends VerticalLayout implements View {
     @PostConstruct
     void init() {
 
-        createLayout();
+        createLayout(this);
         createFilter();
         createBookGrid();
         createMemberGrid();
@@ -115,13 +117,6 @@ public class CheckOut extends VerticalLayout implements View {
 
     }
 
-    private void createLayout() {
-
-        hLayout = new HorizontalLayout();
-        hLayout.setSpacing(true);
-        addComponent(hLayout);
-
-    }
 
     /**
      * Function shall add the search filter to the page.
@@ -133,50 +128,16 @@ public class CheckOut extends VerticalLayout implements View {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
-        titleFilter.addValueChangeListener(this::titleFilterGridChange);
+        titleFilter.addValueChangeListener(event -> titleFilterGridChange(event, bookGrid));
         addComponent(titleFilter);
 
         authorFilter = new TextField();
         authorFilter.setWidth(100, Unit.PERCENTAGE);
         authorFilter.setPlaceholder("Last Name...");
-        authorFilter.addValueChangeListener(this::lNameFilterGridChange);
+        authorFilter.addValueChangeListener(event -> lNameFilterGridChange(event, memberGrid));
         addComponent(authorFilter);
     }//end createFilter
 
-    /**
-     * Helper function for the createFilter.
-     * Changes the grid and compares the titles.
-     * @param event
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private void titleFilterGridChange(HasValue.ValueChangeEvent<String> event) {
-        ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) bookGrid.getDataProvider();
-        dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
-    }//end fNameFilterGridChange
-
-    /**
-     * Helper function for the createFilter.
-     * Changes the grid and compares the titles.
-     * @param event
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private void lNameFilterGridChange(HasValue.ValueChangeEvent<String> event) {
-        ListDataProvider<Member> dataProvider = (ListDataProvider<Member>) memberGrid.getDataProvider();
-        dataProvider.setFilter(Member::getLName, s -> caseInsensitiveContains(s, event.getValue()));
-    }//end lNameFilterGridChange
-
-    /**
-     *Returns a boolean telling if the lowercase form of text input into the filter is contain
-     * by any of the lowercase versions of the book titles.
-     * @param where the books titles its comparing to
-     * @param what  the filter wood being compared to the book titles
-     * @return Boolean telling if the lower case value of the filter input and the book titles match
-     *
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private Boolean caseInsensitiveContains(String where, String what) {
-        return where.toLowerCase().contains(what.toLowerCase());
-    }//end caseInsensitiveContains
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
