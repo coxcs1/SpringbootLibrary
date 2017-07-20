@@ -4,6 +4,7 @@ image_resource:
   type: docker-image
   source:
     repository: maven
+    tag: "alpine"
 
 inputs:
 - name: 12FactorSpringBootLibrary
