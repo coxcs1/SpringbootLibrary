@@ -22,10 +22,14 @@ import org.springframework.web.client.RestTemplate;
 @Theme("valo")
 @SpringUI
 @SpringViewDisplay
-public class LibraryUI extends UI implements ViewDisplay {
-    RestTemplate restTemplate = new RestTemplate();
-    private  Panel LibraryViewDisplay;
-    private final VerticalLayout layout = new VerticalLayout();
+public class LibraryUI extends UI implements ViewDisplay
+{
+    /**
+     * Variable declaration
+     */
+    RestTemplate restTemplate       = new RestTemplate();
+    private                         Panel LibraryViewDisplay;
+    private final VerticalLayout    layout = new VerticalLayout();
 
     @Value("${my.bookUrl}")
     private String bookUrl;
@@ -63,11 +67,13 @@ public class LibraryUI extends UI implements ViewDisplay {
      * last modified by coalsonc 7/17/17
      */
 
-    private void addDefaultView() {
-        LibraryViewDisplay = new Panel();
+    private void addDefaultView()
+    {
+        LibraryViewDisplay      = new Panel();
         LibraryViewDisplay.setSizeUndefined();
         layout.addComponent(LibraryViewDisplay);
         layout.setExpandRatio(LibraryViewDisplay, 1.0f);
+
     }//end addDefaultView
 
     /**
@@ -78,8 +84,8 @@ public class LibraryUI extends UI implements ViewDisplay {
      *
      * last modified by coalsonc 7/17/17
      */
-    private void setupLayout(){
-
+    private void setupLayout()
+    {
         layout.setSpacing(true);
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         setContent(layout);
@@ -94,11 +100,13 @@ public class LibraryUI extends UI implements ViewDisplay {
      *
      * last modified by coalsonc 7/17/17
      */
-    private void addHeader() {
+    private void addHeader()
+    {
         Label header = new Label ("Welcome to the Library");
         header.addStyleName(ValoTheme.LABEL_H1);
         header.setSizeUndefined();
         layout.addComponent(header);
+
     }//end addHeader
 
     /**
@@ -107,8 +115,10 @@ public class LibraryUI extends UI implements ViewDisplay {
      * last modified by coalsonc 7/17/17
      */
     @Override
-    public void showView(View view) {
+    public void showView(View view)
+    {
         LibraryViewDisplay.setContent((Component) view);
+
     }//end showView
 
     /**
@@ -139,7 +149,8 @@ public class LibraryUI extends UI implements ViewDisplay {
      *
      * last modified by coalsonc 7/18/17
      */
-    private Layout addAccordionNavigationButtons(){
+    private Layout addAccordionNavigationButtons()
+    {
 
         Layout tab      = new VerticalLayout();
         Button checkIn  = new Button("Check In");
@@ -163,7 +174,8 @@ public class LibraryUI extends UI implements ViewDisplay {
      *
      * last modified by ricky.clevinger 7/18/17
      */
-    private Component addAdminAccordion(){
+    private Component addAdminAccordion()
+    {
 
         Accordion accordion = new Accordion();
         accordion.addStyleName(ValoTheme.ACCORDION_BORDERLESS);
@@ -186,12 +198,13 @@ public class LibraryUI extends UI implements ViewDisplay {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    private Layout addUserInput(){
+    private Layout addUserInput()
+    {
 
-        Layout tab      = new VerticalLayout();
-        com.vaadin.ui.TextField fName  = new com.vaadin.ui.TextField("First Name");
-        com.vaadin.ui.TextField lName  = new com.vaadin.ui.TextField("Last Name");
-        Button submit  = new Button("Submit");
+        Layout tab                      = new VerticalLayout();
+        com.vaadin.ui.TextField fName   = new com.vaadin.ui.TextField("First Name");
+        com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Last Name");
+        Button submit                   = new Button("Submit");
 
         submit.addClickListener(clickEvent -> {
             this.restTemplate.getForObject(memUrl + "/members/insert/" + fName.getValue() + "/"
@@ -216,13 +229,14 @@ public class LibraryUI extends UI implements ViewDisplay {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    private Layout addBookInput(){
+    private Layout addBookInput()
+    {
 
-        Layout tab      = new VerticalLayout();
-        com.vaadin.ui.TextField title  = new com.vaadin.ui.TextField("Title");
-        com.vaadin.ui.TextField fName  = new com.vaadin.ui.TextField("Author: First Name");
-        com.vaadin.ui.TextField lName  = new com.vaadin.ui.TextField("Author: Last Name");
-        Button submit  = new Button("Submit");
+        Layout tab                      = new VerticalLayout();
+        com.vaadin.ui.TextField title   = new com.vaadin.ui.TextField("Title");
+        com.vaadin.ui.TextField fName   = new com.vaadin.ui.TextField("Author: First Name");
+        com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Author: Last Name");
+        Button submit                   = new Button("Submit");
 
         submit.addClickListener(clickEvent -> {
                         this.restTemplate.getForObject(bookUrl + "/books/insert/" + title.getValue() + "/"
@@ -233,6 +247,7 @@ public class LibraryUI extends UI implements ViewDisplay {
                         fName.setValue("");
                         lName.setValue("");
         });
+
         tab.addComponents(title,fName,lName, submit);
         return tab;
     }//end addBookInput
@@ -245,13 +260,14 @@ public class LibraryUI extends UI implements ViewDisplay {
      *
      * last modified by ricky.clevinger 7/18/17
      */
-    private Layout removeUser(){
-
+    private Layout removeUser()
+    {
         Layout tab  = new VerticalLayout();
         Button all  = new Button("View All Users");
         all.addClickListener(event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
         tab.addComponents(all);
         return tab;
+
     }//end removeUser
 
     /**
@@ -262,12 +278,14 @@ public class LibraryUI extends UI implements ViewDisplay {
      *
      * last modified by ricky.clevinger 7/18/17
      */
-    private Layout removeBook(){
-
+    private Layout removeBook()
+    {
         Layout tab  = new VerticalLayout();
         Button all  = new Button("View All Books");
         all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
         tab.addComponents(all);
         return tab;
+
     }//end removeBook
-}
+
+}//end AllBooks
