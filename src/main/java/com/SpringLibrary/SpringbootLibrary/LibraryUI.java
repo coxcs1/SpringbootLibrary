@@ -34,8 +34,6 @@ public class LibraryUI extends UI implements ViewDisplay
     @Value("${my.bookUrl}")
     private String bookUrl;
 
-    @Value("${my.memberUrl}")
-    private String memUrl;
 
     /**
      * Creates the web page and sets the elements within it
@@ -207,7 +205,7 @@ public class LibraryUI extends UI implements ViewDisplay
         Button submit                   = new Button("Submit");
 
         submit.addClickListener(clickEvent -> {
-            this.restTemplate.getForObject(memUrl + "/members/insert/" + fName.getValue() + "/"
+            this.restTemplate.getForObject(bookUrl + "/members/insert/" + fName.getValue() + "/"
                     + lName.getValue(), String.class);
             Notification.show( fName.getValue() + " "
                     + lName.getValue() + " has been added as a member.");

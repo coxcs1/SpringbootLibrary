@@ -17,6 +17,10 @@ import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 
+import static Resource.gridHelper.fNameFilterGridChange;
+import static Resource.gridHelper.lNameFilterGridChange;
+import static Resource.gridHelper.titleFilterGridChange;
+
 /**
  * Created by ricky.clevinger on 7/12/2017.
  *
@@ -32,8 +36,8 @@ public class AllMembers extends VerticalLayout implements View {
     RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
 
-    @Value("${my.memberUrl}")
-    private String memUrl;
+    @Value("${my.bookUrl}")
+    private String bookUrl;
 
     @PostConstruct
     /**
@@ -63,7 +67,7 @@ public class AllMembers extends VerticalLayout implements View {
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
         delete.addClickListener(event -> {
-            this.restTemplate.getForObject(memUrl + "/members/delete/" + this.id, String.class);
+            this.restTemplate.getForObject(bookUrl + "/members/delete/" + this.id, String.class);
             getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
         });
 
@@ -81,7 +85,7 @@ public class AllMembers extends VerticalLayout implements View {
     public void createMemberGrid() {
 
         // Retrieves the data from the book micro-service.
-        members = Arrays.asList(restTemplate.getForObject(memUrl + "/members/all", Member[].class));
+        members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
 
         // Create a grid and adds listener to record selected item.
         grid = new Grid<>();
@@ -112,50 +116,16 @@ public class AllMembers extends VerticalLayout implements View {
         fNameFilter = new TextField();
         fNameFilter.setWidth(100, Unit.PERCENTAGE);
         fNameFilter.setPlaceholder("First Name...");
-        fNameFilter.addValueChangeListener(this::fNameFilterGridChange);
+        fNameFilter.addValueChangeListener(event -> fNameFilterGridChange(event, grid));
         addComponent(fNameFilter);
 
         lNameFilter = new TextField();
         lNameFilter.setWidth(100, Unit.PERCENTAGE);
         lNameFilter.setPlaceholder("Last Name...");
-        lNameFilter.addValueChangeListener(this::lNameFilterGridChange);
+        lNameFilter.addValueChangeListener(event -> lNameFilterGridChange(event, grid));
         addComponent(lNameFilter);
     }//end createFilter
 
-    /**
-     * Helper function for the createFilter.
-     * Changes the grid and compares the titles.
-     * @param event
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private void fNameFilterGridChange(HasValue.ValueChangeEvent<String> event) {
-        ListDataProvider<Member> dataProvider = (ListDataProvider<Member>) grid.getDataProvider();
-        dataProvider.setFilter(Member::getFName, s -> caseInsensitiveContains(s, event.getValue()));
-    }//end fNameFilterGridChange
-
-    /**
-     * Helper function for the createFilter.
-     * Changes the grid and compares the titles.
-     * @param event
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private void lNameFilterGridChange(HasValue.ValueChangeEvent<String> event) {
-        ListDataProvider<Member> dataProvider = (ListDataProvider<Member>) grid.getDataProvider();
-        dataProvider.setFilter(Member::getLName, s -> caseInsensitiveContains(s, event.getValue()));
-    }//end lNameFilterGridChange
-
-    /**
-     *Returns a boolean telling if the lowercase form of text input into the filter is contain
-     * by any of the lowercase versions of the book titles.
-     * @param where the books titles its comparing to
-     * @param what  the filter wood being compared to the book titles
-     * @return Boolean telling if the lower case value of the filter input and the book titles match
-     *
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private Boolean caseInsensitiveContains(String where, String what) {
-        return where.toLowerCase().contains(what.toLowerCase());
-    }//end caseInsensitiveContains
 
 
     @Override

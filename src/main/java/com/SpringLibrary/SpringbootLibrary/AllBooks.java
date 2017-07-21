@@ -18,6 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import static Resource.gridHelper.authorFilterGridChange;
+import static Resource.gridHelper.titleFilterGridChange;
+
 /**
  * Created by ricky.clevinger on 7/12/2017.
  *
@@ -110,50 +113,16 @@ public class AllBooks extends VerticalLayout implements View {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Book Title...");
-        titleFilter.addValueChangeListener(this::titleFilterGridChange);
+        titleFilter.addValueChangeListener(event -> titleFilterGridChange(event, grid));
         addComponent(titleFilter);
 
         authorFilter = new TextField();
         authorFilter.setWidth(100, Unit.PERCENTAGE);
         authorFilter.setPlaceholder("Last Name...");
-        authorFilter.addValueChangeListener(this::authorFilterGridChange);
+        authorFilter.addValueChangeListener(event -> authorFilterGridChange(event, grid));
         addComponent(authorFilter);
     }//end createFilter
 
-    /**
-     * Helper function for the createFilter.
-     * Changes the grid and compares the titles.
-     * @param event
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private void titleFilterGridChange(HasValue.ValueChangeEvent<String> event) {
-        ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
-        dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
-    }//end titleFilterGridChange
-
-    /**
-     * Helper function for the createFilter.
-     * Changes the grid and compares the titles.
-     * @param event
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private void authorFilterGridChange(HasValue.ValueChangeEvent<String> event) {
-        ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
-        dataProvider.setFilter(Book::getAuthLName, s -> caseInsensitiveContains(s, event.getValue()));
-    }//end titleFilterGridChange
-
-    /**
-     *Returns a boolean telling if the lowercase form of text input into the filter is contain
-     * by any of the lowercase versions of the book titles.
-     * @param where the books titles its comparing to
-     * @param what  the filter wood being compared to the book titles
-     * @return Boolean telling if the lower case value of the filter input and the book titles match
-     *
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private Boolean caseInsensitiveContains(String where, String what) {
-        return where.toLowerCase().contains(what.toLowerCase());
-    }//end caseInsensitiveContains
 
 
     @Override
