@@ -17,8 +17,6 @@ import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 
-import static Resource.gridHelper.*;
-
 /**
  * Created by ricky.clevinger on 7/12/2017.
  *
@@ -47,8 +45,6 @@ public class AllMembers extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/19/17
      */
     void init() {
-
-        createLayout(this);
         createFilter();
         createMemberGrid();
         createDeleteButton();
@@ -61,6 +57,8 @@ public class AllMembers extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/19/17
      */
     public void createDeleteButton() {
+
+
 
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
@@ -99,6 +97,7 @@ public class AllMembers extends VerticalLayout implements View {
         grid.addColumn(Member::getFName, new TextRenderer()).setCaption("First Name");
         grid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
 
+
         // Add the grid to the view.
         addComponent(grid);
     }//end createGrid
@@ -113,16 +112,50 @@ public class AllMembers extends VerticalLayout implements View {
         fNameFilter = new TextField();
         fNameFilter.setWidth(100, Unit.PERCENTAGE);
         fNameFilter.setPlaceholder("First Name...");
-        fNameFilter.addValueChangeListener(event -> fNameFilterGridChange(event, grid));
+        fNameFilter.addValueChangeListener(this::fNameFilterGridChange);
         addComponent(fNameFilter);
 
         lNameFilter = new TextField();
         lNameFilter.setWidth(100, Unit.PERCENTAGE);
         lNameFilter.setPlaceholder("Last Name...");
-        lNameFilter.addValueChangeListener(event -> lNameFilterGridChange(event, grid));
+        lNameFilter.addValueChangeListener(this::lNameFilterGridChange);
         addComponent(lNameFilter);
     }//end createFilter
 
+    /**
+     * Helper function for the createFilter.
+     * Changes the grid and compares the titles.
+     * @param event
+     * last modified by ricky.clevinger 7/19/17
+     */
+    private void fNameFilterGridChange(HasValue.ValueChangeEvent<String> event) {
+        ListDataProvider<Member> dataProvider = (ListDataProvider<Member>) grid.getDataProvider();
+        dataProvider.setFilter(Member::getFName, s -> caseInsensitiveContains(s, event.getValue()));
+    }//end fNameFilterGridChange
+
+    /**
+     * Helper function for the createFilter.
+     * Changes the grid and compares the titles.
+     * @param event
+     * last modified by ricky.clevinger 7/19/17
+     */
+    private void lNameFilterGridChange(HasValue.ValueChangeEvent<String> event) {
+        ListDataProvider<Member> dataProvider = (ListDataProvider<Member>) grid.getDataProvider();
+        dataProvider.setFilter(Member::getLName, s -> caseInsensitiveContains(s, event.getValue()));
+    }//end lNameFilterGridChange
+
+    /**
+     *Returns a boolean telling if the lowercase form of text input into the filter is contain
+     * by any of the lowercase versions of the book titles.
+     * @param where the books titles its comparing to
+     * @param what  the filter wood being compared to the book titles
+     * @return Boolean telling if the lower case value of the filter input and the book titles match
+     *
+     * last modified by ricky.clevinger 7/19/17
+     */
+    private Boolean caseInsensitiveContains(String where, String what) {
+        return where.toLowerCase().contains(what.toLowerCase());
+    }//end caseInsensitiveContains
 
 
     @Override
