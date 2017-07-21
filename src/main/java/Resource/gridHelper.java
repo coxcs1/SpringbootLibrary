@@ -62,7 +62,16 @@ public static void createLayout(VerticalLayout verticalLayout) {
      }//end lNameFilterGridChange
 
 
-
+    /**
+     * Helper function for the createFilter.
+     * Changes the grid and compares the titles.
+     * @param event
+     * last modified by ricky.clevinger 7/19/17
+     */
+    public static void authorFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Book> grid) {
+        ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
+        dataProvider.setFilter(Book::getAuthLName, s -> caseInsensitiveContains(s, event.getValue()));
+    }//end titleFilterGridChange
 
 
 
@@ -78,6 +87,8 @@ public static void createLayout(VerticalLayout verticalLayout) {
      public static Boolean caseInsensitiveContains(String where, String what) {
          return where.toLowerCase().contains(what.toLowerCase());
      }//end caseInsensitiveContains
+
+
 
 
 }
