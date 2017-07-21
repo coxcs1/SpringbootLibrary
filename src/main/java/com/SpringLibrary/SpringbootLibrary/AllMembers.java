@@ -32,8 +32,8 @@ public class AllMembers extends VerticalLayout implements View {
     RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
 
-    @Value("${my.memberUrl}")
-    private String memUrl;
+    @Value("${my.bookUrl}")
+    private String bookUrl;
 
     @PostConstruct
     /**
@@ -63,7 +63,7 @@ public class AllMembers extends VerticalLayout implements View {
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
         delete.addClickListener(event -> {
-            this.restTemplate.getForObject(memUrl + "/members/delete/" + this.id, String.class);
+            this.restTemplate.getForObject(bookUrl + "/members/delete/" + this.id, String.class);
             getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
         });
 
@@ -81,7 +81,7 @@ public class AllMembers extends VerticalLayout implements View {
     public void createMemberGrid() {
 
         // Retrieves the data from the book micro-service.
-        members = Arrays.asList(restTemplate.getForObject(memUrl + "/members/all", Member[].class));
+        members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
 
         // Create a grid and adds listener to record selected item.
         grid = new Grid<>();

@@ -4,7 +4,6 @@ package com.SpringLibrary.SpringbootLibrary;
  * Created by ricky.clevinger on 7/13/2017.
  */
 import Model.Book;
-import Model.BookReturn;
 import Model.Member;
 import com.vaadin.data.HasValue;
 import com.vaadin.data.provider.ListDataProvider;
@@ -13,7 +12,6 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
-import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,8 +36,6 @@ public class CheckIn extends VerticalLayout implements View {
     @Value("${my.bookUrl}")
     private String bookUrl;
 
-    @Value("${my.memberUrl}")
-    private String memUrl;
 
     @PostConstruct
     void init() {
@@ -93,7 +89,7 @@ public class CheckIn extends VerticalLayout implements View {
         //Specifies what parts of the objects in the grid are shown.
         bookReturnGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
         bookReturnGrid.addColumn(Book ->
-                " " + Arrays.asList(restTemplate.getForObject(memUrl + "/members/id/"
+                " " + Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
                         + Book.getMid(), Member[].class)).get(0).getFName()).setCaption("Member");
 
         bookReturnGrid.setWidth(100, Unit.PERCENTAGE);

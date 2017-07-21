@@ -39,8 +39,6 @@ public class CheckOut extends VerticalLayout implements View {
     @Value("${my.bookUrl}")
     private String bookUrl;
 
-    @Value("${my.memberUrl}")
-    private String memUrl;
 
     @PostConstruct
     void init() {
@@ -67,7 +65,7 @@ public class CheckOut extends VerticalLayout implements View {
     }
     private void createMemberGrid() {
 
-        members = Arrays.asList(restTemplate.getForObject(memUrl + "/members/all", Member[].class));
+        members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
         memberGrid = new Grid<>();
         memberGrid.setWidth(100, Unit.PERCENTAGE);
 
