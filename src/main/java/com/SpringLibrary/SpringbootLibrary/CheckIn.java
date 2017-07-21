@@ -88,9 +88,9 @@ public class CheckIn extends VerticalLayout implements View {
         bookReturnGrid.setItems(books);
         //Specifies what parts of the objects in the grid are shown.
         bookReturnGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
-        bookReturnGrid.addColumn(Book ->
-                " " + Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
-                        + Book.getMid(), Member[].class)).get(0).getFName()).setCaption("Member");
+//        bookReturnGrid.addColumn(Book ->
+//                " " + Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
+//                        + Book.getMid(), Member[].class)).get(0).getFName()).setCaption("Member");
 
         bookReturnGrid.setWidth(100, Unit.PERCENTAGE);
 
