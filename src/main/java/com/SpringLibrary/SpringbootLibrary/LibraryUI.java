@@ -292,4 +292,4 @@ public class LibraryUI extends UI implements ViewDisplay
 
     }//end removeBook
 
-}//end AllBooks
+}//end LibraryUI
