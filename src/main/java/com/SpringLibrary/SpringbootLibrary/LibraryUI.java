@@ -27,9 +27,10 @@ public class LibraryUI extends UI implements ViewDisplay
     /**
      * Variable declaration
      */
-    RestTemplate restTemplate       = new RestTemplate();
-    private                         Panel LibraryViewDisplay;
-    private final VerticalLayout    layout = new VerticalLayout();
+                    RestTemplate restTemplate = new RestTemplate();
+    private         Panel LibraryViewDisplay;
+    private final   VerticalLayout layout = new VerticalLayout();
+    private         Label errorDisplay;
 
     @Value("${my.bookUrl}")
     private String bookUrl;
@@ -101,9 +102,14 @@ public class LibraryUI extends UI implements ViewDisplay
     private void addHeader()
     {
         Label header = new Label ("Welcome to the Library");
+        errorDisplay = new Label("");
+
+        errorDisplay.addStyleName(ValoTheme.LABEL_H4);
         header.addStyleName(ValoTheme.LABEL_H1);
         header.setSizeUndefined();
-        layout.addComponent(header);
+        errorDisplay.setSizeUndefined();
+
+        layout.addComponents(header, errorDisplay);
 
     }//end addHeader
 
