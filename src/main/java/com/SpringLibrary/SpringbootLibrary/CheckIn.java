@@ -30,7 +30,6 @@ public class CheckIn extends VerticalLayout implements View {
     String titleId;  // Id used to determine which item is selected in the grid.
     String memberId;  // Id used to determine which item is selected in the grid.
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
-    private TextField authorFilter;   // TextField will be used to filter the results on the grid.
     private HorizontalLayout    gridPanel;
     RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
