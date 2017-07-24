@@ -1,5 +1,6 @@
 package com.SpringLibrary.SpringbootLibrary;
 
+import Resource.LibraryErrorHelper;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
@@ -31,6 +32,7 @@ public class LibraryUI extends UI implements ViewDisplay
     private         Panel LibraryViewDisplay;
     private final   VerticalLayout layout = new VerticalLayout();
     private         Label errorDisplay;
+    LibraryErrorHelper errorHelper;
 
     @Value("${my.bookUrl}")
     private String bookUrl;
@@ -50,10 +52,24 @@ public class LibraryUI extends UI implements ViewDisplay
     @Override
     protected void init(VaadinRequest request) {
 
-        setupLayout();
-        addHeader();
-        addDefaultView();
-        createAccordion();
+        try {
+
+            setupLayout();
+            addHeader();
+            addDefaultView();
+            createAccordion();
+        }
+        catch(Exception e) {
+
+            errorHelper = new LibraryErrorHelper();
+
+            String message = errorHelper.genericError(e);
+
+            errorDisplay.setCaption(message);
+            layout.addComponent(errorDisplay);
+
+        }
+
 
     }//end init
 
@@ -103,6 +119,7 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         Label header = new Label ("Welcome to the Library");
         errorDisplay = new Label("");
+
 
         errorDisplay.addStyleName(ValoTheme.LABEL_H4);
         header.addStyleName(ValoTheme.LABEL_H1);
