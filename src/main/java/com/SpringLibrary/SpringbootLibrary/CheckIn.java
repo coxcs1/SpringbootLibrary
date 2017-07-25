@@ -12,6 +12,7 @@ import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 import static Resource.gridHelper.titleFilterGridChange;
@@ -84,7 +85,7 @@ public class CheckIn extends VerticalLayout implements View {
         bookReturnGrid.setItems(books);
         //Specifies what parts of the objects in the grid are shown.
         bookReturnGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
-        bookReturnGrid.addColumn(Book::getOutDate).setCaption("Due Date");
+        bookReturnGrid.addColumn(Book -> overdue(Book.getOutDate(), new Date(System.currentTimeMillis()))).setCaption("Due Date");
 //        bookReturnGrid.addColumn(Book ->
 //                " " + Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
 //                        + Book.getMid(), Member[].class)).get(0).getFName()).setCaption("Member");
@@ -96,12 +97,24 @@ public class CheckIn extends VerticalLayout implements View {
         addComponent(gridPanel);
     }
 
+
+
     private void createLayout() {
 
         hLayout = new HorizontalLayout();
         hLayout.setSpacing(true);
         addComponent(hLayout);
 
+    }
+
+    public String overdue(Date date1, Date date2){
+
+        if (date1.compareTo(date2) > 0){
+            return date1.toString();
+        }
+        else {
+            return "Overdue";
+        }
     }
 
 
