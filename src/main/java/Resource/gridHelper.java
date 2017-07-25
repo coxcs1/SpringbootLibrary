@@ -8,6 +8,8 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
+import java.sql.Date;
+
 
 public class gridHelper {
 
@@ -85,6 +87,25 @@ public class gridHelper {
      public static Boolean caseInsensitiveContains(String where, String what) {
          return where.toLowerCase().contains(what.toLowerCase());
      }//end caseInsensitiveContains
+
+
+    /**
+     * Compares two dates to see if a due date is past today's date.
+     * @param date1
+     * @param date2
+     * @return String with current date or Overdue
+     *
+     * last modified by ricky.clevinger 7/19/17
+     */
+    public String overdue(Date date1, Date date2){
+
+        if (date1.compareTo(date2) > 0){
+            return date1.toString();
+        }
+        else {
+            return "Overdue";
+        }
+    }// end overdue
 
 
 }
