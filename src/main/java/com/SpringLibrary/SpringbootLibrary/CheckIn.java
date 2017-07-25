@@ -4,6 +4,7 @@ package com.SpringLibrary.SpringbootLibrary;
  * Created by ricky.clevinger on 7/13/2017.
  */
 import Model.Book;
+import Model.Member;
 import Resource.gridHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -113,10 +114,12 @@ public class CheckIn extends VerticalLayout implements View {
         bookReturnGrid.setItems(books);
         //Specifies what parts of the objects in the grid are shown.
         bookReturnGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
+        bookReturnGrid.addColumn(Book ->
+                Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
+                        + Book.getMid(), Member[].class)).get(0).getFName() + " "
+                        + Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
+                        + Book.getMid(), Member[].class)).get(0).getLName()).setCaption("Checked Out By");
         bookReturnGrid.addColumn(Book -> gridHelper.overdue(Book.getOutDate(), new Date(System.currentTimeMillis()))).setCaption("Due Date");
-//        bookReturnGrid.addColumn(Book ->
-//                " " + Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
-//                        + Book.getMid(), Member[].class)).get(0).getFName()).setCaption("Member");
 
         bookReturnGrid.setWidth(100, Unit.PERCENTAGE);
 
