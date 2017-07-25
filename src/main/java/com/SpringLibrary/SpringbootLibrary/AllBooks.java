@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
+import javax.validation.constraints.Null;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -66,8 +67,21 @@ public class AllBooks extends VerticalLayout implements View {
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
         delete.addClickListener(event -> {
-            this.restTemplate.getForObject(bookUrl + "/books/delete/" + this.id, String.class);
-            getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME);
+
+            try
+            {
+                this.restTemplate.getForObject(bookUrl + "/books/delete/" + this.id, String.class);
+                getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME);
+
+            }
+
+            catch (ResourceAccessException error)
+            {
+
+                Notification.show("Service unavailable, please try again in a few minutes");
+
+            }
+
         });
         // Add delete button to the view.
         addComponent(delete);
@@ -124,13 +138,38 @@ public class AllBooks extends VerticalLayout implements View {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Book Title...");
-        titleFilter.addValueChangeListener(event -> titleFilterGridChange(event, grid));
+        titleFilter.addValueChangeListener(event -> {
+
+            try
+            {
+                titleFilterGridChange(event, grid);
+            }
+            catch (NullPointerException error)
+            {
+                titleFilter.setValue("");
+                Notification.show("Service unavailable, please try again in a few minutes");
+            }
+        });
+
         addComponent(titleFilter);
 
         authorFilter = new TextField();
         authorFilter.setWidth(100, Unit.PERCENTAGE);
         authorFilter.setPlaceholder("Last Name...");
-        authorFilter.addValueChangeListener(event -> authorFilterGridChange(event, grid));
+        authorFilter.addValueChangeListener(event -> {
+
+            try
+            {
+
+                authorFilterGridChange(event, grid);
+            }
+            catch (NullPointerException error)
+            {
+                authorFilter.setValue("");
+                Notification.show("Service unavailable, please try again in a few minutes");
+            }
+        });
+
         addComponent(authorFilter);
     }//end createFilter
 
