@@ -13,10 +13,13 @@ import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
+import org.apache.tomcat.jni.Library;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+
+import static Resource.gridHelper.stringClean;
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -90,6 +93,7 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         LibraryViewDisplay      = new Panel();
         layout.addComponent(LibraryViewDisplay);
+        LibraryViewDisplay.setSizeUndefined();
         layout.setExpandRatio(LibraryViewDisplay, 1.0f);
 
     }//end addDefaultView
@@ -122,7 +126,6 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         Label header = new Label ("Welcome to the Library");
         errorDisplay = new Label("");
-
 
         errorDisplay.addStyleName(ValoTheme.LABEL_H4);
         header.addStyleName(ValoTheme.LABEL_H1);
@@ -397,20 +400,5 @@ public class LibraryUI extends UI implements ViewDisplay
         return tab;
 
     }//end removeBook
-
-    /**
-     * Cleans input strings and returns them to the calling method
-     *
-     * last modified by charles.coalson 7/25/17
-     */
-    private String stringClean(String toClean){
-
-        String  temp = toClean.trim();
-                temp = temp.replaceAll("[^a-zA-Z\\- ]","");
-
-                return temp;
-    }
-
-
 
 }//end LibraryUI

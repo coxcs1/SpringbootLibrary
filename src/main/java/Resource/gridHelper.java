@@ -13,16 +13,16 @@ import java.sql.Date;
 
 public class gridHelper {
 
-
-
-
+    /**
+     * Creates layout for views.
+     * @param verticalLayout
+     * last modified by ricky.clevinger 7/25/17
+     */
     public static void createLayout(VerticalLayout verticalLayout) {
-    HorizontalLayout hLayout = new HorizontalLayout();
-    hLayout.setSpacing(true);
-    verticalLayout.addComponent(hLayout);
-    }
-
-
+        HorizontalLayout hLayout = new HorizontalLayout();
+        hLayout.setSpacing(true);
+        verticalLayout.addComponent(hLayout);
+    }//end createLayout
 
 
      /**
@@ -106,6 +106,19 @@ public class gridHelper {
             return "Overdue";
         }
     }// end overdue
+
+    /**
+     * Cleans input strings and returns them to the calling method
+     *
+     * last modified by charles.coalson 7/25/17
+     */
+    public static String stringClean(String toClean){
+
+        String  temp = toClean.trim();
+        temp = temp.replaceAll("[^a-zA-Z\\- ]","");
+
+        return temp;
+    }//end stringClean
 
 
 }
