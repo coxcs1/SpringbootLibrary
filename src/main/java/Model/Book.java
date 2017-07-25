@@ -17,6 +17,9 @@ public class Book {
     private String check;
     private String mid;
 
+    public Book() {
+    }
+
     //Getters and Setters
     public String getBookId() {
         return bookId;
@@ -62,7 +65,7 @@ public class Book {
         return check;
     }
 
-    public void setCheck(String inOut) {
+    public void setCheck(String check) {
         this.check = check;
     }
 
