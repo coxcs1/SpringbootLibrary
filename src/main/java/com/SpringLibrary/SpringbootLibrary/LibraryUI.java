@@ -2,6 +2,7 @@ package com.SpringLibrary.SpringbootLibrary;
 
 import Resource.LibraryErrorHelper;
 import com.vaadin.annotations.Theme;
+import com.vaadin.event.dd.acceptcriteria.Not;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
@@ -14,6 +15,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -265,17 +267,19 @@ public class LibraryUI extends UI implements ViewDisplay
 
                 errorHelper.httpError(error);
 
-                errorDisplay.setCaption("Cannot access add user service, please try again in a few minutes.");
+                Notification.show("Cannot access add user service, please try again in a few minutes.");
             }
             catch (NullPointerException error)
             {
                 errorHelper.genericError(error);
                 Notification.show("Cannot access Add User Service, please try again in a few minutes");
             }
-            catch (Exception e)
+            catch (ResourceAccessException e)
             {
+                Notification.show("Cannot access Add User Service, please try again in a few minutes");
                 errorHelper.genericError(e);
             }
+
         });//end add click event
 
 
@@ -346,8 +350,9 @@ public class LibraryUI extends UI implements ViewDisplay
                         Notification.show("Cannot access Add Book service, please try again in a few minutes");
 
                     }
-                    catch (Exception e)
+                    catch (ResourceAccessException e)
                     {
+                        Notification.show("Cannot access Add Book service, please try again in a few minutes");
                         errorHelper.genericError(e);
                     }
 
