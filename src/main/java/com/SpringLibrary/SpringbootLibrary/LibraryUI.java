@@ -235,10 +235,14 @@ public class LibraryUI extends UI implements ViewDisplay
                 errorDisplay.setCaption("");
                 String lastName = lName.getValue();
                 String firstName = fName.getValue();
+                lastName = stringClean(lastName);
+                firstName = stringClean(firstName);
 
                     if (lastName.equals("") || firstName.equals(""))
                     {
                         errorDisplay.setCaption("Please Enter a First and Last Name");
+                        lName.setValue("");
+                        fName.setValue("");
                     }
 
                     else{
@@ -300,11 +304,17 @@ public class LibraryUI extends UI implements ViewDisplay
                         String authLastName = lName.getValue();
                         String authFirstName = fName.getValue();
                         String bookTitle = title.getValue();
+                        authFirstName = stringClean(authFirstName);
+                        authLastName = stringClean(authLastName);
+                        bookTitle = stringClean(bookTitle);
 
                         if (authLastName.equals("") || authFirstName.equals("") || bookTitle.equals(""))
                         {
                             errorDisplay.setCaption("Please Enter the Author's First Name, Last Name, and Book"+
                             " Title");
+                            fName.setValue("");
+                            lName.setValue("");
+                            title.setValue("");
                         }
                         else
                         {
@@ -372,5 +382,20 @@ public class LibraryUI extends UI implements ViewDisplay
         return tab;
 
     }//end removeBook
+
+    /**
+     * Cleans input strings and returns them to the calling method
+     *
+     * last modified by charles.coalson 7/25/17
+     */
+    private String stringClean(String toClean){
+
+        String  temp = toClean.trim();
+                temp = temp.replaceAll("[^a-zA-Z\\- ]","");
+
+                return temp;
+    }
+
+
 
 }//end LibraryUI
