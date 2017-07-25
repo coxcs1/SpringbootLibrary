@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -89,6 +91,7 @@ public class CheckIn extends VerticalLayout implements View {
         bookReturnGrid.setItems(books);
         //Specifies what parts of the objects in the grid are shown.
         bookReturnGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
+        bookReturnGrid.addColumn(Book::getOutDate).setCaption("Due Date");
 //        bookReturnGrid.addColumn(Book ->
 //                " " + Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
 //                        + Book.getMid(), Member[].class)).get(0).getFName()).setCaption("Member");

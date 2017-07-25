@@ -1,9 +1,7 @@
 package Resource;
 
 import Model.Member;
-
 import Model.Book;
-
 import com.vaadin.data.HasValue;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.ui.Grid;
@@ -16,7 +14,7 @@ public class gridHelper {
 
 
 
-public static void createLayout(VerticalLayout verticalLayout) {
+    public static void createLayout(VerticalLayout verticalLayout) {
     HorizontalLayout hLayout = new HorizontalLayout();
     hLayout.setSpacing(true);
     verticalLayout.addComponent(hLayout);
@@ -87,8 +85,6 @@ public static void createLayout(VerticalLayout verticalLayout) {
      public static Boolean caseInsensitiveContains(String where, String what) {
          return where.toLowerCase().contains(what.toLowerCase());
      }//end caseInsensitiveContains
-
-
 
 
 }

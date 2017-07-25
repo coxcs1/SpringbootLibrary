@@ -2,6 +2,8 @@ package Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * Created by ricky.clevinger on 7/17/2017.
@@ -16,6 +18,7 @@ public class Book {
     private String libId;
     private String check;
     private String mid;
+    private Date outDate;
 
     public Book() {
     }
@@ -75,5 +78,13 @@ public class Book {
 
     public void setMid(String mid) {
         this.mid = mid;
+    }
+
+    public Date getOutDate() {
+        return outDate;
+    }
+
+    public void setOutDate(Date outDate) {
+        this.outDate = outDate;
     }
 }
