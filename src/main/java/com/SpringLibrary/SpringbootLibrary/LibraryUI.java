@@ -93,7 +93,7 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         LibraryViewDisplay      = new Panel();
         layout.addComponent(LibraryViewDisplay);
-        LibraryViewDisplay.setSizeUndefined();
+        //LibraryViewDisplay.setSizeUndefined();
         layout.setExpandRatio(LibraryViewDisplay, 1.0f);
 
     }//end addDefaultView
