@@ -97,7 +97,7 @@ public class gridHelper {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public String overdue(Date date1, Date date2){
+    public static String overdue(Date date1, Date date2){
 
         if (date1.compareTo(date2) > 0){
             return date1.toString();

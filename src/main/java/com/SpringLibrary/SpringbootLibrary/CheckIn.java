@@ -4,6 +4,7 @@ package com.SpringLibrary.SpringbootLibrary;
  * Created by ricky.clevinger on 7/13/2017.
  */
 import Model.Book;
+import Resource.gridHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -16,6 +17,8 @@ import javax.annotation.PostConstruct;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
+
+import static Resource.gridHelper.createLayout;
 import static Resource.gridHelper.titleFilterGridChange;
 
 @SpringView(name = CheckIn.VIEW_NAME)
@@ -38,7 +41,7 @@ public class CheckIn extends VerticalLayout implements View {
     @PostConstruct
     void init() {
 
-        createLayout();
+        createLayout(this);
         addFilters();
         setupGridPanel();
         addCheckInButton();
@@ -110,7 +113,7 @@ public class CheckIn extends VerticalLayout implements View {
         bookReturnGrid.setItems(books);
         //Specifies what parts of the objects in the grid are shown.
         bookReturnGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
-        bookReturnGrid.addColumn(Book -> overdue(Book.getOutDate(), new Date(System.currentTimeMillis()))).setCaption("Due Date");
+        bookReturnGrid.addColumn(Book -> gridHelper.overdue(Book.getOutDate(), new Date(System.currentTimeMillis()))).setCaption("Due Date");
 //        bookReturnGrid.addColumn(Book ->
 //                " " + Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
 //                        + Book.getMid(), Member[].class)).get(0).getFName()).setCaption("Member");
@@ -120,26 +123,6 @@ public class CheckIn extends VerticalLayout implements View {
         gridPanel.addComponent(bookReturnGrid);
         gridPanel.setResponsive(true);
         addComponent(gridPanel);
-    }
-
-
-
-    private void createLayout() {
-
-        hLayout = new HorizontalLayout();
-        hLayout.setSpacing(true);
-        addComponent(hLayout);
-
-    }
-
-    public String overdue(Date date1, Date date2){
-
-        if (date1.compareTo(date2) > 0){
-            return date1.toString();
-        }
-        else {
-            return "Overdue";
-        }
     }
 
 
