@@ -14,6 +14,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
@@ -55,12 +56,24 @@ public class CheckOut extends VerticalLayout implements View {
 
     private void addCheckOutButton() {
 
+
         checkOut = new Button ("Check Out");
 
-        checkOut.addClickListener(event -> {
+        checkOut.addClickListener(event ->
+        {
+            try{
+
             this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 2 + "/" + memberId, String.class);
             this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 2 + "/" + memberId, String.class);
             getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
+
+            }
+            catch (ResourceAccessException error)
+            {
+
+                Notification.show("Service unavailable, please try again in a few minutes");
+
+            }
         });
 
         addComponent(checkOut);
@@ -68,6 +81,7 @@ public class CheckOut extends VerticalLayout implements View {
     }
     private void createMemberGrid() {
 
+        try{
         members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
         memberGrid = new Grid<>();
         memberGrid.setWidth(100, Unit.PERCENTAGE);
@@ -90,29 +104,47 @@ public class CheckOut extends VerticalLayout implements View {
         memberGrid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
 
         hLayout.addComponent(memberGrid);
+
+        }
+        catch (ResourceAccessException error)
+        {
+
+            Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
+                    "few minutes");
+        }
     }
 
     private void createBookGrid() {
 
-        books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
-        bookGrid = new Grid<>();
 
-        bookGrid.addSelectionListener(event -> {
-            this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
-        });
+        try {
+            books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
+            bookGrid = new Grid<>();
 
-        // Sets the width of the grid.
-        bookGrid.setWidth(100, Unit.PERCENTAGE);
-        // Sets list to the grid
-        bookGrid.setItems(books);
-        //Specifies what parts of the objects in the grid are shown.
-        bookGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
-        bookGrid.addColumn(Book ->
-                Book.getAuthFName() + " " + Book.getAuthLName()).setCaption("Author");
+            bookGrid.addSelectionListener(event -> {
+                this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
+            });
 
-        bookGrid.setWidth(100, Unit.PERCENTAGE);
+            // Sets the width of the grid.
+            bookGrid.setWidth(100, Unit.PERCENTAGE);
+            // Sets list to the grid
+            bookGrid.setItems(books);
+            //Specifies what parts of the objects in the grid are shown.
+            bookGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
+            bookGrid.addColumn(Book ->
+                    Book.getAuthFName() + " " + Book.getAuthLName()).setCaption("Author");
 
-        hLayout.addComponent(bookGrid);
+            bookGrid.setWidth(100, Unit.PERCENTAGE);
+
+            hLayout.addComponent(bookGrid);
+
+        }
+        catch (ResourceAccessException error)
+        {
+
+            Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
+                    "few minutes");
+        }
 
     }
 
@@ -130,18 +162,47 @@ public class CheckOut extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createFilter() {
+    public void createFilter()
+    {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
-        titleFilter.addValueChangeListener(event -> titleFilterGridChange(event, bookGrid));
+        titleFilter.addValueChangeListener(event -> {
+
+                try {
+                    titleFilterGridChange(event, bookGrid);
+                }
+                catch (NullPointerException error)
+                {
+                    titleFilter.setValue("");
+                    Notification.show("Service unavailable, please try again in a few minutes");
+
+                }
+
+                });
         addComponent(titleFilter);
+
 
         authorFilter = new TextField();
         authorFilter.setWidth(100, Unit.PERCENTAGE);
         authorFilter.setPlaceholder("Last Name...");
-        authorFilter.addValueChangeListener(event -> lNameFilterGridChange(event, memberGrid));
+        authorFilter.addValueChangeListener(event -> {
+
+            try {
+                lNameFilterGridChange(event, memberGrid);
+
+            }
+            catch (NullPointerException error)
+            {
+                authorFilter.setValue("");
+                Notification.show("Service unavailable, please try again in a few minutes");
+
+            }
+        });
+
+
         addComponent(authorFilter);
+
     }//end createFilter
 
 

@@ -12,6 +12,7 @@ import com.vaadin.ui.components.grid.SingleSelectionModel;
 import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
@@ -81,26 +82,36 @@ public class AllBooks extends VerticalLayout implements View {
      */
     public void createBookGrid() {
 
-        // Retrieves the data from the book micro-service.
-        books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/all", Book[].class));
+        try{
+            // Retrieves the data from the book micro-service.
+            books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/all", Book[].class));
 
-        // Create a grid and adds listener to record selected item.
-        grid = new Grid<>();
-        grid.addSelectionListener(event -> {
-            this.id = event.getFirstSelectedItem().get().getBookId() + "";
-        });
+                // Create a grid and adds listener to record selected item.
+                grid = new Grid<>();
+                grid.addSelectionListener(event -> {
+                this.id = event.getFirstSelectedItem().get().getBookId() + "";
+            });
 
-        // Sets the width of the grid.
-        grid.setWidth(100, Unit.PERCENTAGE);
-        // Sets list to the grid
-        grid.setItems(books);
-        //Specifies what parts of the objects in the grid are shown.
-        grid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
-        grid.addColumn(Book ->
+            // Sets the width of the grid.
+            grid.setWidth(100, Unit.PERCENTAGE);
+
+            // Sets list to the grid
+            grid.setItems(books);
+
+            //Specifies what parts of the objects in the grid are shown.
+            grid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
+            grid.addColumn(Book ->
                 Book.getAuthFName() + " " + Book.getAuthLName()).setCaption("Author");
 
-        // Add the grid to the view.
-        addComponent(grid);
+            // Add the grid to the view.
+            addComponent(grid);
+        }
+        catch (ResourceAccessException error)
+        {
+
+            Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
+                    "few minutes");
+        }
     }//end createGrid
 
     /**

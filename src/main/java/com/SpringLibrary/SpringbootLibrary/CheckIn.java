@@ -13,6 +13,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
@@ -73,31 +74,46 @@ public class CheckIn extends VerticalLayout implements View {
 
     private void setupGridPanel() {
 
+        try{
+
         books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/2", Book[].class));
 
         gridPanel = new HorizontalLayout();
         bookReturnGrid = new Grid<>();
+
         bookReturnGrid.addSelectionListener(event -> {
-            if (event.getAllSelectedItems().isEmpty()){
+                if (event.getAllSelectedItems().isEmpty())
+                {
                 this.titleId = 0 + "";
-                this.memberId = 0 + "";}
-            else {
-                this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
-                this.memberId = event.getFirstSelectedItem().get().getMid() + "";
-            }
-        });
-        bookReturnGrid.setItems(books);
-        //Specifies what parts of the objects in the grid are shown.
-        bookReturnGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
-//        bookReturnGrid.addColumn(Book ->
+                this.memberId = 0 + "";
+                }
+                else
+                {
+                    this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
+                    this.memberId = event.getFirstSelectedItem().get().getMid() + "";
+                }
+            });
+            bookReturnGrid.setItems(books);
+            //Specifies what parts of the objects in the grid are shown.
+            bookReturnGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
+//          bookReturnGrid.addColumn(Book ->
 //                " " + Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
 //                        + Book.getMid(), Member[].class)).get(0).getFName()).setCaption("Member");
 
-        bookReturnGrid.setWidth(100, Unit.PERCENTAGE);
+            bookReturnGrid.setWidth(100, Unit.PERCENTAGE);
 
-        gridPanel.addComponent(bookReturnGrid);
-        gridPanel.setResponsive(true);
-        addComponent(gridPanel);
+            gridPanel.addComponent(bookReturnGrid);
+            gridPanel.setResponsive(true);
+            addComponent(gridPanel);
+
+
+        }
+            catch (ResourceAccessException error)
+        {
+
+            Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
+                "few minutes");
+        }
     }
 
     private void createLayout() {
