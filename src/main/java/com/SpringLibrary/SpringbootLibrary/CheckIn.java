@@ -121,10 +121,11 @@ public class CheckIn extends VerticalLayout implements View {
                         + Book.getMid(), Member[].class)).get(0).getLName()).setCaption("Checked Out By");
         bookReturnGrid.addColumn(Book -> gridHelper.overdue(Book.getOutDate(), new Date(System.currentTimeMillis()))).setCaption("Due Date");
 
-        bookReturnGrid.setWidth(100, Unit.PERCENTAGE);
+        gridPanel.setResponsive(true);
 
         gridPanel.addComponent(bookReturnGrid);
-        gridPanel.setResponsive(true);
+        gridPanel.setSizeFull();
+        bookReturnGrid.setSizeFull();
         addComponent(gridPanel);
     }
 

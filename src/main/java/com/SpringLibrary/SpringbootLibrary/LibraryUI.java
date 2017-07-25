@@ -29,7 +29,7 @@ public class LibraryUI extends UI implements ViewDisplay
     /**
      * Variable declaration
      */
-                    RestTemplate restTemplate = new RestTemplate();
+    private         RestTemplate restTemplate = new RestTemplate();
     private         Panel LibraryViewDisplay;
     private final   VerticalLayout layout = new VerticalLayout();
     private         Label errorDisplay;
@@ -87,7 +87,6 @@ public class LibraryUI extends UI implements ViewDisplay
     private void addDefaultView()
     {
         LibraryViewDisplay      = new Panel();
-        LibraryViewDisplay.setSizeUndefined();
         layout.addComponent(LibraryViewDisplay);
         layout.setExpandRatio(LibraryViewDisplay, 1.0f);
 

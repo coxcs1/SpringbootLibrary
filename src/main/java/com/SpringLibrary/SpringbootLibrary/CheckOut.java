@@ -103,6 +103,8 @@ public class CheckOut extends VerticalLayout implements View {
         memberGrid.addColumn(Member::getFName, new TextRenderer()).setCaption("First Name");
         memberGrid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
 
+        hLayout.setSizeFull();
+        memberGrid.setSizeFull();
         hLayout.addComponent(memberGrid);
 
         }
@@ -136,6 +138,8 @@ public class CheckOut extends VerticalLayout implements View {
 
             bookGrid.setWidth(100, Unit.PERCENTAGE);
 
+            hLayout.setSizeFull();
+            bookGrid.setSizeFull();
             hLayout.addComponent(bookGrid);
 
         }

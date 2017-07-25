@@ -103,7 +103,7 @@ public class AllMembers extends VerticalLayout implements View {
         grid.addColumn(Member::getFName, new TextRenderer()).setCaption("First Name");
         grid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
 
-
+        grid.setSizeFull();
         // Add the grid to the view.
         addComponent(grid);
         }
