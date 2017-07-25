@@ -10,6 +10,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import java.sql.Date;
@@ -48,7 +49,21 @@ public class CheckIn extends VerticalLayout implements View {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
-        titleFilter.addValueChangeListener(event -> titleFilterGridChange(event, bookReturnGrid));
+
+        titleFilter.addValueChangeListener(event -> {
+
+            try
+            {
+                titleFilterGridChange(event, bookReturnGrid);
+            }
+            catch (NullPointerException error)
+            {
+                titleFilter.setValue("");
+                Notification.show("Service unavailable, please try again in a few minutes");
+
+            }
+        });
+
         addComponent(titleFilter);
 
     }
@@ -57,9 +72,19 @@ public class CheckIn extends VerticalLayout implements View {
         VerticalLayout holdsButton = new VerticalLayout();
         Button checkIn = new Button ("Check In");
         checkIn.addClickListener(event -> {
-            this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 1 + "/" + memberId, String.class);
-            this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 1 + "/" + 0, String.class);
-            getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
+
+            try {
+                this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 1 + "/" + memberId, String.class);
+                this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 1 + "/" + 0, String.class);
+                getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
+            }
+            catch (ResourceAccessException error)
+            {
+
+                Notification.show("Service unavailable, please try again in a few minutes");
+
+            }
+
         });
         checkIn.setResponsive(true);
         holdsButton.addComponent(checkIn);
