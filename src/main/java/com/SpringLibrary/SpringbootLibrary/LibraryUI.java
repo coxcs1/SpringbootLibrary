@@ -33,7 +33,8 @@ public class LibraryUI extends UI implements ViewDisplay
     private         Panel LibraryViewDisplay;
     private final   VerticalLayout layout = new VerticalLayout();
     private         Label errorDisplay;
-    LibraryErrorHelper errorHelper;
+    private         LibraryErrorHelper errorHelper = new LibraryErrorHelper();
+
 
     @Value("${my.bookUrl}")
     private String bookUrl;
@@ -53,20 +54,21 @@ public class LibraryUI extends UI implements ViewDisplay
     @Override
     protected void init(VaadinRequest request) {
 
-        try {
+        try
+        {
 
             setupLayout();
             addHeader();
             addDefaultView();
             createAccordion();
-        }
-        catch(Exception e) {
 
-            errorHelper = new LibraryErrorHelper();
+        }
+        catch(Exception e)
+        {
 
             String message = errorHelper.genericError(e);
 
-            errorDisplay.setCaption(message);
+            Notification.show(message);
 
         }
 
@@ -245,7 +247,8 @@ public class LibraryUI extends UI implements ViewDisplay
                         fName.setValue("");
                     }
 
-                    else{
+                    else
+                    {
 
                         this.restTemplate.getForObject(bookUrl + "/members/insert/" + firstName + "/"
                             + lastName, String.class);
@@ -253,28 +256,32 @@ public class LibraryUI extends UI implements ViewDisplay
                             + lastName + " has been added as a member.");
                         fName.setValue("");
                         lName.setValue("");
-                }
+                    }
 
 
-            }
+            }//end try
             catch (HttpClientErrorException error)
             {
-
-                errorHelper = new LibraryErrorHelper();
 
                 errorHelper.httpError(error);
 
                 errorDisplay.setCaption("Cannot access add user service, please try again in a few minutes.");
             }
+            catch (NullPointerException error)
+            {
+                errorHelper.genericError(error);
+                Notification.show("Cannot access Add User Service, please try again in a few minutes");
+            }
             catch (Exception e)
             {
                 errorHelper.genericError(e);
             }
-        });
+        });//end add click event
 
 
         tab.addComponents(fName,lName, submit);
         return tab;
+
     }//end addUserInput
 
 
@@ -329,22 +336,26 @@ public class LibraryUI extends UI implements ViewDisplay
                     }
                     catch (HttpClientErrorException error)
                     {
-
-                        errorHelper = new LibraryErrorHelper();
-
                         errorHelper.httpError(error);
 
                         errorDisplay.setCaption("Cannot access add book service, please try again in a few minutes.");
+                    }
+                    catch(NullPointerException error)
+                    {
+                        errorHelper.genericError(error);
+                        Notification.show("Cannot access Add Book service, please try again in a few minutes");
+
                     }
                     catch (Exception e)
                     {
                         errorHelper.genericError(e);
                     }
 
-        });
+        });//end add click event
 
         tab.addComponents(title,fName,lName, submit);
         return tab;
+
     }//end addBookInput
 
     /**
