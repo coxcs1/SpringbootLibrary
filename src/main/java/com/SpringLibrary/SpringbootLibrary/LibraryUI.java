@@ -13,6 +13,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -66,7 +67,6 @@ public class LibraryUI extends UI implements ViewDisplay
             String message = errorHelper.genericError(e);
 
             errorDisplay.setCaption(message);
-            layout.addComponent(errorDisplay);
 
         }
 
@@ -227,15 +227,47 @@ public class LibraryUI extends UI implements ViewDisplay
         com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Last Name");
         Button submit                   = new Button("Submit");
 
-        submit.addClickListener(clickEvent -> {
-            this.restTemplate.getForObject(bookUrl + "/members/insert/" + fName.getValue() + "/"
-                    + lName.getValue(), String.class);
-            Notification.show( fName.getValue() + " "
-                    + lName.getValue() + " has been added as a member.");
-            fName.setValue("");
-            lName.setValue("");
 
+        submit.addClickListener(clickEvent -> {
+
+            try
+            {
+                errorDisplay.setCaption("");
+                String lastName = lName.getValue();
+                String firstName = fName.getValue();
+
+                    if (lastName.equals("") || firstName.equals(""))
+                    {
+                        errorDisplay.setCaption("Please Enter a First and Last Name");
+                    }
+
+                    else{
+
+                        this.restTemplate.getForObject(bookUrl + "/members/insert/" + firstName + "/"
+                            + lastName, String.class);
+                        Notification.show(firstName + " "
+                            + lastName + " has been added as a member.");
+                        fName.setValue("");
+                        lName.setValue("");
+                }
+
+
+            }
+            catch (HttpClientErrorException error)
+            {
+
+                errorHelper = new LibraryErrorHelper();
+
+                errorHelper.httpError(error);
+
+                errorDisplay.setCaption("Cannot access add user service, please try again in a few minutes.");
+            }
+            catch (Exception e)
+            {
+                errorHelper.genericError(e);
+            }
         });
+
 
         tab.addComponents(fName,lName, submit);
         return tab;
@@ -260,13 +292,45 @@ public class LibraryUI extends UI implements ViewDisplay
         Button submit                   = new Button("Submit");
 
         submit.addClickListener(clickEvent -> {
-                        this.restTemplate.getForObject(bookUrl + "/books/insert/" + title.getValue() + "/"
-                                + fName.getValue() + "/" + lName.getValue() + "/1", String.class);
-                        Notification.show(title.getValue() + " By " + fName.getValue() + " "
-                                + lName.getValue() + " has been added to the library");
-                        title.setValue("");
-                        fName.setValue("");
-                        lName.setValue("");
+
+
+                    try
+                    {
+                        errorDisplay.setCaption("");
+                        String authLastName = lName.getValue();
+                        String authFirstName = fName.getValue();
+                        String bookTitle = title.getValue();
+
+                        if (authLastName.equals("") || authFirstName.equals("") || bookTitle.equals(""))
+                        {
+                            errorDisplay.setCaption("Please Enter the Author's First Name, Last Name, and Book"+
+                            " Title");
+                        }
+                        else
+                        {
+                            this.restTemplate.getForObject(bookUrl + "/books/insert/" + bookTitle + "/"
+                                    + authFirstName + "/" + authLastName + "/1", String.class);
+                            Notification.show(bookTitle + " By " + authFirstName + " "
+                                    + authLastName + " has been added to the library");
+                            title.setValue("");
+                            fName.setValue("");
+                            lName.setValue("");
+                        }
+                    }
+                    catch (HttpClientErrorException error)
+                    {
+
+                        errorHelper = new LibraryErrorHelper();
+
+                        errorHelper.httpError(error);
+
+                        errorDisplay.setCaption("Cannot access add book service, please try again in a few minutes.");
+                    }
+                    catch (Exception e)
+                    {
+                        errorHelper.genericError(e);
+                    }
+
         });
 
         tab.addComponents(title,fName,lName, submit);

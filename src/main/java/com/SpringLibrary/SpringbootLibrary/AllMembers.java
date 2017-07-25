@@ -6,14 +6,13 @@ import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
+import java.net.ConnectException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -84,19 +83,22 @@ public class AllMembers extends VerticalLayout implements View {
      */
     public void createMemberGrid() {
 
-        // Retrieves the data from the book micro-service.
-        members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
+        try {
 
-        // Create a grid and adds listener to record selected item.
-        grid = new Grid<>();
-        grid.addSelectionListener(event -> {
-            this.id = event.getFirstSelectedItem().get().getId() + "";
-        });
+            // Retrieves the data from the book micro-service.
+            members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
 
-        // Sets the width of the grid.
-        grid.setWidth(100, Unit.PERCENTAGE);
-        // Sets list to the grid
-        grid.setItems(members);
+            // Create a grid and adds listener to record selected item.
+            grid = new Grid<>();
+            grid.addSelectionListener(event -> {
+                this.id = event.getFirstSelectedItem().get().getId() + "";
+            });
+
+            // Sets the width of the grid.
+            grid.setWidth(100, Unit.PERCENTAGE);
+            // Sets list to the grid
+            grid.setItems(members);
+
         //Specifies what parts of the objects in the grid are shown.
         grid.addColumn(Member::getFName, new TextRenderer()).setCaption("First Name");
         grid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
@@ -104,6 +106,11 @@ public class AllMembers extends VerticalLayout implements View {
 
         // Add the grid to the view.
         addComponent(grid);
+        }
+        catch (ResourceAccessException error){
+
+            Notification.show("The Book Service is currently unavailable. Please try again in a few minutes");
+        }
     }//end createGrid
 
     /**

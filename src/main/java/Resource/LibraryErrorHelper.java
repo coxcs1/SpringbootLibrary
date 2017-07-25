@@ -6,8 +6,13 @@ public class LibraryErrorHelper {
 
         printToLog(error);
 
-        return "An error has occurred";
+        return "The string was empty";
     }//end generic error
+
+    public void httpError(Exception error){
+
+        printToLog(error);
+    }
 
     private void printToLog(Exception error){
 
