@@ -4,9 +4,6 @@ package com.SpringLibrary.SpringbootLibrary;
  * Created by ricky.clevinger on 7/13/2017.
  */
 import Model.Book;
-import Model.Member;
-import com.vaadin.data.HasValue;
-import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -14,13 +11,9 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
-
 import javax.annotation.PostConstruct;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
-
 import static Resource.gridHelper.titleFilterGridChange;
 
 @SpringView(name = CheckIn.VIEW_NAME)
