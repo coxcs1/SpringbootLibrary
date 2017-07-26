@@ -1,6 +1,7 @@
 package com.SpringLibrary.SpringbootLibrary;
 
 import Model.Book;
+import Resource.LibraryErrorHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -23,17 +24,24 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
  * last modified by ricky.clevinger on 7/26/17
  */
 @SpringView(name = AllBooks.VIEW_NAME)
-public class AllBooks extends VerticalLayout implements View {
+public class AllBooks extends VerticalLayout implements View
+{
     static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
 
+    /**
+     * Variable Declarations
+     */
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     private TextField authorFilter;   // TextField will be used to filter the results on the grid.
     private Grid<Book> grid;  // Grid that will display and organize books on the all.java page.
     private String id;  // Id used to determine which item is selected in the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     private List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
+    private LibraryErrorHelper errorHelper;
 
-    // Variable containing url to access backing service
+    /**
+     * Variable containing url to access backing service
+     */
     @Value("${my.bookMemUrl}")
     private String bookUrl;
 
@@ -48,11 +56,13 @@ public class AllBooks extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/26/17
      */
     @PostConstruct
-    void init() {
+    void init()
+    {
         getLibraryViewDisplay().setSizeFull();
         createFilter();
         createBookGrid();
         createDeleteButton();
+
     }//end init
 
 
@@ -76,10 +86,12 @@ public class AllBooks extends VerticalLayout implements View {
 
             catch (ResourceAccessException error)
             {
+                errorHelper.genericError(error);
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
             catch (HttpClientErrorException error)
             {
+                errorHelper.genericError(error);
                 Notification.show("Please Select a Book to Delete");
             }
         });
@@ -95,8 +107,10 @@ public class AllBooks extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    private void createBookGrid() {
-        try{
+    private void createBookGrid()
+    {
+        try
+        {
             // Retrieves the data from the book micro-service.
             books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/all", Book[].class));
 
@@ -120,12 +134,14 @@ public class AllBooks extends VerticalLayout implements View {
             grid.setSizeFull();
             // Add the grid to the view.
             addComponent(grid);
-        }
+        }//try
         catch (ResourceAccessException error)
         {
+            errorHelper.genericError(error);
             Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
                     "few minutes");
-        }
+        }//catch
+
     }//end createGrid
 
 
@@ -135,10 +151,12 @@ public class AllBooks extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    private void createFilter() {
+    private void createFilter()
+    {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Book Title...");
+        //TODO add a generic version of the add value change
         titleFilter.addValueChangeListener(event -> {
 
             try
@@ -147,6 +165,7 @@ public class AllBooks extends VerticalLayout implements View {
             }
             catch (NullPointerException error)
             {
+                errorHelper.genericError(error);
                 titleFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
@@ -161,11 +180,11 @@ public class AllBooks extends VerticalLayout implements View {
         {
             try
             {
-
                 authorFilterGridChange(event, grid);
             }
             catch (NullPointerException error)
             {
+                errorHelper.genericError(error);
                 authorFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
