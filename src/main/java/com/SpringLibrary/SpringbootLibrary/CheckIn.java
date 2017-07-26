@@ -21,6 +21,7 @@ import java.util.List;
 
 import static Resource.gridHelper.createLayout;
 import static Resource.gridHelper.titleFilterGridChange;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 @SpringView(name = CheckIn.VIEW_NAME)
 public class CheckIn extends VerticalLayout implements View {
@@ -42,6 +43,7 @@ public class CheckIn extends VerticalLayout implements View {
     @PostConstruct
     void init() {
 
+        getLibraryViewDisplay().setSizeFull();
         createLayout(this);
         addFilters();
         setupGridPanel();

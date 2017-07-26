@@ -22,6 +22,7 @@ import java.util.Set;
 
 import static Resource.gridHelper.authorFilterGridChange;
 import static Resource.gridHelper.titleFilterGridChange;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -51,6 +52,7 @@ public class AllBooks extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/19/17
      */
     void init() {
+        getLibraryViewDisplay().setSizeFull();
         createFilter();
         createBookGrid();
         createDeleteButton();

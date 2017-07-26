@@ -23,6 +23,7 @@ import java.util.List;
 
 import static Resource.gridHelper.lNameFilterGridChange;
 import static Resource.gridHelper.titleFilterGridChange;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 @SpringView(name = CheckOut.VIEW_NAME)
 public class CheckOut extends VerticalLayout implements View {
@@ -47,6 +48,7 @@ public class CheckOut extends VerticalLayout implements View {
     @PostConstruct
     void init() {
 
+        getLibraryViewDisplay().setSizeFull();
         createLayout();
         createFilter();
         createBookGrid();

@@ -19,6 +19,7 @@ import java.util.List;
 import static Resource.gridHelper.fNameFilterGridChange;
 import static Resource.gridHelper.lNameFilterGridChange;
 import static Resource.gridHelper.titleFilterGridChange;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -48,6 +49,7 @@ public class AllMembers extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/19/17
      */
     void init() {
+        getLibraryViewDisplay().setSizeFull();
         createFilter();
         createMemberGrid();
         createDeleteButton();

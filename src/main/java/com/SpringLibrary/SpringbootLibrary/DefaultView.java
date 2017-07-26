@@ -30,6 +30,7 @@ public class DefaultView extends VerticalLayout implements View {
     @PostConstruct
     void init() {
 
+        getLibraryViewDisplay().setSizeUndefined();
         setSpacing(true);
         HorizontalLayout horizontalLayout = addButtons();
         addComponent(horizontalLayout);
