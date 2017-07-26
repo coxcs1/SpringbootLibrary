@@ -3,10 +3,10 @@ package Model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Date;
-import java.sql.Timestamp;
+
 
 /**
- * Created by ricky.clevinger on 7/17/2017.
+ * Created by ricky.clevinger on 7/24/2017.
  */
 @XmlRootElement
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -20,6 +20,7 @@ public class Book {
     private String mid;
     private Date outDate;
 
+    // No parameter constructor
     public Book() {
     }
 

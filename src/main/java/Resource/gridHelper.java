@@ -95,7 +95,7 @@ public class gridHelper {
      * @param date2
      * @return String with current date or Overdue
      *
-     * last modified by ricky.clevinger 7/19/17
+     * last modified by ricky.clevinger 7/25/17
      */
     public static String overdue(Date date1, Date date2){
 

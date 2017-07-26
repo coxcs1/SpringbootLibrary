@@ -36,10 +36,19 @@ public class CheckIn extends VerticalLayout implements View {
     RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
 
+    // Variable containing url to access backing service
     @Value("${my.bookUrl}")
     private String bookUrl;
 
-
+    /**
+     * Initializes the view..
+     * Re-sizes the panel
+     * Calls addFilters to create search filter for the grid.
+     * Calls setupGridPanel to create and populate the grid.
+     * Calls addCheckInButton to create Check In button and add functionality to the button.
+     *
+     * last modified by ricky.clevinger 7/26/17
+     */
     @PostConstruct
     void init() {
 

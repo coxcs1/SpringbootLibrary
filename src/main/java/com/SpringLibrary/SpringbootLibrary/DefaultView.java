@@ -20,16 +20,15 @@ public class DefaultView extends VerticalLayout implements View {
 
 
     /**
+     * Re-sizes the panel
      * Constructs the Default view for display
-     *
      * Adds Horizontal layout containing buttons
      * Adjusts alignment/spacing
      *
-     * last modified by coalsonc 7/17/17
+     * last modified by coalsonc 7/26/17
      */
     @PostConstruct
     void init() {
-
         getLibraryViewDisplay().setSizeUndefined();
         setSpacing(true);
         HorizontalLayout horizontalLayout = addButtons();

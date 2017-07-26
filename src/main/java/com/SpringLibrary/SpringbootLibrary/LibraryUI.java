@@ -24,23 +24,21 @@ import static Resource.gridHelper.stringClean;
 /**
  * Created by ricky.clevinger on 7/12/2017.
  *
- * last modified by charles.coalson on 7/18/17
+ * last modified by ricky.clevinger on 7/25/17
  */
 @Theme("valo")
 @SpringUI
 @SpringViewDisplay
 public class LibraryUI extends UI implements ViewDisplay
 {
-    /**
-     * Variable declaration
-     */
+    //Variables
     private         RestTemplate restTemplate = new RestTemplate();
-    private static        Panel LibraryViewDisplay;
+    private static  Panel LibraryViewDisplay;
     private final   VerticalLayout layout = new VerticalLayout();
     private         Label errorDisplay;
     private         LibraryErrorHelper errorHelper = new LibraryErrorHelper();
 
-
+    // Variable containing url to access backing service
     @Value("${my.bookUrl}")
     private String bookUrl;
 
@@ -54,19 +52,17 @@ public class LibraryUI extends UI implements ViewDisplay
      * Adds an Accordion for navigation
      *
      * @param request
-     * last modified by coalsonc 7/18/17
+     * last modified by coalsonc 7/25/17
      */
     @Override
     protected void init(VaadinRequest request) {
 
         try
         {
-
             setupLayout();
             addHeader();
             addDefaultView();
             createAccordion();
-
         }
         catch(Exception e)
         {
@@ -86,12 +82,12 @@ public class LibraryUI extends UI implements ViewDisplay
      * Creates a new panel and sets the size to be responsive
      * Adds the panel to the base layout and sets its expand ratio
      *
-     * last modified by coalsonc 7/17/17
+     * last modified by Ricky.Clevinger 7/26/17
      */
 
     private void addDefaultView()
     {
-        LibraryViewDisplay      = new Panel();
+        LibraryViewDisplay = new Panel();
         layout.addComponent(LibraryViewDisplay);
         layout.setExpandRatio(LibraryViewDisplay, 1.0f);
 
@@ -110,7 +106,6 @@ public class LibraryUI extends UI implements ViewDisplay
         layout.setSpacing(true);
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         setContent(layout);
-
     }//end setupLayout
 
     /**
@@ -173,7 +168,7 @@ public class LibraryUI extends UI implements ViewDisplay
      * Adds listeners to the buttons to allow navigation
      * Adds buttons to layout and returns it to add to accordion
      *
-     * last modified by coalsonc 7/18/17
+     * last modified by Ricky.Clevinger 7/26/17
      */
     private Layout addAccordionNavigationButtons()
     {
@@ -296,7 +291,7 @@ public class LibraryUI extends UI implements ViewDisplay
      * Adds listeners to the buttons to allow navigation
      * Adds textFields and a button to layout and returns it to add to accordion for add book
      *
-     * last modified by ricky.clevinger 7/19/17
+     * Last modified by coalsonc 7/25/17
      */
     private Layout addBookInput()
     {
@@ -400,11 +395,23 @@ public class LibraryUI extends UI implements ViewDisplay
 
     }//end removeBook
 
+    /**
+     * Getter for the panel. Used to change sizes depending on the current view.
+     * @return LibraryViewDisplay
+     *
+     * Last modified by ricky.clevinger 7/26/17
+     */
     public static Panel getLibraryViewDisplay() {
         return LibraryViewDisplay;
-    }
+    }//end getLibraryViewDisplay
 
+    /**
+     * Setter for the panel.
+     *
+     * Last modified by ricky.clevinger 7/26/17
+     */
     public void setLibraryViewDisplay(Panel libraryViewDisplay) {
         LibraryViewDisplay = libraryViewDisplay;
-    }
-}//end LibraryUI
+    }//end setLibraryViewDisplay
+
+}

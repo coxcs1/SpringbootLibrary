@@ -41,13 +41,22 @@ public class CheckOut extends VerticalLayout implements View {
     Grid<Member> memberGrid;
     Grid<Book> bookGrid;
 
+    // Variable containing url to access backing service
     @Value("${my.bookUrl}")
     private String bookUrl;
 
-
+    /**
+     * Initializes the view..
+     * Re-sizes the panel
+     * Calls createFilter to create search filter for the grid.
+     * Calls createBookGrid to create and populate the grid.
+     * Calls createMemberGrid to create and populate the grid.
+     * Calls addCheckOutButton to create Check Out button and add functionality to the button.
+     *
+     * last modified by ricky.clevinger 7/26/17
+     */
     @PostConstruct
     void init() {
-
         getLibraryViewDisplay().setSizeFull();
         createLayout();
         createFilter();

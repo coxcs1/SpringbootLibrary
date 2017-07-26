@@ -36,17 +36,19 @@ public class AllMembers extends VerticalLayout implements View {
     RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
 
+    // Variable containing url to access backing service
     @Value("${my.bookUrl}")
     private String bookUrl;
 
     @PostConstruct
     /**
      * Initializes the view..
+     * Re-sizes the panel
      * Calls createFilter to create search filter for the grid.
      * Calls createGrid to create and populate the grid.
      * Calls createDeleteButton to create delete button and add functionality to the button.
      *
-     * last modified by ricky.clevinger 7/19/17
+     * last modified by ricky.clevinger 7/26/17
      */
     void init() {
         getLibraryViewDisplay().setSizeFull();
