@@ -169,6 +169,7 @@ public class CheckOut extends VerticalLayout implements View {
         }
     }
 
+
     /**
      * Creates HorizontalLayout to store the two grids
      * Used so the two grid can be placed side my side

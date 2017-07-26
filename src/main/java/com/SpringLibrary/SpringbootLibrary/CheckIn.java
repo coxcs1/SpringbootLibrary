@@ -44,7 +44,7 @@ public class CheckIn extends VerticalLayout implements View {
      * Initializes the view..
      * Re-sizes the panel
      * Calls addFilters to create search filter for the grid.
-     * Calls setupGridPanel to create and populate the grid.
+     * Calls setupGrid to create and populate the grid.
      * Calls addCheckInButton to create Check In button and add functionality to the button.
      *
      * last modified by ricky.clevinger 7/26/17
@@ -53,11 +53,17 @@ public class CheckIn extends VerticalLayout implements View {
     void init() {
         getLibraryViewDisplay().setSizeFull();
         addFilters();
-        setupGridPanel();
+        setupGrid();
         addCheckInButton();
     }
 
 
+    /**
+     * Function shall add the search filter to the page.
+     * User shall type in part of a book title and the grid will changed accordingly.
+     *
+     * last modified by ricky.clevinger 7/19/17
+     */
     private void addFilters() {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
@@ -78,6 +84,14 @@ public class CheckIn extends VerticalLayout implements View {
     }
 
 
+    /**
+     * Creatses Check in button
+     * Adds checkIn button functionality
+     * Sends query to record checkout in transaction database
+     * Updates book to it is checked in
+     *
+     * last modified by ricky.clevinger 7/26/17
+     */
     private void addCheckInButton() {
         Button checkIn = new Button ("Check In");
         checkIn.addClickListener(event -> {
@@ -102,7 +116,17 @@ public class CheckIn extends VerticalLayout implements View {
     }
 
 
-    private void setupGridPanel() {
+    /**
+     * Creates list of all books
+     * Listener to select a book in the grid
+     * Add columns to the grid for title  and author
+     * Pulls id and compares to members
+     * Adds coulmns for member name
+     * Adds column for due date.
+     *
+     * last modified by ricky.clevinger 7/26/17
+     */
+    private void setupGrid() {
 
         books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/2", Book[].class));
         bookReturnGrid = new Grid<>();
