@@ -53,8 +53,8 @@ public class CheckIn extends VerticalLayout implements View {
     void init() {
         getLibraryViewDisplay().setSizeFull();
         createLayout();
-        setupGridPanel();
         addFilters();
+        setupGridPanel();
         addCheckInButton();
     }
 

@@ -32,10 +32,10 @@ public class CheckOut extends VerticalLayout implements View {
 
     HorizontalLayout hLayout;
     Button checkOut;
-    private TextField titleFilter;   // TextField will be used to filter the results on the grid.
-    private TextField authorFilter;   // TextField will be used to filter the results on the grid.
     String titleId;  // Id used to determine which item is selected in the grid.
     String memberId;  // Id used to determine which item is selected in the grid.
+    private TextField titleFilter;   // TextField will be used to filter the results on the grid.
+    private TextField authorFilter;   // TextField will be used to filter the results on the grid.
     RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
     List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
@@ -67,7 +67,6 @@ public class CheckOut extends VerticalLayout implements View {
     }
 
     private void addCheckOutButton() {
-
 
         checkOut = new Button ("Check Out");
 
@@ -220,9 +219,7 @@ public class CheckOut extends VerticalLayout implements View {
             }
         });
 
-
         addComponent(authorFilter);
-
     }//end createFilter
 
 
