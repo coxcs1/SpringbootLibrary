@@ -1,26 +1,18 @@
 package com.SpringLibrary.SpringbootLibrary;
 
 import Model.Book;
-import com.vaadin.data.HasValue;
-import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
-import com.vaadin.ui.components.grid.MultiSelectionModel;
-import com.vaadin.ui.components.grid.SingleSelectionModel;
-import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
-import javax.validation.constraints.Null;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-
 import static Resource.gridHelper.authorFilterGridChange;
 import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
@@ -33,7 +25,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = AllBooks.VIEW_NAME)
 public class AllBooks extends VerticalLayout implements View {
     public static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
-    
+
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     private TextField authorFilter;   // TextField will be used to filter the results on the grid.
     private Grid<Book> grid;  // Grid that will display and organize books on the all.java page.

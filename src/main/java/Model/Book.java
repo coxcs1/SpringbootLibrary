@@ -20,7 +20,7 @@ public class Book {
     private String mid;
     private Date outDate;
 
-    // No parameter constructor
+    // Non-parameter constructor
     public Book()
     {
 

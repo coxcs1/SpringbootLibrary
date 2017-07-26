@@ -21,8 +21,6 @@ import javax.annotation.PostConstruct;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
-
-import static Resource.gridHelper.createLayout;
 import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
