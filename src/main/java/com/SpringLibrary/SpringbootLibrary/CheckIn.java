@@ -20,6 +20,7 @@ import java.util.List;
 import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
+
 /**
  * Created by ricky.clevinger on 7/13/2017.
  *
