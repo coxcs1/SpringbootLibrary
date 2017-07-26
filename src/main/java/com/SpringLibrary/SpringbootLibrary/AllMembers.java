@@ -9,6 +9,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
@@ -69,9 +70,28 @@ public class AllMembers extends VerticalLayout implements View {
 
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
-        delete.addClickListener(event -> {
-            this.restTemplate.getForObject(bookUrl + "/members/delete/" + this.id, String.class);
-            getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
+        delete.addClickListener(event ->
+        {
+
+            try
+            {
+                this.restTemplate.getForObject(bookUrl + "/members/delete/" + this.id, String.class);
+                getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
+
+            }
+
+            catch (ResourceAccessException error)
+            {
+
+                Notification.show("Service unavailable, please try again in a few minutes");
+
+            }
+            catch (HttpClientErrorException error)
+            {
+                Notification.show("Please Select a Member Account to Delete");
+            }
+
+
         });
 
         // Add delete button to the view.

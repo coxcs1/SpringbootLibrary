@@ -73,11 +73,15 @@ public class CheckOut extends VerticalLayout implements View {
 
         checkOut.addClickListener(event ->
         {
-            try{
+            try
+            {
 
-            this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 2 + "/" + memberId, String.class);
-            this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 2 + "/" + memberId, String.class);
-            getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
+                this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 2 + "/"
+                    + memberId, String.class);
+                this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 2 + "/"
+                    + memberId, String.class);
+
+                getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
 
             }
             catch (ResourceAccessException error)

@@ -12,6 +12,7 @@ import com.vaadin.ui.components.grid.SingleSelectionModel;
 import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
@@ -70,7 +71,8 @@ public class AllBooks extends VerticalLayout implements View {
 
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
-        delete.addClickListener(event -> {
+        delete.addClickListener(event ->
+        {
 
             try
             {
@@ -84,6 +86,10 @@ public class AllBooks extends VerticalLayout implements View {
 
                 Notification.show("Service unavailable, please try again in a few minutes");
 
+            }
+            catch (HttpClientErrorException error)
+            {
+                Notification.show("Please Select a Book to Delete");
             }
 
         });
@@ -173,6 +179,7 @@ public class AllBooks extends VerticalLayout implements View {
                 authorFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
+
         });
 
         addComponent(authorFilter);
