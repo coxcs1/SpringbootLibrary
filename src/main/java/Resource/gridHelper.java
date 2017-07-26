@@ -2,27 +2,22 @@ package Resource;
 
 import Model.Member;
 import Model.Book;
+import com.SpringLibrary.SpringbootLibrary.CheckIn;
 import com.vaadin.data.HasValue;
 import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.navigator.ViewDisplay;
+import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 import java.sql.Date;
 
 
-public class gridHelper {
-
-    /**
-     * Creates layout for views.
-     * @param verticalLayout
-     * last modified by ricky.clevinger 7/25/17
-     */
-    public static void createLayout(VerticalLayout verticalLayout) {
-        HorizontalLayout hLayout = new HorizontalLayout();
-        hLayout.setSpacing(true);
-        verticalLayout.addComponent(hLayout);
-    }//end createLayout
+public class gridHelper extends VerticalLayout implements View {
 
 
      /**
@@ -35,7 +30,6 @@ public class gridHelper {
          ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
          dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
      }//end fNameFilterGridChange
-
 
 
      /**
@@ -74,7 +68,6 @@ public class gridHelper {
     }//end titleFilterGridChange
 
 
-
      /**
        *Returns a boolean telling if the lowercase form of text input into the filter is contain
        * by any of the lowercase versions of the book titles.
@@ -107,18 +100,21 @@ public class gridHelper {
         }
     }// end overdue
 
+
     /**
      * Cleans input strings and returns them to the calling method
      *
      * last modified by charles.coalson 7/25/17
      */
     public static String stringClean(String toClean){
-
         String  temp = toClean.trim();
         temp = temp.replaceAll("[^a-zA-Z\\- ]","");
-
         return temp;
     }//end stringClean
 
 
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+
+    }
 }

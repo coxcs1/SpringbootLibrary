@@ -7,6 +7,7 @@ package com.SpringLibrary.SpringbootLibrary;
  */
 import Model.Book;
 import Model.Member;
+import Resource.gridHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -64,13 +65,20 @@ public class CheckOut extends VerticalLayout implements View {
     }
 
 
+    /**
+     * Creatses Check out button
+     * Adds checkout button functionality
+     * Sends query to record checkout in transaction database
+     * Updates book to show who, what, and when a book is checked out
+     *
+     * last modified by ricky.clevinger 7/26/17
+     */
     private void addCheckOutButton() {
         checkOut = new Button ("Check Out");
         checkOut.addClickListener(event ->
         {
             try
             {
-
                 this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 2 + "/"
                     + memberId, String.class);
                 this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 2 + "/"
@@ -91,6 +99,13 @@ public class CheckOut extends VerticalLayout implements View {
     }
 
 
+    /**
+     * Creates list of all members
+     * Listener to select a member in the grid
+     * Add columns to the grid for first and last names
+     *
+     * last modified by ricky.clevinger 7/26/17
+     */
     private void createMemberGrid() {
         try{
         members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
@@ -120,6 +135,13 @@ public class CheckOut extends VerticalLayout implements View {
     }
 
 
+    /**
+     * Creates list of all books checked in
+     * Listener to select a book in the grid
+     * Adds columns to the grid for title of book and author names
+     *
+     * last modified by ricky.clevinger 7/26/17
+     */
     private void createBookGrid() {
         try {
             books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
@@ -147,6 +169,12 @@ public class CheckOut extends VerticalLayout implements View {
         }
     }
 
+    /**
+     * Creates HorizontalLayout to store the two grids
+     * Used so the two grid can be placed side my side
+     *
+     * last modified by ricky.clevinger 7/26/17
+     */
     private void createLayout() {
         hLayout = new HorizontalLayout();
         hLayout.setSpacing(true);
@@ -157,6 +185,7 @@ public class CheckOut extends VerticalLayout implements View {
     /**
      * Function shall add the search filter to the page.
      * User shall type in part of a book title and the grid will changed accordingly.
+     * User shall type in part of a last name and the grid will changed accordingly.
      *
      * last modified by ricky.clevinger 7/19/17
      */

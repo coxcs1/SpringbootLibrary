@@ -52,7 +52,6 @@ public class CheckIn extends VerticalLayout implements View {
     @PostConstruct
     void init() {
         getLibraryViewDisplay().setSizeFull();
-        createLayout();
         addFilters();
         setupGridPanel();
         addCheckInButton();
@@ -126,18 +125,9 @@ public class CheckIn extends VerticalLayout implements View {
                         + Book.getMid(), Member[].class)).get(0).getLName()).setCaption("Checked Out By");
         bookReturnGrid.addColumn(Book -> gridHelper.overdue(Book.getOutDate(), new Date(System.currentTimeMillis()))).setCaption("Due Date");
 
-        hLayout.setSizeFull();
         bookReturnGrid.setSizeFull();
         addComponent(bookReturnGrid);
     }
-
-
-    private void createLayout() {
-        hLayout = new HorizontalLayout();
-        hLayout.setSpacing(true);
-        addComponent(hLayout);
-    }
-
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {

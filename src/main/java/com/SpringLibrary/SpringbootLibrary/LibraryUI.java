@@ -31,7 +31,7 @@ public class LibraryUI extends UI implements ViewDisplay
     //Variables
     private         RestTemplate restTemplate = new RestTemplate();
     private static  Panel LibraryViewDisplay;
-    private final   VerticalLayout layout = new VerticalLayout();
+    private static  VerticalLayout layout = new VerticalLayout();
     private         Label errorDisplay;
     private         LibraryErrorHelper errorHelper = new LibraryErrorHelper();
     private static  Accordion accordion;
@@ -276,7 +276,6 @@ public class LibraryUI extends UI implements ViewDisplay
      */
     private Layout addBookInput()
     {
-
         Layout tab                      = new VerticalLayout();
         com.vaadin.ui.TextField title   = new com.vaadin.ui.TextField("Title");
         com.vaadin.ui.TextField fName   = new com.vaadin.ui.TextField("Author: First Name");
@@ -382,7 +381,7 @@ public class LibraryUI extends UI implements ViewDisplay
         return LibraryViewDisplay;
     }//end getLibraryViewDisplay
 
-    
+
     /**
      * Setter for the panel.
      *
@@ -393,4 +392,7 @@ public class LibraryUI extends UI implements ViewDisplay
         LibraryViewDisplay = libraryViewDisplay;
     }//end setLibraryViewDisplay
 
+    public static VerticalLayout getLayout() {
+        return layout;
+    }
 }
