@@ -28,7 +28,9 @@ import static Resource.gridHelper.stringClean;
 @SpringViewDisplay
 public class LibraryUI extends UI implements ViewDisplay
 {
-    //Variables
+    /**
+     * Variable Declarations
+     */
     private         RestTemplate restTemplate = new RestTemplate();
     private static  Panel LibraryViewDisplay;
     private static  VerticalLayout layout = new VerticalLayout();
@@ -36,7 +38,10 @@ public class LibraryUI extends UI implements ViewDisplay
     private         LibraryErrorHelper errorHelper = new LibraryErrorHelper();
     private static  Accordion accordion;
 
-    // Variable containing url to access backing service
+    /**
+     * Variable containing url to access backing service
+     */
+
     @Value("${my.bookMemUrl}")
     private String bookUrl;
 
@@ -61,12 +66,15 @@ public class LibraryUI extends UI implements ViewDisplay
             addHeader();
             addDefaultView();
             createAccordion();
+
         }
         catch(Exception e)
         {
             String message = errorHelper.genericError(e);
             Notification.show(message);
+
         }
+
     }//end init
 
 
@@ -83,6 +91,7 @@ public class LibraryUI extends UI implements ViewDisplay
         LibraryViewDisplay = new Panel();
         layout.addComponent(LibraryViewDisplay);
         layout.setExpandRatio(LibraryViewDisplay, 1.0f);
+
     }//end addDefaultView
 
 
@@ -99,6 +108,7 @@ public class LibraryUI extends UI implements ViewDisplay
         layout.setSpacing(true);
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         setContent(layout);
+
     }//end setupLayout
 
 
@@ -119,6 +129,7 @@ public class LibraryUI extends UI implements ViewDisplay
         header.setSizeUndefined();
         errorDisplay.setSizeUndefined();
         layout.addComponents(header, errorDisplay);
+
     }//end addHeader
 
 
@@ -217,7 +228,8 @@ public class LibraryUI extends UI implements ViewDisplay
         com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Last Name");
         Button submit                   = new Button("Submit");
 
-        submit.addClickListener(clickEvent -> {
+        submit.addClickListener(clickEvent ->
+        {
 
             try
             {
@@ -262,6 +274,7 @@ public class LibraryUI extends UI implements ViewDisplay
 
         tab.addComponents(fName,lName, submit);
         return tab;
+
     }//end addUserInput
 
 
@@ -281,7 +294,8 @@ public class LibraryUI extends UI implements ViewDisplay
         com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Author: Last Name");
         Button submit                   = new Button("Submit");
 
-        submit.addClickListener(clickEvent -> {
+        submit.addClickListener(clickEvent ->
+        {
                     try
                     {
                         errorDisplay.setCaption("");
@@ -330,6 +344,7 @@ public class LibraryUI extends UI implements ViewDisplay
 
         tab.addComponents(title,fName,lName, submit);
         return tab;
+
     }//end addBookInput
 
 
@@ -348,6 +363,7 @@ public class LibraryUI extends UI implements ViewDisplay
         all.addClickListener(event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
         tab.addComponents(all);
         return tab;
+
     }//end removeUser
 
 
@@ -366,6 +382,7 @@ public class LibraryUI extends UI implements ViewDisplay
         all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
         tab.addComponents(all);
         return tab;
+
     }//end removeBook
 
 
