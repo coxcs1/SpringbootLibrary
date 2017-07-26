@@ -7,6 +7,7 @@ package com.SpringLibrary.SpringbootLibrary;
  */
 import Model.Book;
 import Model.Member;
+import Resource.LibraryErrorHelper;
 import Resource.gridHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -25,7 +26,8 @@ import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 @SpringView(name = CheckOut.VIEW_NAME)
-public class CheckOut extends VerticalLayout implements View {
+public class CheckOut extends VerticalLayout implements View
+{
     public static final String VIEW_NAME = "CheckOut";
 
     private HorizontalLayout hLayout;
@@ -39,6 +41,7 @@ public class CheckOut extends VerticalLayout implements View {
     private List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
     private Grid<Member> memberGrid;
     private Grid<Book> bookGrid;
+    private LibraryErrorHelper  errorHelper = new LibraryErrorHelper();
 
     // Variable containing url to access backing service
     @Value("${my.bookMemUrl}")
@@ -88,10 +91,12 @@ public class CheckOut extends VerticalLayout implements View {
             }
             catch (ResourceAccessException error)
             {
+                errorHelper.genericError(error);
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
             catch (HttpClientErrorException error)
             {
+                errorHelper.genericError(error);
                 Notification.show("Please select a book and a user to complete checkout process.");
             }
         });
@@ -129,6 +134,7 @@ public class CheckOut extends VerticalLayout implements View {
         }
         catch (ResourceAccessException error)
         {
+            errorHelper.genericError(error);
             Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
                     "few minutes");
         }
@@ -164,6 +170,7 @@ public class CheckOut extends VerticalLayout implements View {
         }
         catch (ResourceAccessException error)
         {
+            errorHelper.genericError(error);
             Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
                     "few minutes");
         }
@@ -201,6 +208,7 @@ public class CheckOut extends VerticalLayout implements View {
                 }
                 catch (NullPointerException error)
                 {
+                    errorHelper.genericError(error);
                     titleFilter.setValue("");
                     Notification.show("Service unavailable, please try again in a few minutes");
                 }
@@ -216,6 +224,7 @@ public class CheckOut extends VerticalLayout implements View {
             }
             catch (NullPointerException error)
             {
+                errorHelper.genericError(error);
                 authorFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
