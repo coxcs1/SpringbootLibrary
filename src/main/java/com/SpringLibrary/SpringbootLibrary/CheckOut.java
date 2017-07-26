@@ -63,8 +63,8 @@ public class CheckOut extends VerticalLayout implements View {
         addCheckOutButton();
     }
 
+    
     private void addCheckOutButton() {
-
         checkOut = new Button ("Check Out");
         checkOut.addClickListener(event ->
         {
@@ -77,25 +77,21 @@ public class CheckOut extends VerticalLayout implements View {
                     + memberId, String.class);
 
                 getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
-
             }
             catch (ResourceAccessException error)
             {
-
                 Notification.show("Service unavailable, please try again in a few minutes");
-
             }
             catch (HttpClientErrorException error)
             {
                 Notification.show("Please select a book and a user to complete checkout process.");
             }
         });
-
         addComponent(checkOut);
-
     }
-    private void createMemberGrid() {
 
+
+    private void createMemberGrid() {
         try{
         members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
 
@@ -104,7 +100,6 @@ public class CheckOut extends VerticalLayout implements View {
         memberGrid.addSelectionListener(event -> {
             this.memberId = event.getFirstSelectedItem().get().getId() + "";
         });
-
 
         // Sets list to the grid
         memberGrid.setItems(members);
@@ -119,14 +114,13 @@ public class CheckOut extends VerticalLayout implements View {
         }
         catch (ResourceAccessException error)
         {
-
             Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
                     "few minutes");
         }
     }
 
-    private void createBookGrid() {
 
+    private void createBookGrid() {
         try {
             books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
             bookGrid = new Grid<>();
@@ -142,28 +136,23 @@ public class CheckOut extends VerticalLayout implements View {
             bookGrid.addColumn(Book ->
                     Book.getAuthFName() + " " + Book.getAuthLName()).setCaption("Author");
 
-
             hLayout.setSizeFull();
             bookGrid.setSizeFull();
             hLayout.addComponent(bookGrid);
-
         }
         catch (ResourceAccessException error)
         {
-
             Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
                     "few minutes");
         }
-
     }
 
     private void createLayout() {
-
         hLayout = new HorizontalLayout();
         hLayout.setSpacing(true);
         addComponent(hLayout);
-
     }
+
 
     /**
      * Function shall add the search filter to the page.
@@ -177,7 +166,6 @@ public class CheckOut extends VerticalLayout implements View {
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
         titleFilter.addValueChangeListener(event -> {
-
                 try {
                     titleFilterGridChange(event, bookGrid);
                 }
@@ -185,30 +173,23 @@ public class CheckOut extends VerticalLayout implements View {
                 {
                     titleFilter.setValue("");
                     Notification.show("Service unavailable, please try again in a few minutes");
-
                 }
-
                 });
         addComponent(titleFilter);
-
 
         authorFilter = new TextField();
         authorFilter.setWidth(100, Unit.PERCENTAGE);
         authorFilter.setPlaceholder("Last Name...");
         authorFilter.addValueChangeListener(event -> {
-
             try {
                 lNameFilterGridChange(event, memberGrid);
-
             }
             catch (NullPointerException error)
             {
                 authorFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
-
             }
         });
-
         addComponent(authorFilter);
     }//end createFilter
 

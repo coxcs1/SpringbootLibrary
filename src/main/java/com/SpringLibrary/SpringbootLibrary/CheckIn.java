@@ -58,13 +58,12 @@ public class CheckIn extends VerticalLayout implements View {
         addCheckInButton();
     }
 
-    private void addFilters() {
 
+    private void addFilters() {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
         titleFilter.addValueChangeListener(event -> {
-
             try
             {
                 titleFilterGridChange(event, bookReturnGrid);
@@ -73,18 +72,16 @@ public class CheckIn extends VerticalLayout implements View {
             {
                 titleFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
-
             }
         });
 
         addComponent(titleFilter);
-
     }
+
 
     private void addCheckInButton() {
         Button checkIn = new Button ("Check In");
         checkIn.addClickListener(event -> {
-
             try {
                 this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 1 + "/" + memberId, String.class);
                 this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 1 + "/" + 0, String.class);
@@ -92,15 +89,12 @@ public class CheckIn extends VerticalLayout implements View {
             }
             catch (ResourceAccessException error)
             {
-
                 Notification.show("Service unavailable, please try again in a few minutes");
-
             }
             catch (HttpClientErrorException error)
             {
                 Notification.show("Please select a book to check in");
             }
-
         });
         checkIn.setResponsive(true);
         addComponent(checkIn);
@@ -108,10 +102,10 @@ public class CheckIn extends VerticalLayout implements View {
         addComponent(checkIn);
     }
 
+
     private void setupGridPanel() {
 
         books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/2", Book[].class));
-
         bookReturnGrid = new Grid<>();
         bookReturnGrid.addSelectionListener(event -> {
             if (event.getAllSelectedItems().isEmpty()){
@@ -135,15 +129,13 @@ public class CheckIn extends VerticalLayout implements View {
         hLayout.setSizeFull();
         bookReturnGrid.setSizeFull();
         addComponent(bookReturnGrid);
-
     }
 
-    private void createLayout() {
 
+    private void createLayout() {
         hLayout = new HorizontalLayout();
         hLayout.setSpacing(true);
         addComponent(hLayout);
-
     }
 
 

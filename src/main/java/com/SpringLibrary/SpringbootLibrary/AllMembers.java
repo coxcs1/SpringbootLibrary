@@ -173,7 +173,7 @@ public class AllMembers extends VerticalLayout implements View {
         addComponent(lNameFilter);
     }//end createFilter
 
-    
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         // This view is constructed in the init() method()
