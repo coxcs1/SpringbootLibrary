@@ -37,7 +37,6 @@ public class AllMembers extends VerticalLayout implements View {
     @Value("${my.bookUrl}")
     private String bookUrl;
 
-    @PostConstruct
     /**
      * Initializes the view..
      * Re-sizes the panel
@@ -47,14 +46,15 @@ public class AllMembers extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/26/17
      */
+    @PostConstruct
     void init()
     {
         getLibraryViewDisplay().setSizeFull();
         createFilter();
         createMemberGrid();
         createDeleteButton();
-
     }//end init
+
 
     /**
      * Method add delete button to view.
@@ -64,37 +64,30 @@ public class AllMembers extends VerticalLayout implements View {
      */
     public void createDeleteButton()
     {
-
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
         delete.addClickListener(event ->
         {
-
             try
             {
                 this.restTemplate.getForObject(bookUrl + "/members/delete/" + this.id, String.class);
                 getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
-
             }
 
             catch (ResourceAccessException error)
             {
-
                 Notification.show("Service unavailable, please try again in a few minutes");
-
             }
             catch (HttpClientErrorException error)
             {
                 Notification.show("Please Select a Member Account to Delete");
             }
-
-
         });
 
         // Add delete button to the view.
         addComponent(delete);
-
     }//end createDeleteButton
+
 
     /**
      * Function shall retrieve data from microservice.
@@ -105,10 +98,8 @@ public class AllMembers extends VerticalLayout implements View {
      */
     public void createMemberGrid()
     {
-
         try
         {
-
             // Retrieves the data from the book micro-service.
             members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
 
@@ -137,6 +128,7 @@ public class AllMembers extends VerticalLayout implements View {
         }
     }//end createGrid
 
+
     /**
      * Function shall add the search filter to the page.
      * User shall type in part of a book title and the grid will changed accordingly.
@@ -148,10 +140,8 @@ public class AllMembers extends VerticalLayout implements View {
         fNameFilter = new TextField();
         fNameFilter.setWidth(100, Unit.PERCENTAGE);
         fNameFilter.setPlaceholder("First Name...");
-
         fNameFilter.addValueChangeListener(event ->
         {
-
             try
             {
                 fNameFilterGridChange(event, grid);
@@ -160,9 +150,7 @@ public class AllMembers extends VerticalLayout implements View {
             {
                 fNameFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
-
             }
-
         });
         addComponent(fNameFilter);
 
@@ -171,7 +159,6 @@ public class AllMembers extends VerticalLayout implements View {
         lNameFilter.setPlaceholder("Last Name...");
         lNameFilter.addValueChangeListener(event ->
         {
-
             try
             {
                 lNameFilterGridChange(event, grid);
@@ -180,17 +167,13 @@ public class AllMembers extends VerticalLayout implements View {
             {
                 fNameFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
-
             }
-
         }
-
         );
         addComponent(lNameFilter);
     }//end createFilter
 
-
-
+    
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         // This view is constructed in the init() method()

@@ -37,6 +37,7 @@ public class AllBooks extends VerticalLayout implements View {
     @Value("${my.bookUrl}")
     private String bookUrl;
 
+
     /**
      * Initializes the view..
      * Re-sizes the panel
@@ -54,6 +55,7 @@ public class AllBooks extends VerticalLayout implements View {
         createDeleteButton();
     }//end init
 
+
     /**
      * Method add delete button to view.
      * On button click the selected item in the grid will be removed from grid and backing micro-service.
@@ -62,34 +64,29 @@ public class AllBooks extends VerticalLayout implements View {
      */
     public void createDeleteButton()
     {
-
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
         delete.addClickListener(event ->
         {
-
             try
             {
                 this.restTemplate.getForObject(bookUrl + "/books/delete/" + this.id, String.class);
                 getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME);
-
             }
 
             catch (ResourceAccessException error)
             {
-
                 Notification.show("Service unavailable, please try again in a few minutes");
-
             }
             catch (HttpClientErrorException error)
             {
                 Notification.show("Please Select a Book to Delete");
             }
-
         });
         // Add delete button to the view.
         addComponent(delete);
     }//end createDeleteButton
+
 
     /**
      * Function shall retrieve data from microservice.
@@ -99,7 +96,6 @@ public class AllBooks extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/19/17
      */
     public void createBookGrid() {
-
         try{
             // Retrieves the data from the book micro-service.
             books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/all", Book[].class));
@@ -127,11 +123,11 @@ public class AllBooks extends VerticalLayout implements View {
         }
         catch (ResourceAccessException error)
         {
-
             Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
                     "few minutes");
         }
     }//end createGrid
+
 
     /**
      * Function shall add the search filter to the page.
@@ -163,7 +159,6 @@ public class AllBooks extends VerticalLayout implements View {
         authorFilter.setPlaceholder("Last Name...");
         authorFilter.addValueChangeListener(event ->
         {
-
             try
             {
 
@@ -174,12 +169,9 @@ public class AllBooks extends VerticalLayout implements View {
                 authorFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
-
         });
-
         addComponent(authorFilter);
     }//end createFilter
-
 
 
     @Override
