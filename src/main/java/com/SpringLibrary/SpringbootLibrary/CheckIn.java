@@ -157,8 +157,11 @@ public class CheckIn extends VerticalLayout implements View
      */
     private void setupGrid()
     {
-        books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/check/2", Book[].class));
         bookReturnGrid = new Grid<>();
+        try
+        {
+        books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/check/2", Book[].class));
+
 
         bookReturnGrid.addSelectionListener(event ->
         {
@@ -186,6 +189,14 @@ public class CheckIn extends VerticalLayout implements View
                         + Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/id/"
                         + Book.getMid(), Member[].class)).get(0).getLName()).setCaption("Checked Out By");
         bookReturnGrid.addColumn(Book -> gridHelper.overdue(Book.getOutDate(), new Date(System.currentTimeMillis()))).setCaption("Due Date");
+
+        }
+        catch (ResourceAccessException error)
+        {
+            errorHelper.genericError(error);
+            Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
+                    "few minutes");
+        }
 
         bookReturnGrid.setSizeFull();
         addComponent(bookReturnGrid);
