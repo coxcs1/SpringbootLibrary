@@ -69,6 +69,7 @@ public class LibraryUI extends UI implements ViewDisplay
         }
     }//end init
 
+
     /**
      * Constructs the default panel that will change based on function selection
      *
@@ -84,6 +85,7 @@ public class LibraryUI extends UI implements ViewDisplay
         layout.setExpandRatio(LibraryViewDisplay, 1.0f);
     }//end addDefaultView
 
+
     /**
      * Sets the initial layout for the page
      *
@@ -98,6 +100,7 @@ public class LibraryUI extends UI implements ViewDisplay
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         setContent(layout);
     }//end setupLayout
+
 
     /**
      * Adds a header to the page
@@ -118,6 +121,7 @@ public class LibraryUI extends UI implements ViewDisplay
         layout.addComponents(header, errorDisplay);
     }//end addHeader
 
+
     /**
      * Method that Vaadin/Spring Boot use to display the page
      * @param view
@@ -128,6 +132,7 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         LibraryViewDisplay.setContent((Component) view);
     }//end showView
+
 
     /**
      * Creates the navigation accordion, sets style and size for readability
@@ -149,6 +154,7 @@ public class LibraryUI extends UI implements ViewDisplay
         layout.addComponent(accordion);
     }//end createAccordion
 
+
     /**
      * Method used by CreateAccordion to make the navigation buttons
      * Creates the buttons and the layout to pin them to
@@ -159,7 +165,6 @@ public class LibraryUI extends UI implements ViewDisplay
      */
     private Layout addAccordionNavigationButtons()
     {
-
         Layout tab      = new VerticalLayout();
         Button checkIn  = new Button("Check In");
         Button checkOut = new Button("Check Out");
@@ -173,6 +178,7 @@ public class LibraryUI extends UI implements ViewDisplay
 
         return tab;
     }//end addAccordionNavigationButtons
+
 
     /**
      * Method used by CreateAccordion to make the admin activity Accordion
@@ -228,7 +234,6 @@ public class LibraryUI extends UI implements ViewDisplay
                         lName.setValue("");
                         fName.setValue("");
                     }
-
                     else
                     {
                         this.restTemplate.getForObject(bookUrl + "/members/insert/" + firstName + "/"
@@ -241,9 +246,7 @@ public class LibraryUI extends UI implements ViewDisplay
             }//end try
             catch (HttpClientErrorException error)
             {
-
                 errorHelper.httpError(error);
-
                 Notification.show("Cannot access add user service, please try again in a few minutes.");
             }
             catch (NullPointerException error)
@@ -260,7 +263,6 @@ public class LibraryUI extends UI implements ViewDisplay
 
         tab.addComponents(fName,lName, submit);
         return tab;
-
     }//end addUserInput
 
 
@@ -282,7 +284,6 @@ public class LibraryUI extends UI implements ViewDisplay
         Button submit                   = new Button("Submit");
 
         submit.addClickListener(clickEvent -> {
-
                     try
                     {
                         errorDisplay.setCaption("");
@@ -321,7 +322,6 @@ public class LibraryUI extends UI implements ViewDisplay
                     {
                         errorHelper.genericError(error);
                         Notification.show("Cannot access Add Book service, please try again in a few minutes");
-
                     }
                     catch (ResourceAccessException e)
                     {
@@ -333,6 +333,7 @@ public class LibraryUI extends UI implements ViewDisplay
         tab.addComponents(title,fName,lName, submit);
         return tab;
     }//end addBookInput
+
 
     /**
      * Method used by AddAdminAccordion to create the remove user functionality
@@ -351,6 +352,7 @@ public class LibraryUI extends UI implements ViewDisplay
         return tab;
     }//end removeUser
 
+
     /**
      * Method used by AddAdminAccordion to create the remove book functionality
      * Creates the button and the layout to pin them to
@@ -368,6 +370,7 @@ public class LibraryUI extends UI implements ViewDisplay
         return tab;
     }//end removeBook
 
+
     /**
      * Getter for the panel. Used to change sizes depending on the current view.
      * @return LibraryViewDisplay
@@ -379,6 +382,7 @@ public class LibraryUI extends UI implements ViewDisplay
         return LibraryViewDisplay;
     }//end getLibraryViewDisplay
 
+    
     /**
      * Setter for the panel.
      *

@@ -34,8 +34,8 @@ public class DefaultView extends VerticalLayout implements View {
         HorizontalLayout horizontalLayout = addButtons();
         addComponent(horizontalLayout);
         setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
-
     }
+
 
     /**
      * Sets a listener that automatically changes the default view when a selection is made
@@ -46,6 +46,7 @@ public class DefaultView extends VerticalLayout implements View {
     {
         // This view is constructed in the init() method()
     }
+
 
     /**
      * Creates the button layout
@@ -67,9 +68,9 @@ public class DefaultView extends VerticalLayout implements View {
         layout.setSpacing(true);
         layout.addComponent(checkOut);
 
-
         return layout;
     }
+
 
     /**
      * Creates Check In button
@@ -81,7 +82,6 @@ public class DefaultView extends VerticalLayout implements View {
      */
     private Button addCheckInButton()
     {
-
         Button CheckIn = new Button("Check In");
         CheckIn.addStyleName(ValoTheme.BUTTON_LARGE);
         CheckIn.addClickListener(event -> {
@@ -90,6 +90,7 @@ public class DefaultView extends VerticalLayout implements View {
 
         return CheckIn;
     }
+
 
     /**
      * Creates Check Out button
@@ -101,7 +102,6 @@ public class DefaultView extends VerticalLayout implements View {
      */
     private Button addCheckOutButton()
     {
-
         Button checkOut = new Button("Check Out");
         checkOut.addStyleName(ValoTheme.BUTTON_LARGE);
         checkOut.addClickListener(event -> {

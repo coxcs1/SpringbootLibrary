@@ -63,7 +63,7 @@ public class CheckOut extends VerticalLayout implements View {
         addCheckOutButton();
     }
 
-    
+
     private void addCheckOutButton() {
         checkOut = new Button ("Check Out");
         checkOut.addClickListener(event ->
