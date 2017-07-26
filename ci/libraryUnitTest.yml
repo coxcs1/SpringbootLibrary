@@ -8,7 +8,7 @@ image_resource:
     tag: "latest"
 
 inputs:
-- name: 12FactorSpringLibrary
+- name: 12FactorSpringBootLibrary
 
 run:
   path: sh
