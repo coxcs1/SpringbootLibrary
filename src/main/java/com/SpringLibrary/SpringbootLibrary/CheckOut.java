@@ -8,7 +8,6 @@ package com.SpringLibrary.SpringbootLibrary;
 import Model.Book;
 import Model.Member;
 import Resource.LibraryErrorHelper;
-import Resource.gridHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -58,7 +57,8 @@ public class CheckOut extends VerticalLayout implements View
      * last modified by ricky.clevinger 7/26/17
      */
     @PostConstruct
-    void init() {
+    void init()
+    {
         getLibraryViewDisplay().setSizeFull();
         createFilter();
         createLayout();
@@ -76,7 +76,8 @@ public class CheckOut extends VerticalLayout implements View
      *
      * last modified by ricky.clevinger 7/26/17
      */
-    private void addCheckOutButton() {
+    private void addCheckOutButton()
+    {
         checkOut = new Button ("Check Out");
         checkOut.addClickListener(event ->
         {
@@ -99,8 +100,10 @@ public class CheckOut extends VerticalLayout implements View
                 errorHelper.genericError(error);
                 Notification.show("Please select a book and a user to complete checkout process.");
             }
-        });
+        });//end add listener
+
         addComponent(checkOut);
+
     }//end addCheckOutButton
 
 
@@ -111,25 +114,28 @@ public class CheckOut extends VerticalLayout implements View
      *
      * last modified by ricky.clevinger 7/26/17
      */
-    private void createMemberGrid() {
-        try{
-        members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
+    private void createMemberGrid()
+    {
+        try
+        {
+            members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
 
-        // Create a grid and adds listener to record selected item.
-        memberGrid = new Grid<>();
-        memberGrid.addSelectionListener(event -> {
-            this.memberId = event.getFirstSelectedItem().get().getId() + "";
-        });
+            // Create a grid and adds listener to record selected item.
+            memberGrid = new Grid<>();
 
-        // Sets list to the grid
-        memberGrid.setItems(members);
-        //Specifies what parts of the objects in the grid are shown.
-        memberGrid.addColumn(Member::getFName, new TextRenderer()).setCaption("First Name");
-        memberGrid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
+            memberGrid.addSelectionListener(event -> {
+                this.memberId = event.getFirstSelectedItem().get().getId() + "";
+            });//end add listener
 
-        hLayout.setSizeFull();
-        memberGrid.setSizeFull();
-        hLayout.addComponent(memberGrid);
+            // Sets list to the grid
+            memberGrid.setItems(members);
+            //Specifies what parts of the objects in the grid are shown.
+            memberGrid.addColumn(Member::getFName, new TextRenderer()).setCaption("First Name");
+            memberGrid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
+
+            hLayout.setSizeFull();
+            memberGrid.setSizeFull();
+            hLayout.addComponent(memberGrid);
 
         }
         catch (ResourceAccessException error)
@@ -148,8 +154,10 @@ public class CheckOut extends VerticalLayout implements View
      *
      * last modified by ricky.clevinger 7/26/17
      */
-    private void createBookGrid() {
-        try {
+    private void createBookGrid()
+    {
+        try
+        {
             books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
             bookGrid = new Grid<>();
 
@@ -174,6 +182,7 @@ public class CheckOut extends VerticalLayout implements View
             Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
                     "few minutes");
         }
+
     }//end createBookGrid
 
 
@@ -183,10 +192,12 @@ public class CheckOut extends VerticalLayout implements View
      *
      * last modified by ricky.clevinger 7/26/17
      */
-    private void createLayout() {
+    private void createLayout()
+    {
         hLayout = new HorizontalLayout();
         hLayout.setSpacing(true);
         addComponent(hLayout);
+
     }//end createLayout
 
 
@@ -197,13 +208,17 @@ public class CheckOut extends VerticalLayout implements View
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createFilter()
+    private void createFilter()
     {
+
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
-        titleFilter.addValueChangeListener(event -> {
-                try {
+
+        titleFilter.addValueChangeListener(event ->
+        {
+                try
+                {
                     titleFilterGridChange(event, bookGrid);
                 }
                 catch (NullPointerException error)
@@ -212,14 +227,18 @@ public class CheckOut extends VerticalLayout implements View
                     titleFilter.setValue("");
                     Notification.show("Service unavailable, please try again in a few minutes");
                 }
-                });
+        });
+
         addComponent(titleFilter);
 
         authorFilter = new TextField();
         authorFilter.setWidth(100, Unit.PERCENTAGE);
         authorFilter.setPlaceholder("Last Name...");
-        authorFilter.addValueChangeListener(event -> {
-            try {
+
+        authorFilter.addValueChangeListener(event ->
+        {
+            try
+            {
                 lNameFilterGridChange(event, memberGrid);
             }
             catch (NullPointerException error)
@@ -229,7 +248,9 @@ public class CheckOut extends VerticalLayout implements View
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
         });
+
         addComponent(authorFilter);
+
     }//end createFilter
 
 
@@ -238,7 +259,8 @@ public class CheckOut extends VerticalLayout implements View
      * @param event on view change
      */
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
+    public void enter(ViewChangeListener.ViewChangeEvent event)
+    {
         // This view is constructed in the init() method()
     }//end enter
 }
