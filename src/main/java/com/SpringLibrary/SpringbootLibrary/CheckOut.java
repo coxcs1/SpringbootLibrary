@@ -14,6 +14,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
@@ -84,6 +85,10 @@ public class CheckOut extends VerticalLayout implements View {
 
                 Notification.show("Service unavailable, please try again in a few minutes");
 
+            }
+            catch (HttpClientErrorException error)
+            {
+                Notification.show("Please select a book and a user to complete checkout process.");
             }
         });
 
