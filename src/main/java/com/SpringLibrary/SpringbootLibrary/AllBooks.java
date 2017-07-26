@@ -33,6 +33,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = AllBooks.VIEW_NAME)
 public class AllBooks extends VerticalLayout implements View {
     public static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
+    
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     private TextField authorFilter;   // TextField will be used to filter the results on the grid.
     private Grid<Book> grid;  // Grid that will display and organize books on the all.java page.
