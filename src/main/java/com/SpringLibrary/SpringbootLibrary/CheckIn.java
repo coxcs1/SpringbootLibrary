@@ -1,15 +1,9 @@
 package com.SpringLibrary.SpringbootLibrary;
 
-/**
- * Created by ricky.clevinger on 7/13/2017.
- *
- * last modified by ricky.clevinger on 7/26/17
- */
 import Model.Book;
 import Model.Member;
 import Resource.LibraryErrorHelper;
 import Resource.gridHelper;
-import com.sun.xml.internal.bind.v2.TODO;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -26,10 +20,16 @@ import java.util.List;
 import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
+/**
+ * Created by ricky.clevinger on 7/13/2017.
+ *
+ * last modified by ricky.clevinger on 7/26/17
+ */
+
 @SpringView(name = CheckIn.VIEW_NAME)
 public class CheckIn extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "CheckIn";
+    static final String VIEW_NAME = "CheckIn";
 
     /**
      * Variable Declaration
