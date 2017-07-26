@@ -82,7 +82,8 @@ public class CheckIn extends VerticalLayout implements View
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
         //TODO add value change listener generic method
-        titleFilter.addValueChangeListener(event -> {
+        titleFilter.addValueChangeListener(event ->
+        {
             try
             {
                 titleFilterGridChange(event, bookReturnGrid);
