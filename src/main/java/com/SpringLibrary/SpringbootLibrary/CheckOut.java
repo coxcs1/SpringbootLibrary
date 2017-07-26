@@ -30,17 +30,17 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 public class CheckOut extends VerticalLayout implements View {
     public static final String VIEW_NAME = "CheckOut";
 
-    HorizontalLayout hLayout;
-    Button checkOut;
-    String titleId;  // Id used to determine which item is selected in the grid.
-    String memberId;  // Id used to determine which item is selected in the grid.
+    private HorizontalLayout hLayout;
+    private Button checkOut;
+    private String titleId;  // Id used to determine which item is selected in the grid.
+    private String memberId;  // Id used to determine which item is selected in the grid.
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     private TextField authorFilter;   // TextField will be used to filter the results on the grid.
-    RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
-    List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
-    Grid<Member> memberGrid;
-    Grid<Book> bookGrid;
+    private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
+    private List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
+    private List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
+    private Grid<Member> memberGrid;
+    private Grid<Book> bookGrid;
 
     // Variable containing url to access backing service
     @Value("${my.bookUrl}")
@@ -69,7 +69,6 @@ public class CheckOut extends VerticalLayout implements View {
     private void addCheckOutButton() {
 
         checkOut = new Button ("Check Out");
-
         checkOut.addClickListener(event ->
         {
             try

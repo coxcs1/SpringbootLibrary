@@ -32,10 +32,10 @@ public class AllMembers extends VerticalLayout implements View {
     public static final String VIEW_NAME = "AllMembers";  // Name of the View, or "Page".
     private TextField fNameFilter;   // TextField will be used to filter the results on the grid.
     private TextField lNameFilter;   // TextField will be used to filter the results on the grid.
-    Grid<Member> grid;  // Grid that will display and organize books on the all.java page.
-    String id;  // Id used to determine which item is selected in the grid.
-    RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
+    private Grid<Member> grid;  // Grid that will display and organize books on the all.java page.
+    private String id;  // Id used to determine which item is selected in the grid.
+    private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
+    private List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
 
     // Variable containing url to access backing service
     @Value("${my.bookUrl}")
