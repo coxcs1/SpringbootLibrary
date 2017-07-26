@@ -35,7 +35,6 @@ public class CheckIn extends VerticalLayout implements View
      * Variable Declaration
      */
 
-
     private Grid<Book> bookReturnGrid;
     private String titleId;  // Id used to determine which item is selected in the grid.
     private String memberId;  // Id used to determine which item is selected in the grid.
@@ -67,7 +66,6 @@ public class CheckIn extends VerticalLayout implements View
         setupGrid();
         addCheckInButton();
     }//end init
-
 
 
     /**
@@ -102,7 +100,7 @@ public class CheckIn extends VerticalLayout implements View
 
 
     /**
-     * Creatses Check in button
+     * Creates Check in button
      * Adds checkIn button functionality
      * Sends query to record checkout in transaction database
      * Updates book to it is checked in
@@ -124,24 +122,25 @@ public class CheckIn extends VerticalLayout implements View
                         + 0, String.class);
 
                 getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
-            }
+            }//end try
 
             catch (ResourceAccessException error)
             {
                 errorHelper.genericError(error);
                 Notification.show("Service unavailable, please try again in a few minutes");
-            }
+            }//end catch
             catch (HttpClientErrorException error)
             {
                 errorHelper.genericError(error);
                 Notification.show("Please select a book to check in");
-            }
+            }//end catch
         });
 
         checkIn.setResponsive(true);
         addComponent(checkIn);
         setResponsive(true);
         addComponent(checkIn);
+
     }//end addCheckInButton
 
 
@@ -157,25 +156,27 @@ public class CheckIn extends VerticalLayout implements View
      */
     private void setupGrid()
     {
+
         bookReturnGrid = new Grid<>();
+
         try
         {
-        books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/check/2", Book[].class));
+            books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/check/2", Book[].class));
 
 
-        bookReturnGrid.addSelectionListener(event ->
-        {
-            if (event.getAllSelectedItems().isEmpty())
+            bookReturnGrid.addSelectionListener(event ->
             {
-                this.titleId = 0 + "";
-                this.memberId = 0 + "";
-            }
-            else
-            {
-                this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
-                this.memberId = event.getFirstSelectedItem().get().getMid() + "";
-            }
-        });
+                if (event.getAllSelectedItems().isEmpty())
+                {
+                    this.titleId = 0 + "";
+                    this.memberId = 0 + "";
+                }
+                else
+                {
+                    this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
+                    this.memberId = event.getFirstSelectedItem().get().getMid() + "";
+                }
+        });//end select listener
 
         bookReturnGrid.setItems(books);
 
@@ -188,18 +189,20 @@ public class CheckIn extends VerticalLayout implements View
                         + Book.getMid(), Member[].class)).get(0).getFName() + " "
                         + Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/id/"
                         + Book.getMid(), Member[].class)).get(0).getLName()).setCaption("Checked Out By");
-        bookReturnGrid.addColumn(Book -> gridHelper.overdue(Book.getOutDate(), new Date(System.currentTimeMillis()))).setCaption("Due Date");
+        bookReturnGrid.addColumn(Book -> gridHelper.overdue(Book.getOutDate(),
+                new Date(System.currentTimeMillis()))).setCaption("Due Date");
 
-        }
+        }//end try
         catch (ResourceAccessException error)
         {
             errorHelper.genericError(error);
             Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
                     "few minutes");
-        }
+        }//end catch
 
         bookReturnGrid.setSizeFull();
         addComponent(bookReturnGrid);
+
     }//end setupGrid
 
 
