@@ -67,14 +67,9 @@ public class LibraryUI extends UI implements ViewDisplay
         }
         catch(Exception e)
         {
-
             String message = errorHelper.genericError(e);
-
             Notification.show(message);
-
         }
-
-
     }//end init
 
     /**
@@ -84,14 +79,12 @@ public class LibraryUI extends UI implements ViewDisplay
      * Adds the panel to the base layout and sets its expand ratio
      *
      * last modified by Ricky.Clevinger 7/26/17
-     */
-
+     * */
     private void addDefaultView()
     {
         LibraryViewDisplay = new Panel();
         layout.addComponent(LibraryViewDisplay);
         layout.setExpandRatio(LibraryViewDisplay, 1.0f);
-
     }//end addDefaultView
 
     /**
@@ -121,14 +114,11 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         Label header = new Label ("Welcome to the Library");
         errorDisplay = new Label("");
-
         errorDisplay.addStyleName(ValoTheme.LABEL_H4);
         header.addStyleName(ValoTheme.LABEL_H1);
         header.setSizeUndefined();
         errorDisplay.setSizeUndefined();
-
         layout.addComponents(header, errorDisplay);
-
     }//end addHeader
 
     /**
@@ -140,7 +130,6 @@ public class LibraryUI extends UI implements ViewDisplay
     public void showView(View view)
     {
         LibraryViewDisplay.setContent((Component) view);
-
     }//end showView
 
     /**
@@ -161,7 +150,6 @@ public class LibraryUI extends UI implements ViewDisplay
         accordion.addTab(addAccordionNavigationButtons(), "Navigation");
         accordion.addTab(addAdminAccordion(), "Admin");
         layout.addComponent(accordion);
-
     }//end createAccordion
 
     /**
@@ -199,7 +187,6 @@ public class LibraryUI extends UI implements ViewDisplay
      */
     private Component addAdminAccordion()
     {
-
         Accordion accordion = new Accordion();
         accordion.addStyleName(ValoTheme.ACCORDION_BORDERLESS);
         accordion.setWidth("100%");
@@ -223,12 +210,10 @@ public class LibraryUI extends UI implements ViewDisplay
      */
     private Layout addUserInput()
     {
-
         Layout tab                      = new VerticalLayout();
         com.vaadin.ui.TextField fName   = new com.vaadin.ui.TextField("First Name");
         com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Last Name");
         Button submit                   = new Button("Submit");
-
 
         submit.addClickListener(clickEvent -> {
 
@@ -249,7 +234,6 @@ public class LibraryUI extends UI implements ViewDisplay
 
                     else
                     {
-
                         this.restTemplate.getForObject(bookUrl + "/members/insert/" + firstName + "/"
                             + lastName, String.class);
                         Notification.show(firstName + " "
@@ -257,8 +241,6 @@ public class LibraryUI extends UI implements ViewDisplay
                         fName.setValue("");
                         lName.setValue("");
                     }
-
-
             }//end try
             catch (HttpClientErrorException error)
             {
@@ -277,9 +259,7 @@ public class LibraryUI extends UI implements ViewDisplay
                 Notification.show("Cannot access Add User Service, please try again in a few minutes");
                 errorHelper.genericError(e);
             }
-
         });//end add click event
-
 
         tab.addComponents(fName,lName, submit);
         return tab;
@@ -305,7 +285,6 @@ public class LibraryUI extends UI implements ViewDisplay
         Button submit                   = new Button("Submit");
 
         submit.addClickListener(clickEvent -> {
-
 
                     try
                     {
@@ -339,7 +318,6 @@ public class LibraryUI extends UI implements ViewDisplay
                     catch (HttpClientErrorException error)
                     {
                         errorHelper.httpError(error);
-
                         errorDisplay.setCaption("Cannot access add book service, please try again in a few minutes.");
                     }
                     catch(NullPointerException error)
@@ -353,12 +331,10 @@ public class LibraryUI extends UI implements ViewDisplay
                         Notification.show("Cannot access Add Book service, please try again in a few minutes");
                         errorHelper.genericError(e);
                     }
-
         });//end add click event
 
         tab.addComponents(title,fName,lName, submit);
         return tab;
-
     }//end addBookInput
 
     /**
@@ -376,7 +352,6 @@ public class LibraryUI extends UI implements ViewDisplay
         all.addClickListener(event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
         tab.addComponents(all);
         return tab;
-
     }//end removeUser
 
     /**
@@ -394,7 +369,6 @@ public class LibraryUI extends UI implements ViewDisplay
         all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
         tab.addComponents(all);
         return tab;
-
     }//end removeBook
 
     /**

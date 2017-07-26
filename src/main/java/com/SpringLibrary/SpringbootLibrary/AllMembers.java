@@ -25,7 +25,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 /**
  * Created by ricky.clevinger on 7/12/2017.
  *
- * last modified by ricky.clevinger on 7/19/17
+ * last modified by ricky.clevinger on 7/26/17
  */
 @SpringView(name = AllMembers.VIEW_NAME)
 public class AllMembers extends VerticalLayout implements View {
