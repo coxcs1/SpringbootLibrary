@@ -35,7 +35,7 @@ public class LibraryUI extends UI implements ViewDisplay
      * Variable declaration
      */
     private         RestTemplate restTemplate = new RestTemplate();
-    private         Panel LibraryViewDisplay;
+    private static        Panel LibraryViewDisplay;
     private final   VerticalLayout layout = new VerticalLayout();
     private         Label errorDisplay;
     private         LibraryErrorHelper errorHelper = new LibraryErrorHelper();
@@ -93,7 +93,7 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         LibraryViewDisplay      = new Panel();
         layout.addComponent(LibraryViewDisplay);
-        //LibraryViewDisplay.setSizeUndefined();
+        LibraryViewDisplay.setSizeUndefined();
         layout.setExpandRatio(LibraryViewDisplay, 1.0f);
 
     }//end addDefaultView
@@ -184,9 +184,15 @@ public class LibraryUI extends UI implements ViewDisplay
         Button checkOut = new Button("Check Out");
         Button home     = new Button("Home");
 
-        checkIn.addClickListener(event -> getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME));
-        checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
-        home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+        checkIn.addClickListener(event -> {
+            LibraryViewDisplay.setSizeFull();
+            getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);});
+        checkOut.addClickListener(event -> {
+            LibraryViewDisplay.setSizeFull();
+            getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);});
+        home.addClickListener(event -> {
+            LibraryViewDisplay.setSizeUndefined();
+            getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME);});
 
         tab.addComponents(checkIn, checkOut, home);
 
@@ -377,7 +383,9 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         Layout tab  = new VerticalLayout();
         Button all  = new Button("View All Users");
-        all.addClickListener(event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
+        all.addClickListener(event -> {
+                    getLibraryViewDisplay().setSizeFull();
+                    getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);});
         tab.addComponents(all);
         return tab;
 
@@ -395,10 +403,19 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         Layout tab  = new VerticalLayout();
         Button all  = new Button("View All Books");
-        all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
+        all.addClickListener(event -> {
+            getLibraryViewDisplay().setSizeFull();
+            getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME);});
         tab.addComponents(all);
         return tab;
 
     }//end removeBook
 
+    public static Panel getLibraryViewDisplay() {
+        return LibraryViewDisplay;
+    }
+
+    public void setLibraryViewDisplay(Panel libraryViewDisplay) {
+        LibraryViewDisplay = libraryViewDisplay;
+    }
 }//end LibraryUI

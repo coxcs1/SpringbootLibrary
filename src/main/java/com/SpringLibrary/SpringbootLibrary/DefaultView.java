@@ -12,6 +12,8 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import javax.annotation.PostConstruct;
 
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
+
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View {
     public static final String VIEW_NAME = "";
@@ -79,7 +81,9 @@ public class DefaultView extends VerticalLayout implements View {
 
         Button CheckIn = new Button("Check In");
         CheckIn.addStyleName(ValoTheme.BUTTON_LARGE);
-        CheckIn.addClickListener(event -> getUI().getNavigator().navigateTo("CheckIn"));
+        CheckIn.addClickListener(event -> {
+            getLibraryViewDisplay().setSizeFull();
+            getUI().getNavigator().navigateTo("CheckIn");});
 
         return CheckIn;
     }
@@ -96,7 +100,9 @@ public class DefaultView extends VerticalLayout implements View {
 
         Button checkOut = new Button("Check Out");
         checkOut.addStyleName(ValoTheme.BUTTON_LARGE);
-        checkOut.addClickListener(event -> getUI().getNavigator().navigateTo("CheckOut"));
+        checkOut.addClickListener(event -> {
+            getLibraryViewDisplay().setSizeFull();
+            getUI().getNavigator().navigateTo("CheckOut");});
 
         return checkOut;
     }
