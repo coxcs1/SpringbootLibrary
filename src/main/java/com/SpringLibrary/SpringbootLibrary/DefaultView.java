@@ -14,8 +14,9 @@ import javax.annotation.PostConstruct;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 @SpringView(name = DefaultView.VIEW_NAME)
-public class DefaultView extends VerticalLayout implements View {
-    public static final String VIEW_NAME = "";
+public class DefaultView extends VerticalLayout implements View
+{
+    static final String VIEW_NAME = "";
 
 
     /**
@@ -34,6 +35,7 @@ public class DefaultView extends VerticalLayout implements View {
         HorizontalLayout horizontalLayout = addButtons();
         addComponent(horizontalLayout);
         setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
+
     }//end init
 
 
@@ -58,6 +60,7 @@ public class DefaultView extends VerticalLayout implements View {
         layout.addComponent(checkOut);
 
         return layout;
+
     }//end HorizontalLayout
 
 
@@ -73,11 +76,15 @@ public class DefaultView extends VerticalLayout implements View {
     {
         Button CheckIn = new Button("Check In");
         CheckIn.addStyleName(ValoTheme.BUTTON_LARGE);
-        CheckIn.addClickListener(event -> {
+
+        CheckIn.addClickListener(event ->
+        {
             getLibraryViewDisplay().setSizeFull();
-            getUI().getNavigator().navigateTo("CheckIn");});
+            getUI().getNavigator().navigateTo("CheckIn");
+        });
 
         return CheckIn;
+
     }//end addCheckInButton
 
 
@@ -93,11 +100,14 @@ public class DefaultView extends VerticalLayout implements View {
     {
         Button checkOut = new Button("Check Out");
         checkOut.addStyleName(ValoTheme.BUTTON_LARGE);
-        checkOut.addClickListener(event -> {
+        checkOut.addClickListener(event ->
+        {
             getLibraryViewDisplay().setSizeFull();
-            getUI().getNavigator().navigateTo("CheckOut");});
+            getUI().getNavigator().navigateTo("CheckOut");
+        });
 
         return checkOut;
+
     }//end addCheckOutButton
 
 
