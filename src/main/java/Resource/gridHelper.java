@@ -17,8 +17,8 @@ import com.vaadin.ui.VerticalLayout;
 import java.sql.Date;
 
 
-public class gridHelper extends VerticalLayout implements View {
-
+public class gridHelper extends VerticalLayout implements View
+{
 
      /**
       * Helper function for the createFilter.
@@ -26,9 +26,11 @@ public class gridHelper extends VerticalLayout implements View {
       * @param event
       * last modified by ricky.clevinger 7/19/17
       */
-     public static void titleFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Book> grid) {
+     public static void titleFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Book> grid)
+     {
          ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
          dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
+
      }//end titleFilterGridChange
 
 
@@ -38,9 +40,11 @@ public class gridHelper extends VerticalLayout implements View {
        * @param event
        * last modified by ricky.clevinger 7/19/17
        */
-     public static void fNameFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Member> grid) {
+     public static void fNameFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Member> grid)
+     {
          ListDataProvider<Member> dataProvider = (ListDataProvider<Member>) grid.getDataProvider();
          dataProvider.setFilter(Member::getFName, s -> caseInsensitiveContains(s, event.getValue()));
+
      }//end fNameFilterGridChange
 
 
@@ -50,9 +54,11 @@ public class gridHelper extends VerticalLayout implements View {
        * @param event
        * last modified by ricky.clevinger 7/19/17
        */
-     public static void lNameFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Member> grid) {
+     public static void lNameFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Member> grid)
+     {
          ListDataProvider<Member> dataProvider = (ListDataProvider<Member>) grid.getDataProvider();
          dataProvider.setFilter(Member::getLName, s -> caseInsensitiveContains(s, event.getValue()));
+
      }//end lNameFilterGridChange
 
 
@@ -62,9 +68,11 @@ public class gridHelper extends VerticalLayout implements View {
      * @param event
      * last modified by ricky.clevinger 7/19/17
      */
-    public static void authorFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Book> grid) {
+    public static void authorFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Book> grid)
+    {
         ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
         dataProvider.setFilter(Book::getAuthLName, s -> caseInsensitiveContains(s, event.getValue()));
+
     }//end authorFilterGridChange
 
 
@@ -77,8 +85,10 @@ public class gridHelper extends VerticalLayout implements View {
        *
        * last modified by ricky.clevinger 7/19/17
       */
-     public static Boolean caseInsensitiveContains(String where, String what) {
+     public static Boolean caseInsensitiveContains(String where, String what)
+     {
          return where.toLowerCase().contains(what.toLowerCase());
+
      }//end caseInsensitiveContains
 
 
@@ -90,13 +100,17 @@ public class gridHelper extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/25/17
      */
-    public static String overdue(Date date1, Date date2){
-        if (date1.compareTo(date2) > 0){
+    public static String overdue(Date date1, Date date2)
+    {
+        if (date1.compareTo(date2) > 0)
+        {
             return date1.toString();
         }
-        else {
+        else
+        {
             return "Overdue";
         }
+
     }// end overdue
 
 
@@ -105,10 +119,12 @@ public class gridHelper extends VerticalLayout implements View {
      *
      * last modified by charles.coalson 7/25/17
      */
-    public static String stringClean(String toClean){
+    public static String stringClean(String toClean)
+    {
         String  temp = toClean.trim();
         temp = temp.replaceAll("[^a-zA-Z\\- ]","");
         return temp;
+
     }//end stringClean
 
 
@@ -117,6 +133,8 @@ public class gridHelper extends VerticalLayout implements View {
      * @param viewChangeEvent on view change
      */
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent)
+    {
+
     }
 }
