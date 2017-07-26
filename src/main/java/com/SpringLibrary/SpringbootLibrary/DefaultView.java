@@ -34,18 +34,7 @@ public class DefaultView extends VerticalLayout implements View {
         HorizontalLayout horizontalLayout = addButtons();
         addComponent(horizontalLayout);
         setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
-    }
-
-
-    /**
-     * Sets a listener that automatically changes the default view when a selection is made
-     * @param event on view change
-     */
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event)
-    {
-        // This view is constructed in the init() method()
-    }
+    }//end init
 
 
     /**
@@ -69,7 +58,7 @@ public class DefaultView extends VerticalLayout implements View {
         layout.addComponent(checkOut);
 
         return layout;
-    }
+    }//end HorizontalLayout
 
 
     /**
@@ -89,7 +78,7 @@ public class DefaultView extends VerticalLayout implements View {
             getUI().getNavigator().navigateTo("CheckIn");});
 
         return CheckIn;
-    }
+    }//end addCheckInButton
 
 
     /**
@@ -109,6 +98,17 @@ public class DefaultView extends VerticalLayout implements View {
             getUI().getNavigator().navigateTo("CheckOut");});
 
         return checkOut;
-    }
+    }//end addCheckOutButton
+
+
+    /**
+     * Sets a listener that automatically changes the default view when a selection is made
+     * @param event on view change
+     */
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event)
+    {
+        // This view is constructed in the init() method()
+    }//end
 
 }

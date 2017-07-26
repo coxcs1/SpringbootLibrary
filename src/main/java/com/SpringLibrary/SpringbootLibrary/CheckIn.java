@@ -54,7 +54,7 @@ public class CheckIn extends VerticalLayout implements View {
         addFilters();
         setupGrid();
         addCheckInButton();
-    }
+    }//end init
 
 
     /**
@@ -80,7 +80,7 @@ public class CheckIn extends VerticalLayout implements View {
         });
 
         addComponent(titleFilter);
-    }
+    }//end addFilters
 
 
     /**
@@ -112,7 +112,7 @@ public class CheckIn extends VerticalLayout implements View {
         addComponent(checkIn);
         setResponsive(true);
         addComponent(checkIn);
-    }
+    }//end addCheckInButton
 
 
     /**
@@ -126,7 +126,6 @@ public class CheckIn extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/26/17
      */
     private void setupGrid() {
-
         books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/2", Book[].class));
         bookReturnGrid = new Grid<>();
         bookReturnGrid.addSelectionListener(event -> {
@@ -150,10 +149,15 @@ public class CheckIn extends VerticalLayout implements View {
 
         bookReturnGrid.setSizeFull();
         addComponent(bookReturnGrid);
-    }
+    }//end setupGrid
 
+
+    /**
+     * Sets a listener that automatically changes the default view when a selection is made
+     * @param event on view change
+     */
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         // This view is constructed in the init() method()
-    }
+    }//end enter
 }

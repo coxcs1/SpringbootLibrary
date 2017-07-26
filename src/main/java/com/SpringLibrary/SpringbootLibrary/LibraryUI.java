@@ -143,7 +143,6 @@ public class LibraryUI extends UI implements ViewDisplay
      */
     private void createAccordion()
     {
-
         accordion = new Accordion();
         accordion.addStyleName(ValoTheme.ACCORDION_BORDERLESS);
         //accordion.setWidth("20%");
@@ -392,7 +391,4 @@ public class LibraryUI extends UI implements ViewDisplay
         LibraryViewDisplay = libraryViewDisplay;
     }//end setLibraryViewDisplay
 
-    public static VerticalLayout getLayout() {
-        return layout;
-    }
 }

@@ -29,7 +29,7 @@ public class gridHelper extends VerticalLayout implements View {
      public static void titleFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Book> grid) {
          ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
          dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
-     }//end fNameFilterGridChange
+     }//end titleFilterGridChange
 
 
      /**
@@ -65,7 +65,7 @@ public class gridHelper extends VerticalLayout implements View {
     public static void authorFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Book> grid) {
         ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
         dataProvider.setFilter(Book::getAuthLName, s -> caseInsensitiveContains(s, event.getValue()));
-    }//end titleFilterGridChange
+    }//end authorFilterGridChange
 
 
      /**
@@ -91,7 +91,6 @@ public class gridHelper extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/25/17
      */
     public static String overdue(Date date1, Date date2){
-
         if (date1.compareTo(date2) > 0){
             return date1.toString();
         }
@@ -113,8 +112,11 @@ public class gridHelper extends VerticalLayout implements View {
     }//end stringClean
 
 
+    /**
+     * Sets a listener that automatically changes the default view when a selection is made
+     * @param viewChangeEvent on view change
+     */
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-
     }
 }

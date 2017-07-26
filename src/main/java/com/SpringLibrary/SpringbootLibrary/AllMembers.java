@@ -174,8 +174,12 @@ public class AllMembers extends VerticalLayout implements View {
     }//end createFilter
 
 
+    /**
+     * Sets a listener that automatically changes the default view when a selection is made
+     * @param event on view change
+     */
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         // This view is constructed in the init() method()
-    }
+    }//end enter
 }

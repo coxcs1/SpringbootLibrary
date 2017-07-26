@@ -62,7 +62,7 @@ public class CheckOut extends VerticalLayout implements View {
         createBookGrid();
         createMemberGrid();
         addCheckOutButton();
-    }
+    }//end init
 
 
     /**
@@ -96,7 +96,7 @@ public class CheckOut extends VerticalLayout implements View {
             }
         });
         addComponent(checkOut);
-    }
+    }//end addCheckOutButton
 
 
     /**
@@ -132,7 +132,7 @@ public class CheckOut extends VerticalLayout implements View {
             Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
                     "few minutes");
         }
-    }
+    }//end createMemberGrid
 
 
     /**
@@ -167,7 +167,7 @@ public class CheckOut extends VerticalLayout implements View {
             Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
                     "few minutes");
         }
-    }
+    }//end createBookGrid
 
 
     /**
@@ -180,7 +180,7 @@ public class CheckOut extends VerticalLayout implements View {
         hLayout = new HorizontalLayout();
         hLayout.setSpacing(true);
         addComponent(hLayout);
-    }
+    }//end createLayout
 
 
     /**
@@ -224,8 +224,12 @@ public class CheckOut extends VerticalLayout implements View {
     }//end createFilter
 
 
+    /**
+     * Sets a listener that automatically changes the default view when a selection is made
+     * @param event on view change
+     */
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         // This view is constructed in the init() method()
-    }
+    }//end enter
 }
