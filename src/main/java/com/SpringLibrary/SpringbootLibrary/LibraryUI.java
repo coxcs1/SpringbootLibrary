@@ -155,8 +155,8 @@ public class LibraryUI extends UI implements ViewDisplay
     private void createAccordion()
     {
         accordion = new Accordion();
-        accordion.addStyleName(ValoTheme.ACCORDION_BORDERLESS);
-        //accordion.setWidth("20%");
+        //accordion.addStyleName(ValoTheme.ACCORDION_BORDERLESS);
+        accordion.setWidth("20%");
         accordion.setSizeUndefined();
 
         accordion.addTab(addAccordionNavigationButtons(), "Navigation");
@@ -302,6 +302,7 @@ public class LibraryUI extends UI implements ViewDisplay
                         String authLastName = lName.getValue();
                         String authFirstName = fName.getValue();
                         String bookTitle = title.getValue();
+
                         authFirstName = stringClean(authFirstName);
                         authLastName = stringClean(authLastName);
                         bookTitle = stringClean(bookTitle);

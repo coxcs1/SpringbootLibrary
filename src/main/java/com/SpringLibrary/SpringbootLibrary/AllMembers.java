@@ -26,7 +26,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = AllMembers.VIEW_NAME)
 public class AllMembers extends VerticalLayout implements View
 {
-    static final String VIEW_NAME = "AllMembers";  // Name of the View, or "Page".
+    public static final String VIEW_NAME = "AllMembers";  // Name of the View, or "Page".
 
     /**
      * Variable Declarations
