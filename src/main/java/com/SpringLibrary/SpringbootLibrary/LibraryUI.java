@@ -37,6 +37,7 @@ public class LibraryUI extends UI implements ViewDisplay
     private final   VerticalLayout layout = new VerticalLayout();
     private         Label errorDisplay;
     private         LibraryErrorHelper errorHelper = new LibraryErrorHelper();
+    private static  Accordion accordion;
 
     // Variable containing url to access backing service
     @Value("${my.bookUrl}")
@@ -152,9 +153,10 @@ public class LibraryUI extends UI implements ViewDisplay
     private void createAccordion()
     {
 
-        Accordion accordion = new Accordion();
+        accordion = new Accordion();
         accordion.addStyleName(ValoTheme.ACCORDION_BORDERLESS);
-        accordion.setWidth("20%");
+        //accordion.setWidth("20%");
+        accordion.setSizeUndefined();
 
         accordion.addTab(addAccordionNavigationButtons(), "Navigation");
         accordion.addTab(addAdminAccordion(), "Admin");
