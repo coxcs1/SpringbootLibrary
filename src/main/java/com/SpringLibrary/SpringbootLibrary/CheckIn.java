@@ -7,7 +7,9 @@ package com.SpringLibrary.SpringbootLibrary;
  */
 import Model.Book;
 import Model.Member;
+import Resource.LibraryErrorHelper;
 import Resource.gridHelper;
+import com.sun.xml.internal.bind.v2.TODO;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -25,8 +27,14 @@ import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 @SpringView(name = CheckIn.VIEW_NAME)
-public class CheckIn extends VerticalLayout implements View {
+public class CheckIn extends VerticalLayout implements View
+{
     public static final String VIEW_NAME = "CheckIn";
+
+    /**
+     * Variable Declaration
+     */
+
 
     private Grid<Book> bookReturnGrid;
     private String titleId;  // Id used to determine which item is selected in the grid.
@@ -34,9 +42,12 @@ public class CheckIn extends VerticalLayout implements View {
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     private List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
+    private LibraryErrorHelper errorHelper = new LibraryErrorHelper();//error printer
 
-    // Variable containing url to access backing service
-    @Value("${my.bookMemUrl}")
+    /**
+     * Variable containing url to access backing service
+     */
+    @Value("${my.bookUrl}")
     private String bookUrl;
 
     /**
@@ -49,12 +60,14 @@ public class CheckIn extends VerticalLayout implements View {
      * last modified by ricky.clevinger 7/26/17
      */
     @PostConstruct
-    void init() {
+    void init()
+    {
         getLibraryViewDisplay().setSizeFull();
         addFilters();
         setupGrid();
         addCheckInButton();
     }//end init
+
 
 
     /**
@@ -63,10 +76,12 @@ public class CheckIn extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    private void addFilters() {
+    private void addFilters()
+    {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
+        //TODO add value change listener generic method
         titleFilter.addValueChangeListener(event -> {
             try
             {
@@ -74,6 +89,7 @@ public class CheckIn extends VerticalLayout implements View {
             }
             catch (NullPointerException error)
             {
+                errorHelper.genericError(error);
                 titleFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
@@ -81,6 +97,7 @@ public class CheckIn extends VerticalLayout implements View {
 
         addComponent(titleFilter);
     }//end addFilters
+
 
 
     /**
@@ -91,23 +108,35 @@ public class CheckIn extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/26/17
      */
-    private void addCheckInButton() {
+    private void addCheckInButton()
+    {
         Button checkIn = new Button ("Check In");
-        checkIn.addClickListener(event -> {
-            try {
-                this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 1 + "/" + memberId, String.class);
-                this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 1 + "/" + 0, String.class);
+
+        checkIn.addClickListener(event ->
+        {
+            try
+            {
+                this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 1 + "/"
+                        + memberId, String.class);
+
+                this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 1 + "/"
+                        + 0, String.class);
+
                 getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
             }
+
             catch (ResourceAccessException error)
             {
+                errorHelper.genericError(error);
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
             catch (HttpClientErrorException error)
             {
+                errorHelper.genericError(error);
                 Notification.show("Please select a book to check in");
             }
         });
+
         checkIn.setResponsive(true);
         addComponent(checkIn);
         setResponsive(true);
@@ -125,21 +154,31 @@ public class CheckIn extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/26/17
      */
-    private void setupGrid() {
+    private void setupGrid()
+    {
         books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/2", Book[].class));
         bookReturnGrid = new Grid<>();
-        bookReturnGrid.addSelectionListener(event -> {
-            if (event.getAllSelectedItems().isEmpty()){
+
+        bookReturnGrid.addSelectionListener(event ->
+        {
+            if (event.getAllSelectedItems().isEmpty())
+            {
                 this.titleId = 0 + "";
-                this.memberId = 0 + "";}
-            else {
+                this.memberId = 0 + "";
+            }
+            else
+            {
                 this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
                 this.memberId = event.getFirstSelectedItem().get().getMid() + "";
             }
         });
+
         bookReturnGrid.setItems(books);
+
+
         //Specifies what parts of the objects in the grid are shown.
         bookReturnGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
+
         bookReturnGrid.addColumn(Book ->
                 Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
                         + Book.getMid(), Member[].class)).get(0).getFName() + " "
@@ -157,7 +196,8 @@ public class CheckIn extends VerticalLayout implements View {
      * @param event on view change
      */
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
+    public void enter(ViewChangeListener.ViewChangeEvent event)
+    {
         // This view is constructed in the init() method()
     }//end enter
 }
