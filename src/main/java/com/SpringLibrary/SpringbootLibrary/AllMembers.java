@@ -51,11 +51,13 @@ public class AllMembers extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/26/17
      */
-    void init() {
+    void init()
+    {
         getLibraryViewDisplay().setSizeFull();
         createFilter();
         createMemberGrid();
         createDeleteButton();
+
     }//end init
 
     /**
@@ -64,9 +66,8 @@ public class AllMembers extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createDeleteButton() {
-
-
+    public void createDeleteButton()
+    {
 
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
@@ -96,6 +97,7 @@ public class AllMembers extends VerticalLayout implements View {
 
         // Add delete button to the view.
         addComponent(delete);
+
     }//end createDeleteButton
 
     /**
@@ -105,9 +107,11 @@ public class AllMembers extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createMemberGrid() {
+    public void createMemberGrid()
+    {
 
-        try {
+        try
+        {
 
             // Retrieves the data from the book micro-service.
             members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
@@ -123,16 +127,16 @@ public class AllMembers extends VerticalLayout implements View {
             // Sets list to the grid
             grid.setItems(members);
 
-        //Specifies what parts of the objects in the grid are shown.
-        grid.addColumn(Member::getFName, new TextRenderer()).setCaption("First Name");
-        grid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
+            //Specifies what parts of the objects in the grid are shown.
+            grid.addColumn(Member::getFName, new TextRenderer()).setCaption("First Name");
+            grid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
 
-        grid.setSizeFull();
-        // Add the grid to the view.
-        addComponent(grid);
+            grid.setSizeFull();
+            // Add the grid to the view.
+            addComponent(grid);
         }
-        catch (ResourceAccessException error){
-
+        catch (ResourceAccessException error)
+        {
             Notification.show("The Book Service is currently unavailable. Please try again in a few minutes");
         }
     }//end createGrid
@@ -143,17 +147,49 @@ public class AllMembers extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createFilter() {
+    public void createFilter()
+    {
         fNameFilter = new TextField();
         fNameFilter.setWidth(100, Unit.PERCENTAGE);
         fNameFilter.setPlaceholder("First Name...");
-        fNameFilter.addValueChangeListener(event -> fNameFilterGridChange(event, grid));
+
+        fNameFilter.addValueChangeListener(event ->
+        {
+
+            try
+            {
+                fNameFilterGridChange(event, grid);
+            }
+            catch (NullPointerException error)
+            {
+                fNameFilter.setValue("");
+                Notification.show("Service unavailable, please try again in a few minutes");
+
+            }
+
+        });
         addComponent(fNameFilter);
 
         lNameFilter = new TextField();
         lNameFilter.setWidth(100, Unit.PERCENTAGE);
         lNameFilter.setPlaceholder("Last Name...");
-        lNameFilter.addValueChangeListener(event -> lNameFilterGridChange(event, grid));
+        lNameFilter.addValueChangeListener(event ->
+        {
+
+            try
+            {
+                lNameFilterGridChange(event, grid);
+            }
+            catch (NullPointerException error)
+            {
+                fNameFilter.setValue("");
+                Notification.show("Service unavailable, please try again in a few minutes");
+
+            }
+
+        }
+
+        );
         addComponent(lNameFilter);
     }//end createFilter
 

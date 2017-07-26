@@ -64,7 +64,8 @@ public class CheckIn extends VerticalLayout implements View {
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
 
-        titleFilter.addValueChangeListener(event -> {
+        titleFilter.addValueChangeListener(event ->
+        {
 
             try
             {
@@ -82,11 +83,13 @@ public class CheckIn extends VerticalLayout implements View {
 
     }
 
-    private void addCheckInButton() {
+    private void addCheckInButton()
+    {
         Button checkIn = new Button ("Check In");
         checkIn.addClickListener(event -> {
 
-            try {
+            try
+            {
                 this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 1 + "/" + memberId, String.class);
                 this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 1 + "/" + 0, String.class);
                 getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
@@ -139,7 +142,8 @@ public class CheckIn extends VerticalLayout implements View {
         addComponent(bookReturnGrid);
     }
 
-    private void createLayout() {
+    private void createLayout()
+    {
 
         hLayout = new HorizontalLayout();
         hLayout.setSpacing(true);
@@ -149,7 +153,8 @@ public class CheckIn extends VerticalLayout implements View {
 
 
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
+    public void enter(ViewChangeListener.ViewChangeEvent event)
+    {
         // This view is constructed in the init() method()
     }
 }

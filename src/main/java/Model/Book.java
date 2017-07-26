@@ -21,7 +21,9 @@ public class Book {
     private Date outDate;
 
     // No parameter constructor
-    public Book() {
+    public Book()
+    {
+
     }
 
     //Getters and Setters

@@ -67,7 +67,8 @@ public class AllBooks extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createDeleteButton() {
+    public void createDeleteButton()
+    {
 
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
@@ -167,7 +168,8 @@ public class AllBooks extends VerticalLayout implements View {
         authorFilter = new TextField();
         authorFilter.setWidth(100, Unit.PERCENTAGE);
         authorFilter.setPlaceholder("Last Name...");
-        authorFilter.addValueChangeListener(event -> {
+        authorFilter.addValueChangeListener(event ->
+        {
 
             try
             {

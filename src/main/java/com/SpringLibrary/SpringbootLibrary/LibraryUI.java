@@ -56,8 +56,8 @@ public class LibraryUI extends UI implements ViewDisplay
      * last modified by coalsonc 7/25/17
      */
     @Override
-    protected void init(VaadinRequest request) {
-
+    protected void init(VaadinRequest request)
+    {
         try
         {
             setupLayout();
@@ -403,7 +403,8 @@ public class LibraryUI extends UI implements ViewDisplay
      *
      * Last modified by ricky.clevinger 7/26/17
      */
-    public static Panel getLibraryViewDisplay() {
+    public static Panel getLibraryViewDisplay()
+    {
         return LibraryViewDisplay;
     }//end getLibraryViewDisplay
 
@@ -412,7 +413,8 @@ public class LibraryUI extends UI implements ViewDisplay
      *
      * Last modified by ricky.clevinger 7/26/17
      */
-    public void setLibraryViewDisplay(Panel libraryViewDisplay) {
+    public void setLibraryViewDisplay(Panel libraryViewDisplay)
+    {
         LibraryViewDisplay = libraryViewDisplay;
     }//end setLibraryViewDisplay
 

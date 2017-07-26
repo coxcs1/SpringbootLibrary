@@ -28,7 +28,8 @@ public class DefaultView extends VerticalLayout implements View {
      * last modified by coalsonc 7/26/17
      */
     @PostConstruct
-    void init() {
+    void init()
+    {
         getLibraryViewDisplay().setSizeUndefined();
         setSpacing(true);
         HorizontalLayout horizontalLayout = addButtons();
@@ -42,7 +43,8 @@ public class DefaultView extends VerticalLayout implements View {
      * @param event on view change
      */
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
+    public void enter(ViewChangeListener.ViewChangeEvent event)
+    {
         // This view is constructed in the init() method()
     }
 
@@ -54,7 +56,8 @@ public class DefaultView extends VerticalLayout implements View {
      * @return Horizontal layout containing primary buttons
      * last modified by coalsonc 7/17/17
      */
-    private HorizontalLayout addButtons(){
+    private HorizontalLayout addButtons()
+    {
         //Create layout and buttons
         HorizontalLayout layout = new HorizontalLayout();
         Button checkIn = addCheckInButton();
@@ -77,7 +80,8 @@ public class DefaultView extends VerticalLayout implements View {
      * @return the completed Check In button
      * last modified by coalsonc 7/17/17
      */
-    private Button addCheckInButton(){
+    private Button addCheckInButton()
+    {
 
         Button CheckIn = new Button("Check In");
         CheckIn.addStyleName(ValoTheme.BUTTON_LARGE);
@@ -96,7 +100,8 @@ public class DefaultView extends VerticalLayout implements View {
      * @return the completed Check Out button
      * last modified by coalsonc 7/17/17
      */
-    private Button addCheckOutButton(){
+    private Button addCheckOutButton()
+    {
 
         Button checkOut = new Button("Check Out");
         checkOut.addStyleName(ValoTheme.BUTTON_LARGE);
