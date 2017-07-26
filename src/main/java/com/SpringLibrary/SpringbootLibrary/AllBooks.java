@@ -24,7 +24,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
  */
 @SpringView(name = AllBooks.VIEW_NAME)
 public class AllBooks extends VerticalLayout implements View {
-    public static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
+    static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
 
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     private TextField authorFilter;   // TextField will be used to filter the results on the grid.
@@ -62,7 +62,7 @@ public class AllBooks extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createDeleteButton()
+    private void createDeleteButton()
     {
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
@@ -95,7 +95,7 @@ public class AllBooks extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createBookGrid() {
+    private void createBookGrid() {
         try{
             // Retrieves the data from the book micro-service.
             books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/all", Book[].class));
@@ -135,7 +135,7 @@ public class AllBooks extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createFilter() {
+    private void createFilter() {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Book Title...");
