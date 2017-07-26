@@ -16,7 +16,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View
 {
-    static final String VIEW_NAME = "";
+    public static final String VIEW_NAME = "";
 
 
     /**
