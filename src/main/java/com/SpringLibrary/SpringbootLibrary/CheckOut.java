@@ -59,8 +59,8 @@ public class CheckOut extends VerticalLayout implements View {
     @PostConstruct
     void init() {
         getLibraryViewDisplay().setSizeFull();
-        createLayout();
         createFilter();
+        createLayout();
         createBookGrid();
         createMemberGrid();
         addCheckOutButton();
@@ -102,11 +102,6 @@ public class CheckOut extends VerticalLayout implements View {
 
         try{
         members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
-        memberGrid = new Grid<>();
-        memberGrid.setWidth(100, Unit.PERCENTAGE);
-
-        // Retrieves the data from the book micro-service.
-
 
         // Create a grid and adds listener to record selected item.
         memberGrid = new Grid<>();
@@ -114,8 +109,7 @@ public class CheckOut extends VerticalLayout implements View {
             this.memberId = event.getFirstSelectedItem().get().getId() + "";
         });
 
-        // Sets the width of the grid.
-        memberGrid.setWidth(100, Unit.PERCENTAGE);
+
         // Sets list to the grid
         memberGrid.setItems(members);
         //Specifies what parts of the objects in the grid are shown.
@@ -137,7 +131,6 @@ public class CheckOut extends VerticalLayout implements View {
 
     private void createBookGrid() {
 
-
         try {
             books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
             bookGrid = new Grid<>();
@@ -146,8 +139,6 @@ public class CheckOut extends VerticalLayout implements View {
                 this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
             });
 
-            // Sets the width of the grid.
-            bookGrid.setWidth(100, Unit.PERCENTAGE);
             // Sets list to the grid
             bookGrid.setItems(books);
             //Specifies what parts of the objects in the grid are shown.
@@ -155,7 +146,6 @@ public class CheckOut extends VerticalLayout implements View {
             bookGrid.addColumn(Book ->
                     Book.getAuthFName() + " " + Book.getAuthLName()).setCaption("Author");
 
-            bookGrid.setWidth(100, Unit.PERCENTAGE);
 
             hLayout.setSizeFull();
             bookGrid.setSizeFull();

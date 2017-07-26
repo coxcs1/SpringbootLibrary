@@ -63,7 +63,6 @@ public class CheckIn extends VerticalLayout implements View {
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
-
         titleFilter.addValueChangeListener(event -> {
 
             try
@@ -133,10 +132,10 @@ public class CheckIn extends VerticalLayout implements View {
                         + Book.getMid(), Member[].class)).get(0).getLName()).setCaption("Checked Out By");
         bookReturnGrid.addColumn(Book -> gridHelper.overdue(Book.getOutDate(), new Date(System.currentTimeMillis()))).setCaption("Due Date");
 
-        hLayout.addComponent(bookReturnGrid);
         hLayout.setSizeFull();
         bookReturnGrid.setSizeFull();
         addComponent(bookReturnGrid);
+
     }
 
     private void createLayout() {
