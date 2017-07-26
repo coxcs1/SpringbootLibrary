@@ -1,6 +1,7 @@
 package com.SpringLibrary.SpringbootLibrary;
 
 import Model.Member;
+import Resource.LibraryErrorHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -23,17 +24,25 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
  * last modified by ricky.clevinger on 7/26/17
  */
 @SpringView(name = AllMembers.VIEW_NAME)
-public class AllMembers extends VerticalLayout implements View {
-    public static final String VIEW_NAME = "AllMembers";  // Name of the View, or "Page".
+public class AllMembers extends VerticalLayout implements View
+{
+    static final String VIEW_NAME = "AllMembers";  // Name of the View, or "Page".
 
+    /**
+     * Variable Declarations
+     */
     private TextField fNameFilter;   // TextField will be used to filter the results on the grid.
     private TextField lNameFilter;   // TextField will be used to filter the results on the grid.
     private Grid<Member> grid;  // Grid that will display and organize books on the all.java page.
     private String id;  // Id used to determine which item is selected in the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     private List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
+    private LibraryErrorHelper errorHelper = new LibraryErrorHelper();
 
-    // Variable containing url to access backing service
+    /**
+     * Variable containing url to access backing service
+     */
+
     @Value("${my.bookMemUrl}")
     private String bookUrl;
 
@@ -53,6 +62,7 @@ public class AllMembers extends VerticalLayout implements View {
         createFilter();
         createMemberGrid();
         createDeleteButton();
+
     }//end init
 
 
@@ -62,10 +72,11 @@ public class AllMembers extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createDeleteButton()
+    private void createDeleteButton()
     {
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
+
         delete.addClickListener(event ->
         {
             try
@@ -76,16 +87,19 @@ public class AllMembers extends VerticalLayout implements View {
 
             catch (ResourceAccessException error)
             {
+                errorHelper.genericError(error);
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
             catch (HttpClientErrorException error)
             {
+                errorHelper.genericError(error);
                 Notification.show("Please Select a Member Account to Delete");
             }
-        });
+        });//end click listener
 
         // Add delete button to the view.
         addComponent(delete);
+
     }//end createDeleteButton
 
 
@@ -96,7 +110,7 @@ public class AllMembers extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createMemberGrid()
+    private void createMemberGrid()
     {
         try
         {
@@ -124,6 +138,7 @@ public class AllMembers extends VerticalLayout implements View {
         }
         catch (ResourceAccessException error)
         {
+            errorHelper.genericError(error);
             Notification.show("The Book Service is currently unavailable. Please try again in a few minutes");
         }
     }//end createGrid
@@ -135,11 +150,12 @@ public class AllMembers extends VerticalLayout implements View {
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    public void createFilter()
+    private void createFilter()
     {
         fNameFilter = new TextField();
         fNameFilter.setWidth(100, Unit.PERCENTAGE);
         fNameFilter.setPlaceholder("First Name...");
+
         fNameFilter.addValueChangeListener(event ->
         {
             try
@@ -148,6 +164,7 @@ public class AllMembers extends VerticalLayout implements View {
             }
             catch (NullPointerException error)
             {
+                errorHelper.genericError(error);
                 fNameFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
@@ -157,6 +174,7 @@ public class AllMembers extends VerticalLayout implements View {
         lNameFilter = new TextField();
         lNameFilter.setWidth(100, Unit.PERCENTAGE);
         lNameFilter.setPlaceholder("Last Name...");
+
         lNameFilter.addValueChangeListener(event ->
         {
             try
@@ -165,11 +183,13 @@ public class AllMembers extends VerticalLayout implements View {
             }
             catch (NullPointerException error)
             {
+                errorHelper.genericError(error);
                 fNameFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
         }
         );
+
         addComponent(lNameFilter);
     }//end createFilter
 
