@@ -47,8 +47,8 @@ public class CheckIn extends VerticalLayout implements View
     /**
      * Variable containing url to access backing service
      */
-    @Value("${my.bookUrl}")
-    private String bookUrl;
+    @Value("${my.bookMemUrl}")
+    private String bookMemUrl;
 
     /**
      * Initializes the view..
@@ -116,10 +116,10 @@ public class CheckIn extends VerticalLayout implements View
         {
             try
             {
-                this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 1 + "/"
+                this.restTemplate.getForObject(bookMemUrl + "/trans/insert/" + this.titleId + "/" + 1 + "/"
                         + memberId, String.class);
 
-                this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 1 + "/"
+                this.restTemplate.getForObject(bookMemUrl + "/books/cho/" + this.titleId + "/" + 1 + "/"
                         + 0, String.class);
 
                 getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
@@ -156,7 +156,7 @@ public class CheckIn extends VerticalLayout implements View
      */
     private void setupGrid()
     {
-        books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/2", Book[].class));
+        books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/check/2", Book[].class));
         bookReturnGrid = new Grid<>();
 
         bookReturnGrid.addSelectionListener(event ->
@@ -180,9 +180,9 @@ public class CheckIn extends VerticalLayout implements View
         bookReturnGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
 
         bookReturnGrid.addColumn(Book ->
-                Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
+                Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/id/"
                         + Book.getMid(), Member[].class)).get(0).getFName() + " "
-                        + Arrays.asList(restTemplate.getForObject(bookUrl + "/members/id/"
+                        + Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/id/"
                         + Book.getMid(), Member[].class)).get(0).getLName()).setCaption("Checked Out By");
         bookReturnGrid.addColumn(Book -> gridHelper.overdue(Book.getOutDate(), new Date(System.currentTimeMillis()))).setCaption("Due Date");
 
