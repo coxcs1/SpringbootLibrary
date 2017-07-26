@@ -32,7 +32,6 @@ public class CheckIn extends VerticalLayout implements View {
     String titleId;  // Id used to determine which item is selected in the grid.
     String memberId;  // Id used to determine which item is selected in the grid.
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
-    private HorizontalLayout    gridPanel;
     RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
 
@@ -51,11 +50,10 @@ public class CheckIn extends VerticalLayout implements View {
      */
     @PostConstruct
     void init() {
-
         getLibraryViewDisplay().setSizeFull();
-        createLayout(this);
-        addFilters();
+        createLayout();
         setupGridPanel();
+        addFilters();
         addCheckInButton();
     }
 
@@ -84,7 +82,6 @@ public class CheckIn extends VerticalLayout implements View {
     }
 
     private void addCheckInButton() {
-        VerticalLayout holdsButton = new VerticalLayout();
         Button checkIn = new Button ("Check In");
         checkIn.addClickListener(event -> {
 
@@ -102,16 +99,15 @@ public class CheckIn extends VerticalLayout implements View {
 
         });
         checkIn.setResponsive(true);
-        holdsButton.addComponent(checkIn);
-        holdsButton.setResponsive(true);
-        addComponent(holdsButton);
+        addComponent(checkIn);
+        setResponsive(true);
+        addComponent(checkIn);
     }
 
     private void setupGridPanel() {
 
         books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/2", Book[].class));
 
-        gridPanel = new HorizontalLayout();
         bookReturnGrid = new Grid<>();
         bookReturnGrid.addSelectionListener(event -> {
             if (event.getAllSelectedItems().isEmpty()){
@@ -132,12 +128,18 @@ public class CheckIn extends VerticalLayout implements View {
                         + Book.getMid(), Member[].class)).get(0).getLName()).setCaption("Checked Out By");
         bookReturnGrid.addColumn(Book -> gridHelper.overdue(Book.getOutDate(), new Date(System.currentTimeMillis()))).setCaption("Due Date");
 
-        gridPanel.setResponsive(true);
-
-        gridPanel.addComponent(bookReturnGrid);
-        gridPanel.setSizeFull();
+        hLayout.addComponent(bookReturnGrid);
+        hLayout.setSizeFull();
         bookReturnGrid.setSizeFull();
-        addComponent(gridPanel);
+        addComponent(bookReturnGrid);
+    }
+
+    private void createLayout() {
+
+        hLayout = new HorizontalLayout();
+        hLayout.setSpacing(true);
+        addComponent(hLayout);
+
     }
 
 
