@@ -37,7 +37,7 @@ public class LibraryUI extends UI implements ViewDisplay
     private static  Accordion accordion;
 
     // Variable containing url to access backing service
-    @Value("${my.bookUrl}")
+    @Value("${my.bookMemUrl}")
     private String bookUrl;
 
 

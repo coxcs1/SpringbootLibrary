@@ -41,7 +41,7 @@ public class CheckOut extends VerticalLayout implements View {
     private Grid<Book> bookGrid;
 
     // Variable containing url to access backing service
-    @Value("${my.bookUrl}")
+    @Value("${my.bookMemUrl}")
     private String bookUrl;
 
     /**

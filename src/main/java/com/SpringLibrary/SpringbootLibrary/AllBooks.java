@@ -34,7 +34,7 @@ public class AllBooks extends VerticalLayout implements View {
     private List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
 
     // Variable containing url to access backing service
-    @Value("${my.bookUrl}")
+    @Value("${my.bookMemUrl}")
     private String bookUrl;
 
 

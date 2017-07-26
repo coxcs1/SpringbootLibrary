@@ -28,7 +28,6 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 public class CheckIn extends VerticalLayout implements View {
     public static final String VIEW_NAME = "CheckIn";
 
-    private HorizontalLayout hLayout;
     private Grid<Book> bookReturnGrid;
     private String titleId;  // Id used to determine which item is selected in the grid.
     private String memberId;  // Id used to determine which item is selected in the grid.
@@ -37,7 +36,7 @@ public class CheckIn extends VerticalLayout implements View {
     private List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
 
     // Variable containing url to access backing service
-    @Value("${my.bookUrl}")
+    @Value("${my.bookMemUrl}")
     private String bookUrl;
 
     /**
