@@ -242,6 +242,7 @@ public class LibraryUI extends UI implements ViewDisplay
 
                     if (lastName.equals("") || firstName.equals(""))
                     {
+                        Notification.show("Please Enter a First and Last Name");
                         errorDisplay.setCaption("Please Enter a First and Last Name");
                         lName.setValue("");
                         fName.setValue("");
@@ -311,6 +312,7 @@ public class LibraryUI extends UI implements ViewDisplay
 
                         if (authLastName.equals("") || authFirstName.equals("") || bookTitle.equals(""))
                         {
+                            Notification.show("Please Enter the Author's First Name, Last Name, and Book");
                             errorDisplay.setCaption("Please Enter the Author's First Name, Last Name, and Book"+
                             " Title");
                             fName.setValue("");
