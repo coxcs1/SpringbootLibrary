@@ -37,7 +37,7 @@ public class AllBooks extends VerticalLayout implements View
     private String id;  // Id used to determine which item is selected in the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     private List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
-    private LibraryErrorHelper errorHelper;
+    private LibraryErrorHelper errorHelper = new LibraryErrorHelper();
 
     /**
      * Variable containing url to access backing service
