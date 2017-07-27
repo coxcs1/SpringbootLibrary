@@ -6,6 +6,7 @@ import Resource.LibraryErrorHelper;
 import Resource.gridHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
+import static com.vaadin.ui.UI.getCurrent;
 
 
 /**
@@ -62,6 +64,7 @@ public class CheckIn extends VerticalLayout implements View
     @PostConstruct
     void init()
     {
+
         getLibraryViewDisplay().setSizeFull();
         addFilters();
         setupGrid();
@@ -183,6 +186,7 @@ public class CheckIn extends VerticalLayout implements View
 
 
         //Specifies what parts of the objects in the grid are shown.
+        bookReturnGrid.addColumn(Book::getBookId, new TextRenderer()).setCaption("Book ID");
         bookReturnGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
 
         bookReturnGrid.addColumn(Book ->

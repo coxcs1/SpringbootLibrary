@@ -130,6 +130,7 @@ public class CheckOut extends VerticalLayout implements View
             // Sets list to the grid
             memberGrid.setItems(members);
             //Specifies what parts of the objects in the grid are shown.
+            memberGrid.addColumn(Member::getId, new TextRenderer()).setCaption("Member ID");
             memberGrid.addColumn(Member::getFName, new TextRenderer()).setCaption("First Name");
             memberGrid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
 
@@ -168,6 +169,7 @@ public class CheckOut extends VerticalLayout implements View
             // Sets list to the grid
             bookGrid.setItems(books);
             //Specifies what parts of the objects in the grid are shown.
+            bookGrid.addColumn(Book::getBookId, new TextRenderer()).setCaption("Book ID");
             bookGrid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
             bookGrid.addColumn(Book ->
                     Book.getAuthFName() + " " + Book.getAuthLName()).setCaption("Author");

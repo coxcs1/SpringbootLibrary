@@ -129,6 +129,7 @@ public class AllMembers extends VerticalLayout implements View
             grid.setItems(members);
 
             //Specifies what parts of the objects in the grid are shown.
+            grid.addColumn(Member::getId, new TextRenderer()).setCaption("ID");
             grid.addColumn(Member::getFName, new TextRenderer()).setCaption("First Name");
             grid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
 

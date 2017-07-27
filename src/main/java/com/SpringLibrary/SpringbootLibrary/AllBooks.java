@@ -127,6 +127,7 @@ public class AllBooks extends VerticalLayout implements View
             grid.setItems(books);
 
             //Specifies what parts of the objects in the grid are shown.
+            grid.addColumn(Book::getBookId, new TextRenderer()).setCaption("ID");
             grid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
             grid.addColumn(Book ->
                 Book.getAuthFName() + " " + Book.getAuthLName()).setCaption("Author");
