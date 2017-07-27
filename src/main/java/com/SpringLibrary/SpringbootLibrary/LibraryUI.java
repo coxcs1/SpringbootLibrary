@@ -62,6 +62,7 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         try
         {
+
             setupLayout();
             addHeader();
             addDefaultView();

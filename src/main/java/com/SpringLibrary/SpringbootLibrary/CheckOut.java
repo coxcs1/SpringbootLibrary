@@ -20,6 +20,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import static Resource.gridHelper.lNameFilterGridChange;
 import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
@@ -124,7 +126,14 @@ public class CheckOut extends VerticalLayout implements View
             memberGrid = new Grid<>();
 
             memberGrid.addSelectionListener(event -> {
-                this.memberId = event.getFirstSelectedItem().get().getId() + "";
+                try
+                {
+                    this.memberId = event.getFirstSelectedItem().get().getId() + "";
+                }
+                catch(NoSuchElementException error)
+                {
+                    Notification.show("Double Click Error");
+                }
             });//end add listener
 
             // Sets list to the grid
@@ -144,6 +153,10 @@ public class CheckOut extends VerticalLayout implements View
             Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
                     "few minutes");
         }
+        catch(NoSuchElementException error)
+        {
+            Notification.show("Please dont double click the grids. I promise i'll fix it soon");
+        }
     }//end createMemberGrid
 
 
@@ -161,8 +174,15 @@ public class CheckOut extends VerticalLayout implements View
             books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
             bookGrid = new Grid<>();
 
-            bookGrid.addSelectionListener(event -> {
-                this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
+            bookGrid.addSelectionListener(event ->
+            {
+                try {
+                    this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
+                }
+                catch(NoSuchElementException error)
+                {
+                    Notification.show("Double Click Error");
+                }
             });
 
             // Sets list to the grid

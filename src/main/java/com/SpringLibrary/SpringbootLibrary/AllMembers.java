@@ -14,6 +14,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import static Resource.gridHelper.fNameFilterGridChange;
 import static Resource.gridHelper.lNameFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
@@ -119,8 +121,17 @@ public class AllMembers extends VerticalLayout implements View
 
             // Create a grid and adds listener to record selected item.
             grid = new Grid<>();
-            grid.addSelectionListener(event -> {
-                this.id = event.getFirstSelectedItem().get().getId() + "";
+            grid.addSelectionListener(event ->
+            {
+                try
+                {
+                    this.id = event.getFirstSelectedItem().get().getId() + "";
+                }
+                catch(NoSuchElementException error)
+                {
+                    errorHelper.genericError(error);
+                    Notification.show("Double Click Error");
+                }
             });
 
             // Sets the width of the grid.
