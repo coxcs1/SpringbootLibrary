@@ -272,6 +272,7 @@ public class LibraryUI extends UI implements ViewDisplay
             }
         });//end add click event
 
+        errorDisplay.setCaption("");
         tab.addComponents(fName,lName, submit);
         return tab;
 
@@ -343,6 +344,7 @@ public class LibraryUI extends UI implements ViewDisplay
                     }
         });//end add click event
 
+        errorDisplay.setCaption("");
         tab.addComponents(title,fName,lName, submit);
         return tab;
 
@@ -359,9 +361,13 @@ public class LibraryUI extends UI implements ViewDisplay
      */
     private Layout removeUser()
     {
+
         Layout tab  = new VerticalLayout();
         Button all  = new Button("View All Users");
-        all.addClickListener(event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
+        all.addClickListener(event -> {
+            errorDisplay.setCaption("");
+            getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
+        });
         tab.addComponents(all);
         return tab;
 
@@ -380,7 +386,12 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         Layout tab  = new VerticalLayout();
         Button all  = new Button("View All Books");
-        all.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
+        all.addClickListener(event -> {
+
+            errorDisplay.setCaption("");
+            getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME);
+
+        });
         tab.addComponents(all);
         return tab;
 
