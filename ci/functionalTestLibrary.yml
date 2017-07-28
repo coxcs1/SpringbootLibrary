@@ -19,4 +19,5 @@ run:
   args:
   - -exc
   - |
+    ls -a
     cd built-library
