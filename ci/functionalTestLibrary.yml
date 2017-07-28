@@ -9,6 +9,7 @@ image_resource:
 
 inputs:
 - name: built-library
+- name: 12FactorSpringBootLibrary
 
 #outputs:
 #- name: built-library
