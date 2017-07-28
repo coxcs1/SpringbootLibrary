@@ -41,7 +41,6 @@ public class LibraryUI extends UI implements ViewDisplay
     /**
      * Variable containing url to access backing service
      */
-
     @Value("${my.bookMemUrl}")
     private String bookUrl;
 
@@ -62,7 +61,6 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         try
         {
-
             setupLayout();
             addHeader();
             addDefaultView();

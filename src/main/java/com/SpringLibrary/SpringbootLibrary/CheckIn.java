@@ -6,6 +6,7 @@ import Resource.LibraryErrorHelper;
 import Resource.gridHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
@@ -20,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
-import static com.vaadin.ui.UI.getCurrent;
+
 
 
 /**
@@ -64,7 +65,6 @@ public class CheckIn extends VerticalLayout implements View
     @PostConstruct
     void init()
     {
-
         getLibraryViewDisplay().setSizeFull();
         addFilters();
         setupGrid();
