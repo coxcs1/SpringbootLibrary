@@ -21,3 +21,4 @@ run:
   - |
     ls -a
     cd built-library
+    ps aux | grep X
