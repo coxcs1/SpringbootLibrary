@@ -21,4 +21,5 @@ run:
   - |
     ls -a
     cd built-library
-    ps aux | grep X
+    docker port <container-name|container-id> 4444
+    ps
