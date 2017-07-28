@@ -1,0 +1,21 @@
+
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: selenium/standalone-chrome
+    tag: "latest"
+
+inputs:
+- name: built-library
+
+#outputs:
+#- name: built-library
+
+run:
+  path: sh
+  args:
+  - -exc
+  - |
+    cd built-library
