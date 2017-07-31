@@ -10,6 +10,7 @@ import Model.Member;
 import Resource.LibraryErrorHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
@@ -65,6 +66,7 @@ public class CheckOut extends VerticalLayout implements View
         createBookGrid();
         createMemberGrid();
         addCheckOutButton();
+        Page.getCurrent().setTitle("Check Out");
     }//end init
 
 

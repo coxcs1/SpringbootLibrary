@@ -6,6 +6,7 @@ import Resource.LibraryErrorHelper;
 import Resource.gridHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
@@ -67,6 +68,7 @@ public class CheckIn extends VerticalLayout implements View
         addFilters();
         setupGrid();
         addCheckInButton();
+        Page.getCurrent().setTitle("Check In");
     }//end init
 
 

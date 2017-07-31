@@ -21,5 +21,4 @@ run:
   - |
     ls -a
     cd built-library
-    docker port <container-name|container-id> 4444
     ps

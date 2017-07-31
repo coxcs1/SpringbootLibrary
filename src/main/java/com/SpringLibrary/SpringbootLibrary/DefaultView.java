@@ -7,6 +7,7 @@ package com.SpringLibrary.SpringbootLibrary;
  */
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -35,6 +36,7 @@ public class DefaultView extends VerticalLayout implements View
         HorizontalLayout horizontalLayout = addButtons();
         addComponent(horizontalLayout);
         setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
+        Page.getCurrent().setTitle("CGI Library");
 
     }//end init
 
