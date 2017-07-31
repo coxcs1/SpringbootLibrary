@@ -124,7 +124,9 @@ public class AllMembers extends VerticalLayout implements View
             {
                 try
                 {
-                    this.id = event.getFirstSelectedItem().get().getId() + "";
+                    if(event.getFirstSelectedItem().isPresent()) {
+                        this.id = event.getFirstSelectedItem().get().getId() + "";
+                    }
                 }
                 catch(NoSuchElementException error)
                 {

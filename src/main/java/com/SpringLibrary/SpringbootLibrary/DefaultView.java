@@ -1,10 +1,6 @@
 package com.SpringLibrary.SpringbootLibrary;
 
-/**
- * Created by ricky.clevinger on 7/13/2017.
- *
- * Modified by ricky.clevinger  7/26/17
- */
+
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
@@ -14,11 +10,16 @@ import com.vaadin.ui.themes.ValoTheme;
 import javax.annotation.PostConstruct;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
+/**
+ * Created by ricky.clevinger on 7/13/2017.
+ *
+ * Modified by ricky.clevinger  7/26/17
+ */
+
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "";
-
+    static final String VIEW_NAME = "";
 
     /**
      * Re-sizes the panel

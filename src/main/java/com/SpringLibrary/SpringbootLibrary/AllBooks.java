@@ -121,7 +121,9 @@ public class AllBooks extends VerticalLayout implements View
                 grid.addSelectionListener(event ->
                 {
                     try {
-                        this.id = event.getFirstSelectedItem().get().getBookId() + "";
+                        if(event.getFirstSelectedItem().isPresent()) {
+                            this.id = event.getFirstSelectedItem().get().getBookId() + "";
+                        }
                     }
                     catch(NoSuchElementException error)
                     {

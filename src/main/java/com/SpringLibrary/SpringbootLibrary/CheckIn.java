@@ -32,7 +32,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = CheckIn.VIEW_NAME)
 public class CheckIn extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "CheckIn";
+    static final String VIEW_NAME = "CheckIn";
 
     /**
      * Variable Declaration
@@ -43,7 +43,6 @@ public class CheckIn extends VerticalLayout implements View
     private String memberId;  // Id used to determine which item is selected in the grid.
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    private List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper();//error printer
 
     /**
@@ -83,7 +82,6 @@ public class CheckIn extends VerticalLayout implements View
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
-        //TODO add value change listener generic method
         titleFilter.addValueChangeListener(event ->
         {
             try
@@ -165,7 +163,7 @@ public class CheckIn extends VerticalLayout implements View
 
         try
         {
-            books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/check/2", Book[].class));
+            List<Book> books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/check/2", Book[].class));
 
 
             bookReturnGrid.addSelectionListener(event ->
@@ -177,8 +175,10 @@ public class CheckIn extends VerticalLayout implements View
                 }
                 else
                 {
-                    this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
-                    this.memberId = event.getFirstSelectedItem().get().getMid() + "";
+                    if (event.getFirstSelectedItem().isPresent()) {
+                        this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
+                        this.memberId = event.getFirstSelectedItem().get().getMid() + "";
+                    }
                 }
         });//end select listener
 
