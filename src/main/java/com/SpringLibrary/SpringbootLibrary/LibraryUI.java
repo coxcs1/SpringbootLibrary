@@ -222,58 +222,15 @@ public class LibraryUI extends UI implements ViewDisplay
      */
     private Layout addUserInput()
     {
-        Layout tab                      = new VerticalLayout();
-        com.vaadin.ui.TextField fName   = new com.vaadin.ui.TextField("First Name");
-        com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Last Name");
-        Button submit                   = new Button("Submit");
+        Layout tab  = new VerticalLayout();
+        Button users  = new Button("Add Users");
+        users.addClickListener(event -> {
 
-        submit.addClickListener(clickEvent ->
-        {
+            errorDisplay.setCaption("");
+            getUI().getNavigator().navigateTo(AddUser.VIEW_NAME);
 
-            try
-            {
-                errorDisplay.setCaption("");
-                String lastName = lName.getValue();
-                String firstName = fName.getValue();
-                lastName = stringClean(lastName);
-                firstName = stringClean(firstName);
-
-                    if (lastName.equals("") || firstName.equals(""))
-                    {
-                        Notification.show("Please Enter a First and Last Name");
-                        errorDisplay.setCaption("Please Enter a First and Last Name");
-                        lName.setValue("");
-                        fName.setValue("");
-                    }
-                    else
-                    {
-                        this.restTemplate.getForObject(bookUrl + "/members/insert/" + firstName + "/"
-                            + lastName, String.class);
-                        Notification.show(firstName + " "
-                            + lastName + " has been added as a member.");
-                        fName.setValue("");
-                        lName.setValue("");
-                    }
-            }//end try
-            catch (HttpClientErrorException error)
-            {
-                errorHelper.httpError(error);
-                Notification.show("Cannot access add user service, please try again in a few minutes.");
-            }
-            catch (NullPointerException error)
-            {
-                errorHelper.genericError(error);
-                Notification.show("Cannot access Add User Service, please try again in a few minutes");
-            }
-            catch (ResourceAccessException e)
-            {
-                Notification.show("Cannot access Add User Service, please try again in a few minutes");
-                errorHelper.genericError(e);
-            }
-        });//end add click event
-
-        errorDisplay.setCaption("");
-        tab.addComponents(fName,lName, submit);
+        });
+        tab.addComponents(users);
         return tab;
 
     }//end addUserInput
@@ -289,64 +246,15 @@ public class LibraryUI extends UI implements ViewDisplay
      */
     private Layout addBookInput()
     {
-        Layout tab                      = new VerticalLayout();
-        com.vaadin.ui.TextField title   = new com.vaadin.ui.TextField("Title");
-        com.vaadin.ui.TextField fName   = new com.vaadin.ui.TextField("Author: First Name");
-        com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Author: Last Name");
-        Button submit                   = new Button("Submit");
+        Layout tab  = new VerticalLayout();
+        Button books  = new Button("Add Books");
+        books.addClickListener(event -> {
 
-        submit.addClickListener(clickEvent ->
-        {
-                    try
-                    {
-                        errorDisplay.setCaption("");
-                        String authLastName = lName.getValue();
-                        String authFirstName = fName.getValue();
-                        String bookTitle = title.getValue();
+            errorDisplay.setCaption("");
+            getUI().getNavigator().navigateTo(AddBooks.VIEW_NAME);
 
-                        authFirstName = stringClean(authFirstName);
-                        authLastName = stringClean(authLastName);
-                        bookTitle = stringClean(bookTitle);
-
-                        if (authLastName.equals("") || authFirstName.equals("") || bookTitle.equals(""))
-                        {
-                            Notification.show("Please Enter the Author's First Name, Last Name, and Book");
-                            errorDisplay.setCaption("Please Enter the Author's First Name, Last Name, and Book"+
-                            " Title");
-                            fName.setValue("");
-                            lName.setValue("");
-                            title.setValue("");
-                        }
-                        else
-                        {
-                            this.restTemplate.getForObject(bookUrl + "/books/insert/" + bookTitle + "/"
-                                    + authFirstName + "/" + authLastName + "/1", String.class);
-                            Notification.show(bookTitle + " By " + authFirstName + " "
-                                    + authLastName + " has been added to the library");
-                            title.setValue("");
-                            fName.setValue("");
-                            lName.setValue("");
-                        }
-                    }
-                    catch (HttpClientErrorException error)
-                    {
-                        errorHelper.httpError(error);
-                        errorDisplay.setCaption("Cannot access add book service, please try again in a few minutes.");
-                    }
-                    catch(NullPointerException error)
-                    {
-                        errorHelper.genericError(error);
-                        Notification.show("Cannot access Add Book service, please try again in a few minutes");
-                    }
-                    catch (ResourceAccessException e)
-                    {
-                        Notification.show("Cannot access Add Book service, please try again in a few minutes");
-                        errorHelper.genericError(e);
-                    }
-        });//end add click event
-
-        errorDisplay.setCaption("");
-        tab.addComponents(title,fName,lName, submit);
+        });
+        tab.addComponents(books);
         return tab;
 
     }//end addBookInput
