@@ -152,7 +152,7 @@ public class CheckIn extends VerticalLayout implements View
      * Listener to select a book in the grid
      * Add columns to the grid for title  and author
      * Pulls id and compares to members
-     * Adds coulmns for member name
+     * Adds columns for member name
      * Adds column for due date.
      *
      * last modified by ricky.clevinger 7/26/17
