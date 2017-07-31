@@ -4,6 +4,7 @@ import Model.Book;
 import Resource.LibraryErrorHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
@@ -64,6 +65,7 @@ public class AllBooks extends VerticalLayout implements View
         createFilter();
         createBookGrid();
         createDeleteButton();
+        Page.getCurrent().setTitle("View All Books");
 
     }//end init
 

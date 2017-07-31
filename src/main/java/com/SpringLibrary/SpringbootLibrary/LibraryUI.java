@@ -1,9 +1,11 @@
 package com.SpringLibrary.SpringbootLibrary;
 
 import Resource.LibraryErrorHelper;
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
@@ -26,6 +28,7 @@ import static Resource.gridHelper.stringClean;
 @Theme("valo")
 @SpringUI
 @SpringViewDisplay
+@PreserveOnRefresh
 public class LibraryUI extends UI implements ViewDisplay
 {
     /**

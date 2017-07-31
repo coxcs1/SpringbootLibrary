@@ -4,6 +4,7 @@ import Model.Member;
 import Resource.LibraryErrorHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
@@ -64,6 +65,7 @@ public class AllMembers extends VerticalLayout implements View
         createFilter();
         createMemberGrid();
         createDeleteButton();
+        Page.getCurrent().setTitle("View All Members");
 
     }//end init
 
