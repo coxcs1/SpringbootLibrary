@@ -1,10 +1,5 @@
 package com.SpringLibrary.SpringbootLibrary;
 
-/**
- * Created by ricky.clevinger on 7/12/2017.
- *
- * last modified by ricky.clevinger on 7/26/17
- */
 import Model.Book;
 import Model.Member;
 import Resource.LibraryErrorHelper;
@@ -25,20 +20,23 @@ import static Resource.gridHelper.lNameFilterGridChange;
 import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
+/**
+ * Created by ricky.clevinger on 7/12/2017.
+ *
+ * last modified by ricky.clevinger on 7/31/17
+ */
+
 @SpringView(name = CheckOut.VIEW_NAME)
 public class CheckOut extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "CheckOut";
+    static final String VIEW_NAME = "CheckOut";
 
     private HorizontalLayout hLayout;
-    private Button checkOut;
     private String titleId;  // Id used to determine which item is selected in the grid.
     private String memberId;  // Id used to determine which item is selected in the grid.
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     private TextField authorFilter;   // TextField will be used to filter the results on the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    private List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
-    private List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
     private Grid<Member> memberGrid;
     private Grid<Book> bookGrid;
     private LibraryErrorHelper  errorHelper = new LibraryErrorHelper();
@@ -80,7 +78,7 @@ public class CheckOut extends VerticalLayout implements View
      */
     private void addCheckOutButton()
     {
-        checkOut = new Button ("Check Out");
+        Button checkOut = new Button("Check Out");
         checkOut.addClickListener(event ->
         {
             try
@@ -120,13 +118,15 @@ public class CheckOut extends VerticalLayout implements View
     {
         try
         {
-            members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
+            List<Member> members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
 
             // Create a grid and adds listener to record selected item.
             memberGrid = new Grid<>();
 
             memberGrid.addSelectionListener(event -> {
-                this.memberId = event.getFirstSelectedItem().get().getId() + "";
+                if(event.getFirstSelectedItem().isPresent()) {
+                    this.memberId = event.getFirstSelectedItem().get().getId() + "";
+                }
             });//end add listener
 
             // Sets list to the grid
@@ -160,11 +160,13 @@ public class CheckOut extends VerticalLayout implements View
     {
         try
         {
-            books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
+            List<Book> books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
             bookGrid = new Grid<>();
 
             bookGrid.addSelectionListener(event -> {
-                this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
+                if(event.getFirstSelectedItem().isPresent()) {
+                    this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
+                }
             });
 
             // Sets list to the grid
