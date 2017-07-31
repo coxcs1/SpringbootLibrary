@@ -105,7 +105,7 @@ public class AllMembers extends VerticalLayout implements View
 
 
     /**
-     * Function shall retrieve data from microservice.
+     * Function shall retrieve data from micro-service.
      * Creates and populates the grid.
      * Adds listener to record the user selected item.
      *
