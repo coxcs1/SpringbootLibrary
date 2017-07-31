@@ -22,7 +22,7 @@ import com.vaadin.ui.themes.ValoTheme;
 @Theme("valo")
 @SpringUI
 @SpringViewDisplay
-@PreserveOnRefresh
+//@PreserveOnRefresh
 public class LibraryUI extends UI implements ViewDisplay
 {
     /**
