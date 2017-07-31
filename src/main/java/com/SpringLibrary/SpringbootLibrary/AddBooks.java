@@ -1,6 +1,5 @@
 package com.SpringLibrary.SpringbootLibrary;
 
-import Model.Book;
 import Resource.LibraryErrorHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -10,10 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
-
 import javax.annotation.PostConstruct;
-import java.util.List;
-
 import static Resource.gridHelper.stringClean;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
@@ -32,14 +28,7 @@ public class AddBooks extends VerticalLayout implements View
     /**
      * Variable Declaration
      */
-
-    private         Label errorDisplay;
-    private Grid<Book> bookReturnGrid;
-    private String titleId;  // Id used to determine which item is selected in the grid.
-    private String memberId;  // Id used to determine which item is selected in the grid.
-    private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    private List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper();//error printer
 
     /**
@@ -128,7 +117,7 @@ public class AddBooks extends VerticalLayout implements View
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         addComponents(title,fName,lName, addBook);
 
-    }//end addCheckInButton
+    }//end addBooks
 
 
     /**

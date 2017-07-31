@@ -1,27 +1,17 @@
 package com.SpringLibrary.SpringbootLibrary;
 
-import Model.Book;
-import Model.Member;
 import Resource.LibraryErrorHelper;
-import Resource.gridHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
-import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
-import java.sql.Date;
-import java.util.Arrays;
-import java.util.List;
-
 import static Resource.gridHelper.stringClean;
-import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
-
 
 
 /**
@@ -38,14 +28,7 @@ public class AddUser extends VerticalLayout implements View
     /**
      * Variable Declaration
      */
-
-    private         Label errorDisplay;
-    private Grid<Book> bookReturnGrid;
-    private String titleId;  // Id used to determine which item is selected in the grid.
-    private String memberId;  // Id used to determine which item is selected in the grid.
-    private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    private List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper();//error printer
 
     /**
@@ -69,7 +52,6 @@ public class AddUser extends VerticalLayout implements View
         getLibraryViewDisplay().setSizeUndefined();
         addUser();
     }//end init
-
 
     /**
      * Creates addUser in button
@@ -128,8 +110,7 @@ public class AddUser extends VerticalLayout implements View
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         addComponents(fName,lName, addUser);
 
-    }//end addCheckInButton
-
+    }//end addUser
 
     /**
      * Sets a listener that automatically changes the default view when a selection is made

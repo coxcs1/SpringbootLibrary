@@ -16,7 +16,6 @@ import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import static Resource.gridHelper.fNameFilterGridChange;
 import static Resource.gridHelper.lNameFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;

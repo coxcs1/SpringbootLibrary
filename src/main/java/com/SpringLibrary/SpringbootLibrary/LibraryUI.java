@@ -5,7 +5,6 @@ import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
-import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
@@ -15,10 +14,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestTemplate;
-import static Resource.gridHelper.stringClean;
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -34,7 +29,6 @@ public class LibraryUI extends UI implements ViewDisplay
     /**
      * Variable Declarations
      */
-    private         RestTemplate restTemplate = new RestTemplate();
     private static  Panel LibraryViewDisplay;
     private static  VerticalLayout layout = new VerticalLayout();
     private         Label errorDisplay;
