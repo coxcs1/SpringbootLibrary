@@ -28,17 +28,15 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = AllMembers.VIEW_NAME)
 public class AllMembers extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "AllMembers";  // Name of the View, or "Page".
+    static final String VIEW_NAME = "AllMembers";  // Name of the View, or "Page".
 
     /**
      * Variable Declarations
      */
     private TextField fNameFilter;   // TextField will be used to filter the results on the grid.
-    private TextField lNameFilter;   // TextField will be used to filter the results on the grid.
     private Grid<Member> grid;  // Grid that will display and organize books on the all.java page.
     private String id;  // Id used to determine which item is selected in the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    private List<Member> members; // Used to store data retrieved from micro-service. Placed into the grid.
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper();
 
     /**
@@ -118,7 +116,7 @@ public class AllMembers extends VerticalLayout implements View
         try
         {
             // Retrieves the data from the book micro-service.
-            members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
+            List<Member> members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
 
             // Create a grid and adds listener to record selected item.
             grid = new Grid<>();
@@ -184,7 +182,7 @@ public class AllMembers extends VerticalLayout implements View
         });
         addComponent(fNameFilter);
 
-        lNameFilter = new TextField();
+        TextField lNameFilter = new TextField();
         lNameFilter.setWidth(100, Unit.PERCENTAGE);
         lNameFilter.setPlaceholder("Last Name...");
 
