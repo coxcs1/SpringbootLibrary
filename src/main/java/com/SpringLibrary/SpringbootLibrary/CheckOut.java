@@ -56,6 +56,7 @@ public class CheckOut extends VerticalLayout implements View
      * last modified by ricky.clevinger 7/26/17
      */
     @PostConstruct
+    @SuppressWarnings("unused")
     void init()
     {
         getLibraryViewDisplay().setSizeFull();

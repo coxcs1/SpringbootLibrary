@@ -18,7 +18,7 @@ public class LibraryErrorHelper {
     private void printToLog(Exception error)
     {
         error.printStackTrace();
-        System.out.println(error);
+        System.out.println(error.toString());
     }//end print to log
 
 }

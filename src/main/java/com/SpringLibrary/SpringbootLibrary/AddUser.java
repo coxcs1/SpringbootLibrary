@@ -47,6 +47,7 @@ public class AddUser extends VerticalLayout implements View
      * last modified by ricky.clevinger 7/26/17
      */
     @PostConstruct
+    @SuppressWarnings("unused")
     private void init()
     {
         getLibraryViewDisplay().setSizeUndefined();

@@ -30,6 +30,7 @@ public class DefaultView extends VerticalLayout implements View
      * last modified by coalsonc 7/26/17
      */
     @PostConstruct
+    @SuppressWarnings("unused")
     void init()
     {
         getLibraryViewDisplay().setSizeUndefined();

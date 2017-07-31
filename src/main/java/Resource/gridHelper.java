@@ -22,6 +22,7 @@ public class gridHelper extends VerticalLayout implements View
       */
      public static void titleFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Book> grid)
      {
+         @SuppressWarnings("unchecked")
          ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
          dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
 
@@ -36,6 +37,7 @@ public class gridHelper extends VerticalLayout implements View
        */
      public static void fNameFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Member> grid)
      {
+         @SuppressWarnings("unchecked")
          ListDataProvider<Member> dataProvider = (ListDataProvider<Member>) grid.getDataProvider();
          dataProvider.setFilter(Member::getFName, s -> caseInsensitiveContains(s, event.getValue()));
 
@@ -50,6 +52,7 @@ public class gridHelper extends VerticalLayout implements View
        */
      public static void lNameFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Member> grid)
      {
+         @SuppressWarnings("unchecked")
          ListDataProvider<Member> dataProvider = (ListDataProvider<Member>) grid.getDataProvider();
          dataProvider.setFilter(Member::getLName, s -> caseInsensitiveContains(s, event.getValue()));
 
@@ -64,6 +67,7 @@ public class gridHelper extends VerticalLayout implements View
      */
     public static void authorFilterGridChange(HasValue.ValueChangeEvent<String> event, Grid<Book> grid)
     {
+        @SuppressWarnings("unchecked")
         ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
         dataProvider.setFilter(Book::getAuthLName, s -> caseInsensitiveContains(s, event.getValue()));
 
