@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import java.sql.Date;
 
-
 public class BooksTest {
 
     private Book mockBook = new Book();
