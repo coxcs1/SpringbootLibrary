@@ -72,12 +72,11 @@ public class AddUser extends VerticalLayout implements View
 
 
     /**
-     * Creates Check in button
+     * Creates addUser in button
      * Adds checkIn button functionality
-     * Sends query to record checkout in transaction database
-     * Updates book to it is checked in
+     * Inserts new member into database
      *
-     * last modified by ricky.clevinger 7/26/17
+     * last modified by ricky.clevinger 7/31/17
      */
     private void addUser()
     {

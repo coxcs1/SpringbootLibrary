@@ -66,21 +66,20 @@ public class AddBooks extends VerticalLayout implements View
 
 
     /**
-     * Creates Check in button
-     * Adds checkIn button functionality
-     * Sends query to record checkout in transaction database
-     * Updates book to it is checked in
+     * Creates addbook in button
+     * Adds addbook button functionality
+     * Add new book to the database
      *
-     * last modified by ricky.clevinger 7/26/17
+     * last modified by ricky.clevinger 7/31/17
      */
     private void addBooks()
     {
         com.vaadin.ui.TextField title   = new com.vaadin.ui.TextField("Title");
         com.vaadin.ui.TextField fName   = new com.vaadin.ui.TextField("Author: First Name");
         com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Author: Last Name");
-        Button submit                   = new Button("Submit");
+        Button addBook                   = new Button("Submit");
 
-        submit.addClickListener(event ->
+        addBook.addClickListener(event ->
         {
             try
             {
@@ -127,7 +126,7 @@ public class AddBooks extends VerticalLayout implements View
             }
         });//end add click event
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        addComponents(title,fName,lName, submit);
+        addComponents(title,fName,lName, addBook);
 
     }//end addCheckInButton
 

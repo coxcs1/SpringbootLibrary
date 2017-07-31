@@ -195,8 +195,8 @@ public class LibraryUI extends UI implements ViewDisplay
     /**
      * Method used by CreateAccordion to make the admin activity Accordion
      * Creates the admin accordion and the layout to add to the accordion
-     * Adds listeners to the buttons for admin input.
-     * Adds the inputs and buttons to the layout and returns it to the CreateAccordion method
+     * Adds listeners to the buttons for navigation.
+     * Adds the buttons to the layout and returns it to the CreateAccordion method
      *
      * last modified by ricky.clevinger 7/18/17
      */
@@ -218,7 +218,7 @@ public class LibraryUI extends UI implements ViewDisplay
 
         return tab;
     }// end addAdminAccordion
-    
+
 
     /**
      * Getter for the panel. Used to change sizes depending on the current view.
