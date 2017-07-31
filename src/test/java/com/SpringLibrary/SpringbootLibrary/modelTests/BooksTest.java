@@ -4,10 +4,12 @@ import Model.Book;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.Date;
+
 
 public class BooksTest {
 
-    Book mockBook = new Book();
+    private Book mockBook = new Book();
 
     @Test
     public void getSetTitleTest() throws Exception {
@@ -116,6 +118,22 @@ public class BooksTest {
 
         //What the expected result is
         String expected = "0";
+
+        //Compares expected result with the actual result.
+        Assert.assertEquals(expected, result);
+    }//end getSetMidTest
+
+    @Test
+    public void getSetOutDateTest() throws Exception {
+
+        //setter
+        mockBook.setOutDate(new Date(0));
+
+        //Sets the result using getter
+        String result = mockBook.getOutDate() + "";
+
+        //What the expected result is
+        String expected = "" + new Date(0);
 
         //Compares expected result with the actual result.
         Assert.assertEquals(expected, result);

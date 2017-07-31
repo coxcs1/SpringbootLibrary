@@ -2,18 +2,12 @@ package Resource;
 
 import Model.Member;
 import Model.Book;
-import com.SpringLibrary.SpringbootLibrary.CheckIn;
 import com.vaadin.data.HasValue;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.navigator.ViewDisplay;
-import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
-
 import java.sql.Date;
 
 
@@ -94,8 +88,8 @@ public class gridHelper extends VerticalLayout implements View
 
     /**
      * Compares two dates to see if a due date is past today's date.
-     * @param date1
-     * @param date2
+     * @param date1 First date to compare
+     * @param date2 Second date to compare
      * @return String with current date or Overdue
      *
      * last modified by ricky.clevinger 7/25/17
