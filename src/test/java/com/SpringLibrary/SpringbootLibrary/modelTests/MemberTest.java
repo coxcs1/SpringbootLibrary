@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class MemberTest {
 
-    Member mockMem = new Member();
+    private Member mockMem = new Member();
 
     @Test
     public void getSetIdTest() throws Exception {

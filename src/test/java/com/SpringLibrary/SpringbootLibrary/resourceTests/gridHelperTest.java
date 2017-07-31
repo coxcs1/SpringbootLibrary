@@ -2,18 +2,14 @@ package com.SpringLibrary.SpringbootLibrary.resourceTests;
 
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.sql.Date;
-
 import static Resource.gridHelper.caseInsensitiveContains;
 import static Resource.gridHelper.overdue;
 import static Resource.gridHelper.stringClean;
 
 public class gridHelperTest {
-    Boolean resultBoolean;
-    Boolean expectedBoolean;
-    String expectedString;
-    String resultString;
+    private String expectedString;
+    private String resultString;
 
     @Test
     public void stringCleanBadInputTest() throws Exception {
@@ -67,18 +63,15 @@ public class gridHelperTest {
     @Test
     public void caseInsensitiveContainsTest() throws Exception {
 
-        //What the expected result is
-        expectedBoolean = true;
-
         //Sets the result using getter
-        resultBoolean = caseInsensitiveContains("ROAR","ro");
+        Boolean resultBoolean = caseInsensitiveContains("ROAR", "ro");
         //Compares expected result with the actual result.
-        Assert.assertEquals(expectedBoolean, resultBoolean);
+        Assert.assertEquals(true, resultBoolean);
 
-        expectedBoolean = false;
+
         resultBoolean = caseInsensitiveContains("ROAR","rooooo");
 
-        Assert.assertEquals(expectedBoolean, resultBoolean);
+        Assert.assertEquals(false, resultBoolean);
 
     }
 }
