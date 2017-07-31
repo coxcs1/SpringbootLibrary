@@ -149,6 +149,7 @@ public class LibraryUI extends UI implements ViewDisplay
         accordion.addTab(addAccordionNavigationButtons(), "Navigation");
         accordion.addTab(addAdminAccordion(), "Admin");
         layout.addComponent(accordion);
+
     }//end createAccordion
 
 
@@ -172,7 +173,6 @@ public class LibraryUI extends UI implements ViewDisplay
         home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
 
         tab.addComponents(checkIn, checkOut, home);
-
         return tab;
     }//end addAccordionNavigationButtons
 
