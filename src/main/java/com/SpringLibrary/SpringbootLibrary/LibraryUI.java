@@ -13,7 +13,6 @@ import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -34,12 +33,6 @@ public class LibraryUI extends UI implements ViewDisplay
     private         Label errorDisplay;
     private         LibraryErrorHelper errorHelper = new LibraryErrorHelper();
     private static  Accordion accordion;
-
-    /**
-     * Variable containing url to access backing service
-     */
-    @Value("${my.bookMemUrl}")
-    private String bookUrl;
 
 
     /**
@@ -225,15 +218,5 @@ public class LibraryUI extends UI implements ViewDisplay
         return LibraryViewDisplay;
     }//end getLibraryViewDisplay
 
-
-    /**
-     * Setter for the panel.
-     *
-     * Last modified by ricky.clevinger 7/26/17
-     */
-    public void setLibraryViewDisplay(Panel libraryViewDisplay)
-    {
-        LibraryViewDisplay = libraryViewDisplay;
-    }//end setLibraryViewDisplay
 
 }
