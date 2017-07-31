@@ -202,113 +202,23 @@ public class LibraryUI extends UI implements ViewDisplay
      */
     private Component addAdminAccordion()
     {
-        Accordion accordion = new Accordion();
-        accordion.addStyleName(ValoTheme.ACCORDION_BORDERLESS);
-        accordion.setWidth("100%");
+        Layout tab      = new VerticalLayout();
+        Button addUsers  = new Button("Add User");
+        Button viewUsers  = new Button("View Users");
 
-        accordion.addTab(addUserInput(), "Add User");
-        accordion.addTab(addBookInput(), "Add Book");
-        accordion.addTab(removeUser(), "Remove User");
-        accordion.addTab(removeBook(), "Remove Book");
+        Button addBooks = new Button("Add Books");
+        Button viewBooks  = new Button("View Books");
 
-        return accordion;
+        addUsers.addClickListener(event -> getUI().getNavigator().navigateTo(AddUser.VIEW_NAME));
+        viewUsers.addClickListener(event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
+        addBooks.addClickListener(event -> getUI().getNavigator().navigateTo(AddBooks.VIEW_NAME));
+        viewBooks.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
+
+        tab.addComponents(addUsers, addBooks, viewBooks,viewUsers);
+
+        return tab;
     }// end addAdminAccordion
-
-
-    /**
-     * Method used by AddAdminAccordion to create the add user functionality
-     * Creates the textFields, button, and the layout to pin them to
-     * Adds listeners to the buttons to allow navigation
-     * Adds textFields and a button to layout and returns it to add to accordion for add user
-     *
-     * last modified by ricky.clevinger 7/19/17
-     */
-    private Layout addUserInput()
-    {
-        Layout tab  = new VerticalLayout();
-        Button users  = new Button("Add Users");
-        users.addClickListener(event -> {
-
-            errorDisplay.setCaption("");
-            getUI().getNavigator().navigateTo(AddUser.VIEW_NAME);
-
-        });
-        tab.addComponents(users);
-        return tab;
-
-    }//end addUserInput
-
-
-    /**
-     * Method used by AddAdminAccordion to create the add book functionality
-     * Creates the textFields, button, and the layout to pin them to
-     * Adds listeners to the buttons to allow navigation
-     * Adds textFields and a button to layout and returns it to add to accordion for add book
-     *
-     * Last modified by coalsonc 7/25/17
-     */
-    private Layout addBookInput()
-    {
-        Layout tab  = new VerticalLayout();
-        Button books  = new Button("Add Books");
-        books.addClickListener(event -> {
-
-            errorDisplay.setCaption("");
-            getUI().getNavigator().navigateTo(AddBooks.VIEW_NAME);
-
-        });
-        tab.addComponents(books);
-        return tab;
-
-    }//end addBookInput
-
-
-    /**
-     * Method used by AddAdminAccordion to create the remove user functionality
-     * Creates the button and the layout to pin them to
-     * Adds listeners to the buttons to allow navigation
-     * Adds textFields and a button to layout and returns it to add to accordion for remove user
-     *
-     * last modified by ricky.clevinger 7/18/17
-     */
-    private Layout removeUser()
-    {
-
-        Layout tab  = new VerticalLayout();
-        Button all  = new Button("View All Users");
-        all.addClickListener(event -> {
-            errorDisplay.setCaption("");
-            getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
-        });
-        tab.addComponents(all);
-        return tab;
-
-    }//end removeUser
-
-
-    /**
-     * Method used by AddAdminAccordion to create the remove book functionality
-     * Creates the button and the layout to pin them to
-     * Adds listeners to the buttons to allow navigation
-     * Adds textFields and a button to layout and returns it to add to accordion for remove book
-     *
-     * last modified by ricky.clevinger 7/18/17
-     */
-    private Layout removeBook()
-    {
-        Layout tab  = new VerticalLayout();
-        Button all  = new Button("View All Books");
-        all.addClickListener(event -> {
-
-            errorDisplay.setCaption("");
-            getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME);
-
-        });
-        tab.addComponents(all);
-        return tab;
-
-    }//end removeBook
-
+    
 
     /**
      * Getter for the panel. Used to change sizes depending on the current view.
