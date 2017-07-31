@@ -30,9 +30,7 @@ public class LibraryUI extends UI implements ViewDisplay
      */
     private static  Panel LibraryViewDisplay;
     private static  VerticalLayout layout = new VerticalLayout();
-    private         Label errorDisplay;
     private         LibraryErrorHelper errorHelper = new LibraryErrorHelper();
-    private static  Accordion accordion;
 
 
     /**
@@ -112,7 +110,7 @@ public class LibraryUI extends UI implements ViewDisplay
     private void addHeader()
     {
         Label header = new Label ("Welcome to the Library");
-        errorDisplay = new Label("");
+        Label errorDisplay = new Label("");
         errorDisplay.addStyleName(ValoTheme.LABEL_H4);
         header.addStyleName(ValoTheme.LABEL_H1);
         header.setSizeUndefined();
@@ -143,7 +141,7 @@ public class LibraryUI extends UI implements ViewDisplay
      */
     private void createAccordion()
     {
-        accordion = new Accordion();
+        Accordion accordion = new Accordion();
         //accordion.addStyleName(ValoTheme.ACCORDION_BORDERLESS);
         accordion.setWidth("20%");
         accordion.setSizeUndefined();
@@ -213,7 +211,7 @@ public class LibraryUI extends UI implements ViewDisplay
      *
      * Last modified by ricky.clevinger 7/26/17
      */
-    public static Panel getLibraryViewDisplay()
+    static Panel getLibraryViewDisplay()
     {
         return LibraryViewDisplay;
     }//end getLibraryViewDisplay
