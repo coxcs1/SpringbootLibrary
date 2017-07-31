@@ -28,7 +28,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = AllBooks.VIEW_NAME)
 public class AllBooks extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
+    static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
 
     /**
      * Variable Declarations
@@ -38,7 +38,6 @@ public class AllBooks extends VerticalLayout implements View
     private Grid<Book> grid;  // Grid that will display and organize books on the all.java page.
     private String id;  // Id used to determine which item is selected in the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    private List<Book> books; // Used to store data retrieved from micro-service. Placed into the grid.
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper();
 
     /**
@@ -115,7 +114,7 @@ public class AllBooks extends VerticalLayout implements View
         try
         {
             // Retrieves the data from the book micro-service.
-            books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/all", Book[].class));
+            List<Book> books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/all", Book[].class));
 
                 // Create a grid and adds listener to record selected item.
                 grid = new Grid<>();
@@ -168,7 +167,6 @@ public class AllBooks extends VerticalLayout implements View
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Book Title...");
-        //TODO add a generic version of the add value change
         titleFilter.addValueChangeListener(event -> {
 
             try

@@ -23,7 +23,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = AddUser.VIEW_NAME)
 public class AddUser extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "addUser";
+    static final String VIEW_NAME = "addUser";
 
     /**
      * Variable Declaration
@@ -47,7 +47,7 @@ public class AddUser extends VerticalLayout implements View
      * last modified by ricky.clevinger 7/26/17
      */
     @PostConstruct
-    void init()
+    private void init()
     {
         getLibraryViewDisplay().setSizeUndefined();
         addUser();
