@@ -110,12 +110,9 @@ public class LibraryUI extends UI implements ViewDisplay
     private void addHeader()
     {
         Label header = new Label ("Welcome to the Library");
-        Label errorDisplay = new Label("");
-        errorDisplay.addStyleName(ValoTheme.LABEL_H4);
         header.addStyleName(ValoTheme.LABEL_H1);
         header.setSizeUndefined();
-        errorDisplay.setSizeUndefined();
-        layout.addComponents(header, errorDisplay);
+        layout.addComponent(header);
 
     }//end addHeader
 
@@ -128,7 +125,14 @@ public class LibraryUI extends UI implements ViewDisplay
     @Override
     public void showView(View view)
     {
-        LibraryViewDisplay.setContent((Component) view);
+        try
+        {
+            LibraryViewDisplay.setContent((Component) view);
+        }
+        catch(RuntimeException error)
+        {
+            Notification.show("Notify your administrator of a session ID error");
+        }
     }//end showView
 
 
@@ -143,8 +147,9 @@ public class LibraryUI extends UI implements ViewDisplay
     {
         Accordion accordion = new Accordion();
         //accordion.addStyleName(ValoTheme.ACCORDION_BORDERLESS);
-        accordion.setWidth("20%");
-        accordion.setSizeUndefined();
+        accordion.setWidth("10%");
+        //accordion.setSizeUndefined();
+        accordion.setId("accordion");
 
         accordion.addTab(addAccordionNavigationButtons(), "Navigation");
         accordion.addTab(addAdminAccordion(), "Admin");
@@ -169,9 +174,13 @@ public class LibraryUI extends UI implements ViewDisplay
         Button home     = new Button("Home");
 
         checkIn.addClickListener(event -> getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME));
+        checkIn.setId("nav_checkIn");
         checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
+        checkOut.setId("nav_checkOut");
         home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+        home.setId("nav_home");
 
+        tab.setId("navigation_tab");
         tab.addComponents(checkIn, checkOut, home);
         return tab;
     }//end addAccordionNavigationButtons
@@ -195,10 +204,15 @@ public class LibraryUI extends UI implements ViewDisplay
         Button viewBooks  = new Button("View Books");
 
         addUsers.addClickListener(event -> getUI().getNavigator().navigateTo(AddUser.VIEW_NAME));
+        addUsers.setId("admin_addUsers");
         viewUsers.addClickListener(event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
+        viewUsers.setId("admin_viewUsers");
         addBooks.addClickListener(event -> getUI().getNavigator().navigateTo(AddBooks.VIEW_NAME));
+        addBooks.setId("admin_addBooks");
         viewBooks.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
+        viewBooks.setId("admin_viewBooks");
 
+        tab.setId("admin_tab");
         tab.addComponents(addUsers, addBooks, viewBooks,viewUsers);
 
         return tab;
