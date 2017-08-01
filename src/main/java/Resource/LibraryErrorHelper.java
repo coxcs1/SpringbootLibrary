@@ -21,4 +21,12 @@ public class LibraryErrorHelper {
         System.out.println(error.toString());
     }//end print to log
 
+    public void errorWithMessage(Exception error, String message)
+    {
+        error.printStackTrace();
+        System.out.println(error);
+        System.out.println(message);
+    }
+
+
 }
