@@ -5,6 +5,7 @@ import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
+import com.vaadin.server.ClientConnector;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
@@ -13,6 +14,7 @@ import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
+
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -31,6 +33,7 @@ public class LibraryUI extends UI implements ViewDisplay
     private static  Panel LibraryViewDisplay;
     private VerticalLayout layout = new VerticalLayout();
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper();
+    private ConnectorTracker tracker;
 
 
     /**
@@ -64,6 +67,32 @@ public class LibraryUI extends UI implements ViewDisplay
 
     }//end init
 
+    @Override
+    public ConnectorTracker getConnectorTracker()
+    {
+        if (this.tracker == null)
+        {
+            this.tracker = new ConnectorTracker(this)
+            {
+
+                @Override
+                public void registerConnector(ClientConnector connector)
+                {
+                    try
+                    {
+                        super.registerConnector(connector);
+                    }
+                    catch(RuntimeException error)
+                    {
+                        errorHelper.errorWithMessage(error, "Failed Connector in Library UI");
+
+                    }
+                }
+            };
+        }
+
+        return tracker;
+    }
 
     /**
      * Constructs the default panel that will change based on function selection
