@@ -119,7 +119,7 @@ public class gridHelper extends VerticalLayout implements View
     public static String stringClean(String toClean)
     {
         String  temp = toClean.trim();
-        temp = temp.replaceAll("[^a-zA-Z\\- ]","");
+        temp = temp.replaceAll("[^a-zA-Z.\\- ]","");
         return temp;
 
     }//end stringClean
