@@ -29,8 +29,8 @@ public class LibraryUI extends UI implements ViewDisplay
      * Variable Declarations
      */
     private static  Panel LibraryViewDisplay;
-    private static  VerticalLayout layout = new VerticalLayout();
-    private         LibraryErrorHelper errorHelper = new LibraryErrorHelper();
+    private VerticalLayout layout = new VerticalLayout();
+    private LibraryErrorHelper errorHelper = new LibraryErrorHelper();
 
 
     /**
