@@ -6,4 +6,4 @@ applications:
   timeout: 180
   env:
     JAVA_OPTS: -Djava.security.egd=file:///dev/urando
-#    MY_BOOKMEMURL: https://springboot-books-succulent-lira.cfapps.io
+    MY_BOOKMEMURL: https://springboot-books-succulent-lira.cfapps.io

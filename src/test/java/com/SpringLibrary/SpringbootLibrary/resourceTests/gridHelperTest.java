@@ -56,7 +56,7 @@ public class gridHelperTest
 
         Assert.assertEquals(expectedString, resultString);
     }
-    
+
 
     @Test
     public void caseInsensitiveContainsTest() throws Exception
