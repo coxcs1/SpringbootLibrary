@@ -236,7 +236,6 @@ public class LibraryUI extends UI implements ViewDisplay
         Layout tab          = new VerticalLayout();
         Button addUsers     = new Button("Add User");
         Button viewUsers    = new Button("View Users");
-
         Button addBooks     = new Button("Add Books");
         Button viewBooks    = new Button("View Books");
 
