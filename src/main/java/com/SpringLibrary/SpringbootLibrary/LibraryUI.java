@@ -250,7 +250,7 @@ public class LibraryUI extends UI implements ViewDisplay
         viewBooks.setId("admin_viewBooks");
 
         tab.setId("admin_tab");
-        tab.addComponents(addUsers, addBooks, viewBooks,viewUsers);
+        tab.addComponents(addUsers, viewUsers, addBooks,viewBooks);
 
         return tab;
     }// end addAdminAccordion
