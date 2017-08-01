@@ -50,7 +50,15 @@ public class AddBooks extends VerticalLayout implements View
     @SuppressWarnings("unused")
     private void init()
     {
-        getLibraryViewDisplay().setSizeUndefined();
+        try
+        {
+            getLibraryViewDisplay().setSizeUndefined();
+        }
+        catch(RuntimeException error)
+        {
+            Notification.show("Notify your administrator of a session ID error");
+        }
+
         addBooks();
     }//end init
 
