@@ -80,6 +80,8 @@ public class CheckOut extends VerticalLayout implements View
     private void addCheckOutButton()
     {
         Button checkOut = new Button("Check Out");
+
+        checkOut.setId("button_checkOut");
         checkOut.addClickListener(event ->
         {
             try
@@ -124,8 +126,11 @@ public class CheckOut extends VerticalLayout implements View
             // Create a grid and adds listener to record selected item.
             memberGrid = new Grid<>();
 
-            memberGrid.addSelectionListener(event -> {
-                if(event.getFirstSelectedItem().isPresent()) {
+            memberGrid.setId("grid_members");
+            memberGrid.addSelectionListener(event ->
+            {
+                if(event.getFirstSelectedItem().isPresent())
+                {
                     this.memberId = event.getFirstSelectedItem().get().getId() + "";
                 }
             });//end add listener
@@ -163,9 +168,12 @@ public class CheckOut extends VerticalLayout implements View
         {
             List<Book> books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
             bookGrid = new Grid<>();
+            bookGrid.setId("grid_books");
 
-            bookGrid.addSelectionListener(event -> {
-                if(event.getFirstSelectedItem().isPresent()) {
+            bookGrid.addSelectionListener(event ->
+            {
+                if(event.getFirstSelectedItem().isPresent())
+                {
                     this.titleId = event.getFirstSelectedItem().get().getBookId() + "";
                 }
             });
@@ -220,6 +228,7 @@ public class CheckOut extends VerticalLayout implements View
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
+        titleFilter.setId("search_title");
 
         titleFilter.addValueChangeListener(event ->
         {
@@ -240,6 +249,7 @@ public class CheckOut extends VerticalLayout implements View
         authorFilter = new TextField();
         authorFilter.setWidth(100, Unit.PERCENTAGE);
         authorFilter.setPlaceholder("Last Name...");
+        authorFilter.setId("search_lastName");
 
         authorFilter.addValueChangeListener(event ->
         {

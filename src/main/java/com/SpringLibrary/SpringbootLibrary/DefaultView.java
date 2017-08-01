@@ -78,16 +78,17 @@ public class DefaultView extends VerticalLayout implements View
      */
     private Button addCheckInButton()
     {
-        Button CheckIn = new Button("Check In");
-        CheckIn.addStyleName(ValoTheme.BUTTON_LARGE);
+        Button checkIn = new Button("Check In");
+        checkIn.addStyleName(ValoTheme.BUTTON_LARGE);
+        checkIn.setId("button_checkIn");
 
-        CheckIn.addClickListener(event ->
+        checkIn.addClickListener(event ->
         {
             getLibraryViewDisplay().setSizeFull();
             getUI().getNavigator().navigateTo("CheckIn");
         });
 
-        return CheckIn;
+        return checkIn;
 
     }//end addCheckInButton
 
@@ -103,7 +104,9 @@ public class DefaultView extends VerticalLayout implements View
     private Button addCheckOutButton()
     {
         Button checkOut = new Button("Check Out");
+        checkOut.setId("button_checkOut");
         checkOut.addStyleName(ValoTheme.BUTTON_LARGE);
+
         checkOut.addClickListener(event ->
         {
             getLibraryViewDisplay().setSizeFull();

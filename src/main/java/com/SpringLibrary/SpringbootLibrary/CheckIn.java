@@ -83,6 +83,8 @@ public class CheckIn extends VerticalLayout implements View
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Title...");
+        titleFilter.setId("search_title");
+
         titleFilter.addValueChangeListener(event ->
         {
             try
@@ -113,6 +115,7 @@ public class CheckIn extends VerticalLayout implements View
     private void addCheckInButton()
     {
         Button checkIn = new Button ("Check In");
+        checkIn.setId("button_checkIn");
 
         checkIn.addClickListener(event ->
         {
@@ -161,6 +164,7 @@ public class CheckIn extends VerticalLayout implements View
     {
 
         bookReturnGrid = new Grid<>();
+        bookReturnGrid.setId("grid_bookReturn");
 
         try
         {

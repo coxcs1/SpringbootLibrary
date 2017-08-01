@@ -75,7 +75,13 @@ public class AddBooks extends VerticalLayout implements View
         com.vaadin.ui.TextField title   = new com.vaadin.ui.TextField("Title");
         com.vaadin.ui.TextField fName   = new com.vaadin.ui.TextField("Author: First Name");
         com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Author: Last Name");
-        Button addBook                   = new Button("Submit");
+        Button addBook                  = new Button("Submit");
+
+        title.setId("search_title");
+        fName.setId("search_authorFirstName");
+        lName.setId("search_authorLastName");
+        addBook.setId("button_addBook");
+
 
         addBook.addClickListener(event ->
         {

@@ -78,6 +78,7 @@ public class AllMembers extends VerticalLayout implements View
     {
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
+        delete.setId("button_deleteMember");
 
         delete.addClickListener(event ->
         {
@@ -121,6 +122,7 @@ public class AllMembers extends VerticalLayout implements View
 
             // Create a grid and adds listener to record selected item.
             grid = new Grid<>();
+            grid.setId("grid_member");
             grid.addSelectionListener(event ->
             {
                 try
@@ -132,7 +134,7 @@ public class AllMembers extends VerticalLayout implements View
                 catch(NoSuchElementException error)
                 {
                     errorHelper.genericError(error);
-                    Notification.show("Double Click Error");
+                    Notification.show("Please do not double click the grid");
                 }
             });
 
@@ -169,6 +171,7 @@ public class AllMembers extends VerticalLayout implements View
         fNameFilter = new TextField();
         fNameFilter.setWidth(100, Unit.PERCENTAGE);
         fNameFilter.setPlaceholder("First Name...");
+        fNameFilter.setId("search_authorFirstName");
 
         fNameFilter.addValueChangeListener(event ->
         {
@@ -188,6 +191,7 @@ public class AllMembers extends VerticalLayout implements View
         TextField lNameFilter = new TextField();
         lNameFilter.setWidth(100, Unit.PERCENTAGE);
         lNameFilter.setPlaceholder("Last Name...");
+        lNameFilter.setId("search_authorLastName");
 
         lNameFilter.addValueChangeListener(event ->
         {

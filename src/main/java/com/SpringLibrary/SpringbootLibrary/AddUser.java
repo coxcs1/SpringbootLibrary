@@ -73,8 +73,11 @@ public class AddUser extends VerticalLayout implements View
     private void addUser()
     {
         Button addUser = new Button ("Add User");
+        addUser.setId("button_addUser");
         com.vaadin.ui.TextField fName   = new com.vaadin.ui.TextField("First Name");
+        fName.setId("search_firstName");
         com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Last Name");
+        lName.setId("search_lastName");
 
         addUser.addClickListener(event ->
         {
@@ -117,6 +120,7 @@ public class AddUser extends VerticalLayout implements View
                 errorHelper.genericError(e);
             }
         });//end add click event
+
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         addComponents(fName,lName, addUser);
 

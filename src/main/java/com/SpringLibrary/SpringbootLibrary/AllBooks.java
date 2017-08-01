@@ -79,6 +79,7 @@ public class AllBooks extends VerticalLayout implements View
     {
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
+        delete.setId("button_deleteUser");
         delete.addClickListener(event ->
         {
             try
@@ -119,17 +120,20 @@ public class AllBooks extends VerticalLayout implements View
 
                 // Create a grid and adds listener to record selected item.
                 grid = new Grid<>();
+                grid.setId("grid_books");
                 grid.addSelectionListener(event ->
                 {
-                    try {
-                        if(event.getFirstSelectedItem().isPresent()) {
+                    try
+                    {
+                        if(event.getFirstSelectedItem().isPresent())
+                        {
                             this.id = event.getFirstSelectedItem().get().getBookId() + "";
                         }
                     }
                     catch(NoSuchElementException error)
                     {
                         errorHelper.genericError(error);
-                        Notification.show("Double Click Error");
+                        Notification.show("Please do not double click the grid");
                     }
                 });
 
@@ -170,6 +174,7 @@ public class AllBooks extends VerticalLayout implements View
         titleFilter = new TextField();
         titleFilter.setWidth(100, Unit.PERCENTAGE);
         titleFilter.setPlaceholder("Book Title...");
+        titleFilter.setId("search_title");
         titleFilter.addValueChangeListener(event -> {
 
             try
@@ -189,6 +194,7 @@ public class AllBooks extends VerticalLayout implements View
         authorFilter = new TextField();
         authorFilter.setWidth(100, Unit.PERCENTAGE);
         authorFilter.setPlaceholder("Last Name...");
+        authorFilter.setId("search_authorLastName");
         authorFilter.addValueChangeListener(event ->
         {
             try
