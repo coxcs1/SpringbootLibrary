@@ -10,7 +10,6 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
 import java.sql.Date;
 
-
 public class gridHelper extends VerticalLayout implements View
 {
 
