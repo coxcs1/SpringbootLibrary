@@ -67,7 +67,7 @@ public class gridHelperTest {
         Boolean resultBoolean = caseInsensitiveContains("ROAR", "ro");
         //Compares expected result with the actual result.
         Assert.assertEquals(true, resultBoolean);
-        
+
         resultBoolean = caseInsensitiveContains("ROAR","rooooo");
 
         Assert.assertEquals(false, resultBoolean);
