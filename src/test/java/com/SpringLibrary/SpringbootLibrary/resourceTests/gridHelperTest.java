@@ -7,12 +7,14 @@ import static Resource.gridHelper.caseInsensitiveContains;
 import static Resource.gridHelper.overdue;
 import static Resource.gridHelper.stringClean;
 
-public class gridHelperTest {
+public class gridHelperTest
+{
     private String expectedString;
     private String resultString;
 
     @Test
-    public void stringCleanBadInputTest() throws Exception {
+    public void stringCleanBadInputTest() throws Exception
+    {
 
         //What the expected result is
         expectedString = "";
@@ -25,10 +27,21 @@ public class gridHelperTest {
         resultString = stringClean("!23214");
 
         Assert.assertEquals(expectedString, resultString);
+
+        expectedString = "Moth";
+        resultString = stringClean("      Moth      ");
+
+        Assert.assertEquals(expectedString, resultString);
+
+        expectedString = "Mister Rogers";
+        resultString = stringClean("    Mister Rogers     ");
+
+        Assert.assertEquals(expectedString, resultString);
     }
 
     @Test
-    public void stringCleanGoodInputTest() throws Exception {
+    public void stringCleanGoodInputTest() throws Exception
+    {
 
         //What the expected result is
         expectedString = "Cat";
@@ -45,7 +58,8 @@ public class gridHelperTest {
     }
 
     @Test
-    public void overdueTest() throws Exception {
+    public void overdueTest() throws Exception
+    {
 
         Date date1 = new Date(0);
         Date date2 = new Date(1);
@@ -61,7 +75,8 @@ public class gridHelperTest {
     }
 
     @Test
-    public void caseInsensitiveContainsTest() throws Exception {
+    public void caseInsensitiveContainsTest() throws Exception
+    {
 
         //Sets the result using getter
         Boolean resultBoolean = caseInsensitiveContains("ROAR", "ro");
