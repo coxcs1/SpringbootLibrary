@@ -100,14 +100,14 @@ public class gridHelper extends VerticalLayout implements View
      */
     public static String overdue(Date date1, Date date2)
     {
-        if ((date1.getTime() + (1000*60*60*24*7) ) > (date2.getTime()))
+        if (new Date((date1.getTime() + (1000*60*60*24*7) )).compareTo(new Date(date2.getTime())) > 0)
         {
             Calendar c = Calendar.getInstance();
             c.setTime(date1);
             c.add(Calendar.DATE, 7);
             c.getTime();
 
-            return new Date(c.getTimeInMillis()) + "";
+            return new Date(c.getTimeInMillis()).toString();
         }
         else
         {

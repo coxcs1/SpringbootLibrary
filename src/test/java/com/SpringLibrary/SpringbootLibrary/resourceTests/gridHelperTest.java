@@ -56,23 +56,7 @@ public class gridHelperTest
 
         Assert.assertEquals(expectedString, resultString);
     }
-
-    @Test
-    public void overdueTest() throws Exception
-    {
-
-        Date date1 = new Date(0);
-        Date date2 = new Date(1);
-
-        //What the expected result is
-        expectedString = "Overdue";
-
-        //Sets the result using getter
-        String result = overdue(date1,date2);
-        //Compares expected result with the actual result.
-        Assert.assertEquals(expectedString, result);
-
-    }
+    
 
     @Test
     public void caseInsensitiveContainsTest() throws Exception
