@@ -6,7 +6,9 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.ClientConnector;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
@@ -14,6 +16,9 @@ import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
+import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.context.annotation.Bean;
+import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 
 /**
@@ -25,7 +30,7 @@ import com.vaadin.ui.themes.ValoTheme;
 @SpringUI
 @SpringViewDisplay
 @PreserveOnRefresh
-public class LibraryUI extends UI implements ViewDisplay
+public class LibraryUI extends UI implements ViewDisplay, ClientConnector.DetachListener
 {
     /**
      * Variable Declarations
@@ -56,6 +61,7 @@ public class LibraryUI extends UI implements ViewDisplay
             addHeader();
             addDefaultView();
             createAccordion();
+            //VaadinSession.getCurrent().getSession().setMaxInactiveInterval(30);
 
         }
         catch(Exception e)
@@ -210,9 +216,33 @@ public class LibraryUI extends UI implements ViewDisplay
         Button checkOut = new Button("Check Out");
         Button home     = new Button("Home");
 
-        checkIn.addClickListener(event -> getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME));
+        checkIn.addClickListener(event ->
+        {
+
+            try
+            {
+                getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
+            }
+            catch (BeanCreationException error)
+            {
+                errorHelper.genericError(error);
+                Notification.show("The session has expired.");
+            }
+
+        });
         checkIn.setId("nav_checkIn");
-        checkOut.addClickListener(event -> getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME));
+        checkOut.addClickListener(event ->
+                {
+                    try
+                    {
+                        getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
+                    }
+                    catch (BeanCreationException error)
+                    {
+                        errorHelper.genericError(error);
+                        Notification.show("The session has expired");
+                    }
+                });
         checkOut.setId("nav_checkOut");
         home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
         home.setId("nav_home");
@@ -266,5 +296,14 @@ public class LibraryUI extends UI implements ViewDisplay
         return LibraryViewDisplay;
     }//end getLibraryViewDisplay
 
-
+    /**
+     * Detects the end of a session or a page close and creates a new session if necessary
+     *
+     * @param event
+     */
+    @Override
+    public void detach(DetachEvent event)
+    {
+        VaadinSession.getCurrent().getSession().isNew();
+    }
 }
