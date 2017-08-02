@@ -55,6 +55,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         try
         {
             setupLayout();
+            addMenu();
             addHeader();
             addDefaultView();
             createAccordion();
@@ -167,6 +168,40 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         }
     }//end showView
 
+    private void addMenu() {
+        MenuBar menuBar = new MenuBar();
+        menuBar.setWidth(100,Unit.PERCENTAGE);
+        MenuBar.MenuItem Admin = menuBar.addItem("Admin", null, null);
+        Admin.addItem("Check In",null,(MenuBar.Command) event ->
+        {
+            try
+            {
+                getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
+            }
+            catch (BeanCreationException error)
+            {
+                errorHelper.genericError(error);
+                Notification.show("The session has expired.");
+            }
+        });
+        Admin.addItem("Check Out",null, (MenuBar.Command) event ->
+        {
+            try
+            {
+                getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
+                System.out.println(this.getId());
+            }
+            catch (BeanCreationException error)
+            {
+                errorHelper.genericError(error);
+                Notification.show("The session has expired");
+            }
+        }
+        );
+        Admin.addItem("Home",null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+        layout.addComponent(menuBar);
+
+    }
 
     /**
      * Creates the navigation accordion, sets style and size for readability

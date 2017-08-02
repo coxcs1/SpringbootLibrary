@@ -65,7 +65,6 @@ public class AllBooks extends VerticalLayout implements View
         createBookGrid();
         createDeleteButton();
         Page.getCurrent().setTitle("View All Books");
-
     }//end init
 
 
