@@ -55,10 +55,10 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         try
         {
             setupLayout();
-            addMenu();
             addHeader();
+            addMenu();
             addDefaultView();
-            createAccordion();
+            //createAccordion();
         }
         catch(Exception e)
         {
@@ -170,9 +170,9 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
 
     private void addMenu() {
         MenuBar menuBar = new MenuBar();
-        menuBar.setWidth(100,Unit.PERCENTAGE);
-        MenuBar.MenuItem Admin = menuBar.addItem("Admin", null, null);
-        Admin.addItem("Check In",null,(MenuBar.Command) event ->
+        menuBar.setSizeUndefined();
+        menuBar.addItem("Home",null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+        menuBar.addItem("Check In",null,(MenuBar.Command) event ->
         {
             try
             {
@@ -184,7 +184,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
                 Notification.show("The session has expired.");
             }
         });
-        Admin.addItem("Check Out",null, (MenuBar.Command) event ->
+        menuBar.addItem("Check Out",null, (MenuBar.Command) event ->
         {
             try
             {
@@ -198,7 +198,12 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
             }
         }
         );
-        Admin.addItem("Home",null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+
+        MenuBar.MenuItem Admin = menuBar.addItem("Admin", null, null);
+        Admin.addItem("Add User", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AddUser.VIEW_NAME));
+        Admin.addItem("View Users", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
+        Admin.addItem("Add Book", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AddBooks.VIEW_NAME));
+        Admin.addItem("View Books", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
         layout.addComponent(menuBar);
 
     }
