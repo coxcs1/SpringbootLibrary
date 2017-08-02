@@ -189,7 +189,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
             try
             {
                 getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
-                System.out.println(this.getId());
             }
             catch (BeanCreationException error)
             {
