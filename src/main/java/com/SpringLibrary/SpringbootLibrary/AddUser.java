@@ -54,6 +54,7 @@ public class AddUser extends VerticalLayout implements View
         try
         {
             getLibraryViewDisplay().setSizeUndefined();
+            getLibraryViewDisplay().setResponsive(true);
         }
         catch(RuntimeException error)
         {
