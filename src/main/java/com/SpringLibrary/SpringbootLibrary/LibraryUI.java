@@ -63,7 +63,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         {
             String message = errorHelper.genericError(e);
             Notification.show(message);
-
         }
     }//end init
 
@@ -113,7 +112,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         LibraryViewDisplay = new Panel();
         layout.addComponent(LibraryViewDisplay);
         layout.setExpandRatio(LibraryViewDisplay, 1.0f);
-
     }//end addDefaultView
 
 
@@ -130,7 +128,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         layout.setSpacing(true);
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         setContent(layout);
-
     }//end setupLayout
 
 

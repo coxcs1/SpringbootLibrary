@@ -176,7 +176,6 @@ public class AllBooks extends VerticalLayout implements View
         titleFilter.setPlaceholder("Book Title...");
         titleFilter.setId("search_title");
         titleFilter.addValueChangeListener(event -> {
-
             try
             {
                 titleFilterGridChange(event, grid);

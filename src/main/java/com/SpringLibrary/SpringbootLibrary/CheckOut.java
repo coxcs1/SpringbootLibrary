@@ -211,7 +211,6 @@ public class CheckOut extends VerticalLayout implements View
         hLayout.setSpacing(true);
         hLayout.setSizeFull();
         addComponent(hLayout);
-
     }//end createLayout
 
 
@@ -266,7 +265,6 @@ public class CheckOut extends VerticalLayout implements View
         });
 
         addComponent(authorFilter);
-
     }//end createFilter
 
 
