@@ -186,9 +186,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     private void createAccordion()
     {
         Accordion accordion = new Accordion();
-        //accordion.addStyleName(ValoTheme.ACCORDION_BORDERLESS);
-        accordion.setWidth("10%");
-        //accordion.setSizeUndefined();
+        accordion.setSizeUndefined();
         accordion.setId("accordion");
 
         accordion.addTab(addAccordionNavigationButtons(), "Navigation");
@@ -296,7 +294,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     /**
      * Detects the end of a session or a page close and creates a new session if necessary
      *
-     * @param event
+     * @param event the Detach event
      */
     @Override
     public void detach(DetachEvent event)
