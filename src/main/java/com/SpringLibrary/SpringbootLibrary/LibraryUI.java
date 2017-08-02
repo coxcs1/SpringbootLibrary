@@ -58,8 +58,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
             addHeader();
             addDefaultView();
             createAccordion();
-            //VaadinSession.getCurrent().getSession().setMaxInactiveInterval(30);
-
         }
         catch(Exception e)
         {
@@ -67,7 +65,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
             Notification.show(message);
 
         }
-
     }//end init
 
     /**
@@ -85,7 +82,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         {
             this.tracker = new ConnectorTracker(this)
             {
-
                 @Override
                 public void registerConnector(ClientConnector connector)
                 {
@@ -96,7 +92,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
                     catch(RuntimeException error)
                     {
                         errorHelper.errorWithMessage(error, "Failed Connector in Library UI");
-
                     }
                 }
             };
@@ -192,7 +187,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         accordion.addTab(addAccordionNavigationButtons(), "Navigation");
         accordion.addTab(addAdminAccordion(), "Admin");
         layout.addComponent(accordion);
-
     }//end createAccordion
 
 
@@ -213,7 +207,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
 
         checkIn.addClickListener(event ->
         {
-
             try
             {
                 getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
@@ -223,7 +216,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
                 errorHelper.genericError(error);
                 Notification.show("The session has expired.");
             }
-
         });
         checkIn.setId("nav_checkIn");
         checkOut.addClickListener(event ->
