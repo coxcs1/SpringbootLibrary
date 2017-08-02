@@ -17,7 +17,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.BeanCreationException;
 
-
 /**
  * Created by ricky.clevinger on 7/12/2017.
  *
@@ -197,14 +196,12 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
             }
         }
         );
-
         MenuBar.MenuItem Admin = menuBar.addItem("Admin", null, null);
         Admin.addItem("Add User", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AddUser.VIEW_NAME));
         Admin.addItem("View Users", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
         Admin.addItem("Add Book", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AddBooks.VIEW_NAME));
         Admin.addItem("View Books", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
         layout.addComponent(menuBar);
-
     }
 
     /**
