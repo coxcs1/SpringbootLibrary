@@ -237,6 +237,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         Button checkOut = new Button("Check Out");
         Button home     = new Button("Home");
 
+        checkIn.setId("nav_checkIn");
         checkIn.addClickListener(event ->
         {
             try
@@ -249,7 +250,8 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
                 Notification.show("The session has expired.");
             }
         });
-        checkIn.setId("nav_checkIn");
+
+        checkOut.setId("nav_checkOut");
         checkOut.addClickListener(event ->
                 {
                     try
@@ -262,13 +264,25 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
                         Notification.show("The session has expired");
                     }
                 });
-        checkOut.setId("nav_checkOut");
-        home.addClickListener(event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+
         home.setId("nav_home");
+        home.addClickListener(event ->
+                {
+                    try
+                    {
+                        getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME);
+                    }
+                    catch (BeanCreationException error)
+                    {
+                        errorHelper.genericError(error);
+                        Notification.show("The session has expired");
+                    }
+                });
 
         tab.setId("navigation_tab");
         tab.addComponents(checkIn, checkOut, home);
         return tab;
+
     }//end addAccordionNavigationButtons
 
 
@@ -318,7 +332,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     /**
      * Detects the end of a session or a page close and creates a new session if necessary
      *
-     * @param event the Detach event
+     * @param event session close
      */
     @Override
     public void detach(DetachEvent event)
