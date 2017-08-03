@@ -44,7 +44,7 @@ public class AllMembers extends VerticalLayout implements View
      */
 
     @Value("${my.bookMemUrl}")
-    private String bookUrl;
+    private String bookMemUrl;
 
     /**
      * Initializes the view..
@@ -84,7 +84,7 @@ public class AllMembers extends VerticalLayout implements View
         {
             try
             {
-                this.restTemplate.getForObject(bookUrl + "/members/delete/" + this.id, String.class);
+                this.restTemplate.getForObject(bookMemUrl + "/members/delete/" + this.id, String.class);
                 getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
             }
 
@@ -118,7 +118,7 @@ public class AllMembers extends VerticalLayout implements View
         try
         {
             // Retrieves the data from the book micro-service.
-            List<Member> members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
+            List<Member> members = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/all", Member[].class));
 
             // Create a grid and adds listener to record selected item.
             grid = new Grid<>();

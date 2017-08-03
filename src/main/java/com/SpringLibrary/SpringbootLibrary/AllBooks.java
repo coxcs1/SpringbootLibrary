@@ -44,7 +44,7 @@ public class AllBooks extends VerticalLayout implements View
      * Variable containing url to access backing service
      */
     @Value("${my.bookMemUrl}")
-    private String bookUrl;
+    private String bookMemUrl;
 
 
     /**
@@ -83,7 +83,7 @@ public class AllBooks extends VerticalLayout implements View
         {
             try
             {
-                this.restTemplate.getForObject(bookUrl + "/books/delete/" + this.id, String.class);
+                this.restTemplate.getForObject(bookMemUrl + "/books/delete/" + this.id, String.class);
                 getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME);
             }
 
@@ -115,7 +115,7 @@ public class AllBooks extends VerticalLayout implements View
         try
         {
             // Retrieves the data from the book micro-service.
-            List<Book> books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/all", Book[].class));
+            List<Book> books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/all", Book[].class));
 
                 // Create a grid and adds listener to record selected item.
                 grid = new Grid<>();
