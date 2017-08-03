@@ -11,7 +11,9 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
@@ -144,6 +146,10 @@ public class CheckIn extends VerticalLayout implements View
                 errorHelper.genericError(error);
                 Notification.show("Please select a book to check in");
             }//end catch
+            catch (HttpServerErrorException | HttpMessageNotReadableException error){
+                errorHelper.genericError(error);
+                Notification.show("No Book Selected");
+            }
         });
 
         checkIn.setResponsive(true);

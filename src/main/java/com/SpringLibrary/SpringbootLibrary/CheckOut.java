@@ -10,7 +10,9 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.TextRenderer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
@@ -39,7 +41,7 @@ public class CheckOut extends VerticalLayout implements View
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     private Grid<Member> memberGrid; // Grid used to display the members.
     private Grid<Book> bookGrid; // Grid used to display the books.
-    private LibraryErrorHelper  errorHelper = new LibraryErrorHelper();
+    private LibraryErrorHelper  errorHelper = new LibraryErrorHelper(); // Instantiates the LibraryErrorHelper
 
     // Variable containing url to access backing service
     @Value("${my.bookMemUrl}")
@@ -110,6 +112,10 @@ public class CheckOut extends VerticalLayout implements View
                 errorHelper.genericError(error);
                 Notification.show("Please select a book and a user to complete checkout process.");
             }
+            catch (HttpServerErrorException | HttpMessageNotReadableException error){
+                errorHelper.genericError(error);
+                Notification.show("No Book Selected");
+            }
         });//end add listener
 
         addComponent(checkOut);
@@ -155,7 +161,6 @@ public class CheckOut extends VerticalLayout implements View
             memberGrid.getColumns().get(2).setResizable(false);
 
             hLayout.addComponent(memberGrid);
-
         }
         catch (ResourceAccessException error)
         {
