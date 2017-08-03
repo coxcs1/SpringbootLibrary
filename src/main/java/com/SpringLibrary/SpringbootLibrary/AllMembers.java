@@ -40,9 +40,9 @@ public class AllMembers extends VerticalLayout implements View
     private String id;  // Id used to determine which item is selected in the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper(); // Creates instance of LibraryErrorHelper
-    private HorizontalLayout hLayout = new HorizontalLayout();
-    private VerticalLayout popupContent = new VerticalLayout();
-    private PopupView popup;
+    private HorizontalLayout hLayout = new HorizontalLayout(); // Layout that hold the delete button and the popup
+    private VerticalLayout popupContent = new VerticalLayout(); // Layout that hold the popup components
+    private PopupView popup; // Popup that appears when delete button is clicked
 
     /**
      * Variable containing url to access backing service
