@@ -42,9 +42,9 @@ public class AllMembers extends VerticalLayout implements View
     private Button yes = new Button("Yes");
     private Button no = new Button("No");
     private Label label = new Label("Are you sure?");
-    HorizontalLayout hLayout = new HorizontalLayout();
-    VerticalLayout popupContent = new VerticalLayout();
-    PopupView popup = new PopupView(null, popupContent);
+    private HorizontalLayout hLayout = new HorizontalLayout();
+    private VerticalLayout popupContent = new VerticalLayout();
+    private PopupView popup = new PopupView(null, popupContent);
 
     /**
      * Variable containing url to access backing service
@@ -134,10 +134,6 @@ public class AllMembers extends VerticalLayout implements View
             {
                 errorHelper.genericError(error);
                 Notification.show("Please Select a Member Account to Delete");
-            }
-            catch (NullPointerException error){
-                errorHelper.genericError(error);
-                Notification.show("No Member Selected");
             }
             catch (NumberFormatException error){
                 errorHelper.genericError(error);
