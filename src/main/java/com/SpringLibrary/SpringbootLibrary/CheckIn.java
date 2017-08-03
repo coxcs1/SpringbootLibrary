@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
-import static com.vaadin.ui.UI.getCurrent;
 
 
 /**
@@ -132,7 +131,7 @@ public class CheckIn extends VerticalLayout implements View
                 }
                 else{
                     Notification.show("Book has already been checked in.");
-                    Page.getCurrent().reload();
+                    getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
                 }
             }//end try
 

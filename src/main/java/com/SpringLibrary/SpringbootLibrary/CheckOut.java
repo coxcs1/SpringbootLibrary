@@ -93,11 +93,11 @@ public class CheckOut extends VerticalLayout implements View
                     this.restTemplate.getForObject(bookMemUrl + "/books/cho/" + this.titleId + "/" + 2 + "/"
                       + memberId, String.class);
 
-                    Page.getCurrent().reload();
+                    getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
                 }
                 else{
                     Notification.show("Book has already been checked in.");
-                    Page.getCurrent().reload();
+                    getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
                 }
             }
             catch (ResourceAccessException error)
