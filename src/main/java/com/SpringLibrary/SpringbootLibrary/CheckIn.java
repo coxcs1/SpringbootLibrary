@@ -131,7 +131,7 @@ public class CheckIn extends VerticalLayout implements View
                 }
                 else{
                     Notification.show("Book has already been checked in.");
-                    getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
+                    getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
                 }
             }//end try
 
