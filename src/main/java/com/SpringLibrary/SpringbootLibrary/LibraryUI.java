@@ -6,7 +6,6 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.ClientConnector;
-import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringUI;
@@ -14,7 +13,6 @@ import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.BeanCreationException;
-
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -30,10 +28,10 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     /**
      * Variable Declarations
      */
-    private static  Panel LibraryViewDisplay;
-    private VerticalLayout layout = new VerticalLayout();
-    private LibraryErrorHelper errorHelper = new LibraryErrorHelper();
-    private ConnectorTracker tracker;
+    private static  Panel LibraryViewDisplay; // Panel used to display the views (pages).
+    private VerticalLayout layout = new VerticalLayout(); // Layout to place to the components (Header, Panel, etcetera).
+    private LibraryErrorHelper errorHelper = new LibraryErrorHelper(); // Instantiates LibraryErrorHelper
+    private ConnectorTracker tracker; // Connection Tracker
 
 
     /**
@@ -56,7 +54,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
             addHeader();
             addMenu();
             addDefaultView();
-            //createAccordion();
         }
         catch(Exception e)
         {
@@ -203,120 +200,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
 
         layout.addComponent(menuBar);
     }
-
-    /**
-     * Creates the navigation accordion, sets style and size for readability
-     * Calls a method to populate the accordion buttons
-     * Adds the accordion to the layout
-     *
-     * last modified by coalsonc 7/18/17
-     */
-    private void createAccordion()
-    {
-        Accordion accordion = new Accordion();
-        accordion.setSizeUndefined();
-        accordion.setId("accordion");
-
-        accordion.addTab(addAccordionNavigationButtons(), "Navigation");
-        accordion.addTab(addAdminAccordion(), "Admin");
-        layout.addComponent(accordion);
-    }//end createAccordion
-
-
-    /**
-     * Method used by CreateAccordion to make the navigation buttons
-     * Creates the buttons and the layout to pin them to
-     * Adds listeners to the buttons to allow navigation
-     * Adds buttons to layout and returns it to add to accordion
-     *
-     * last modified by Ricky.Clevinger 7/26/17
-     */
-    private Layout addAccordionNavigationButtons()
-    {
-        Layout tab      = new VerticalLayout();
-        Button checkIn  = new Button("Check In");
-        Button checkOut = new Button("Check Out");
-        Button home     = new Button("Home");
-
-        checkIn.setId("nav_checkIn");
-        checkIn.addClickListener(event ->
-        {
-            try
-            {
-                getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
-            }
-            catch (BeanCreationException error)
-            {
-                errorHelper.genericError(error);
-                Notification.show("The session has expired.");
-            }
-        });
-
-        checkOut.setId("nav_checkOut");
-        checkOut.addClickListener(event ->
-                {
-                    try
-                    {
-                        getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
-                    }
-                    catch (BeanCreationException error)
-                    {
-                        errorHelper.genericError(error);
-                        Notification.show("The session has expired");
-                    }
-                });
-
-        home.setId("nav_home");
-        home.addClickListener(event ->
-                {
-                    try
-                    {
-                        getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME);
-                    }
-                    catch (BeanCreationException error)
-                    {
-                        errorHelper.genericError(error);
-                        Notification.show("The session has expired");
-                    }
-                });
-
-        tab.setId("navigation_tab");
-        tab.addComponents(checkIn, checkOut, home);
-        return tab;
-
-    }//end addAccordionNavigationButtons
-
-
-    /**
-     * Method used by CreateAccordion to make the admin activity Accordion
-     * Creates the admin accordion and the layout to add to the accordion
-     * Adds listeners to the buttons for navigation.
-     * Adds the buttons to the layout and returns it to the CreateAccordion method
-     *
-     * last modified by ricky.clevinger 7/18/17
-     */
-    private Component addAdminAccordion()
-    {
-        Layout tab          = new VerticalLayout();
-        Button addUsers     = new Button("Add User");
-        Button viewUsers    = new Button("View Users");
-        Button addBooks     = new Button("Add Books");
-        Button viewBooks    = new Button("View Books");
-
-        addUsers.addClickListener(event -> getUI().getNavigator().navigateTo(AddUser.VIEW_NAME));
-        addUsers.setId("admin_addUsers");
-        viewUsers.addClickListener(event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
-        viewUsers.setId("admin_viewUsers");
-        addBooks.addClickListener(event -> getUI().getNavigator().navigateTo(AddBooks.VIEW_NAME));
-        addBooks.setId("admin_addBooks");
-        viewBooks.addClickListener(event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
-        viewBooks.setId("admin_viewBooks");
-
-        tab.setId("admin_tab");
-        tab.addComponents(addUsers, viewUsers, addBooks,viewBooks);
-
-        return tab;
-    }// end addAdminAccordion
 
 
     /**

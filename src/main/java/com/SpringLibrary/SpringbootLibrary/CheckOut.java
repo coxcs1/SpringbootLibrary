@@ -37,8 +37,8 @@ public class CheckOut extends VerticalLayout implements View
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
     private TextField authorFilter;   // TextField will be used to filter the results on the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    private Grid<Member> memberGrid;
-    private Grid<Book> bookGrid;
+    private Grid<Member> memberGrid; // Grid used to display the members.
+    private Grid<Book> bookGrid; // Grid used to display the books.
     private LibraryErrorHelper  errorHelper = new LibraryErrorHelper();
 
     // Variable containing url to access backing service

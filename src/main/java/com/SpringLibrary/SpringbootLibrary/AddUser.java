@@ -13,7 +13,6 @@ import javax.annotation.PostConstruct;
 import static Resource.gridHelper.stringClean;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
-
 /**
  * Created by ricky.clevinger on 7/31/2017.
  *

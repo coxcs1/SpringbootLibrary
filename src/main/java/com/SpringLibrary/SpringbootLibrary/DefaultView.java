@@ -19,7 +19,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View
 {
-    static final String VIEW_NAME = "";
+    static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
 
     /**
      * Re-sizes the panel

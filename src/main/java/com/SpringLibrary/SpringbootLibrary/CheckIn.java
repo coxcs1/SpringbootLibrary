@@ -21,7 +21,6 @@ import java.util.List;
 import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
-
 /**
  * Created by ricky.clevinger on 7/13/2017.
  *
@@ -37,7 +36,7 @@ public class CheckIn extends VerticalLayout implements View
      * Variable Declaration
      */
 
-    private Grid<Book> bookReturnGrid;
+    private Grid<Book> bookReturnGrid; // Grid used to display the books.
     private String titleId;  // Id used to determine which item is selected in the grid.
     private String memberId;  // Id used to determine which item is selected in the grid.
     private TextField titleFilter;   // TextField will be used to filter the results on the grid.
