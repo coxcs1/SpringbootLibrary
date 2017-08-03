@@ -39,6 +39,12 @@ public class AllMembers extends VerticalLayout implements View
     private String id;  // Id used to determine which item is selected in the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper(); // Creates instance of LibraryErrorHelper
+    private Button yes = new Button("Yes");
+    private Button no = new Button("No");
+    private Label label = new Label("Are you sure?");
+    HorizontalLayout hLayout = new HorizontalLayout();
+    VerticalLayout popupContent = new VerticalLayout();
+    PopupView popup = new PopupView(null, popupContent);
 
     /**
      * Variable containing url to access backing service
@@ -64,10 +70,39 @@ public class AllMembers extends VerticalLayout implements View
         createFilter();
         createMemberGrid();
         createDeleteButton();
+        createPopup();
         Page.getCurrent().setTitle("View All Members");
 
     }//end init
 
+    /**
+     * Method add popup to view.
+     * On click of delete button, popup appears to ensure user is sure of the delete.
+     *
+     * last modified by ricky.clevinger 8/3/17
+     */
+    private void createPopup(){
+        try {
+            this.yes.addClickListener(clickEvent -> {
+                this.restTemplate.getForObject(bookMemUrl + "/members/delete/" + this.id, String.class);
+                getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
+            });
+
+
+            this.no.addClickListener(clickEvent -> popup.setPopupVisible(false));
+            popupContent.addComponents(label, yes, no);
+
+            // The component itself
+            popup = new PopupView(null, popupContent);
+            popup.setPopupVisible(false);
+            hLayout.addComponent(popup);
+            hLayout.setComponentAlignment(popup, Alignment.TOP_CENTER);
+        }
+        catch (NullPointerException error){
+            errorHelper.genericError(error);
+            Notification.show("No Member Selected");
+        }
+    }
 
     /**
      * Method add delete button to view.
@@ -79,16 +114,17 @@ public class AllMembers extends VerticalLayout implements View
     {
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
+        hLayout.addComponent(delete);
         delete.setId("button_deleteMember");
 
         delete.addClickListener(event ->
         {
             try
             {
-                this.restTemplate.getForObject(bookMemUrl + "/members/delete/" + this.id, String.class);
-                getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
+                if (Integer.parseInt(this.id) > 0 ){
+                    popup.setPopupVisible(true);
+                }
             }
-
             catch (ResourceAccessException error)
             {
                 errorHelper.genericError(error);
@@ -99,10 +135,18 @@ public class AllMembers extends VerticalLayout implements View
                 errorHelper.genericError(error);
                 Notification.show("Please Select a Member Account to Delete");
             }
+            catch (NullPointerException error){
+                errorHelper.genericError(error);
+                Notification.show("No Member Selected");
+            }
+            catch (NumberFormatException error){
+                errorHelper.genericError(error);
+                Notification.show("No Member Selected");
+            }
         });//end click listener
 
         // Add delete button to the view.
-        addComponent(delete);
+        addComponent(hLayout);
 
     }//end createDeleteButton
 
