@@ -1,5 +1,6 @@
 package com.SpringLibrary.SpringbootLibrary;
 
+import Model.Book;
 import Model.Member;
 import Resource.LibraryErrorHelper;
 import com.vaadin.navigator.View;
@@ -84,8 +85,16 @@ public class AllMembers extends VerticalLayout implements View
     private void createPopup(){
         try {
             this.yes.addClickListener(clickEvent -> {
-                this.restTemplate.getForObject(bookMemUrl + "/members/delete/" + this.id, String.class);
-                getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
+
+                List<Book> books = Arrays.asList(this.restTemplate.getForObject(bookMemUrl + "/books/mid/" + this.id, Book[].class));
+
+                if (books.isEmpty()){
+                    this.restTemplate.getForObject(bookMemUrl + "/members/delete/" + this.id, String.class);
+                    getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
+                }
+                else {
+                    Notification.show("Member currently has a book checked out");
+                }
             });
 
 

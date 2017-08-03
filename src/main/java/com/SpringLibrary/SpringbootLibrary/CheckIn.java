@@ -166,14 +166,11 @@ public class CheckIn extends VerticalLayout implements View
      */
     private void setupGrid()
     {
-
         bookReturnGrid = new Grid<>();
         bookReturnGrid.setId("grid_bookReturn");
-
         try
         {
             List<Book> books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/check/2", Book[].class));
-
 
             bookReturnGrid.addSelectionListener(event ->
             {
@@ -192,7 +189,6 @@ public class CheckIn extends VerticalLayout implements View
         });//end select listener
 
         bookReturnGrid.setItems(books);
-
 
         //Specifies what parts of the objects in the grid are shown.
         bookReturnGrid.addColumn(Book::getBookId, new TextRenderer()).setCaption("Book ID");
