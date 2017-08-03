@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import static Resource.gridHelper.titleFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
+import static com.vaadin.ui.UI.getCurrent;
 
 
 /**
@@ -120,13 +121,19 @@ public class CheckIn extends VerticalLayout implements View
         {
             try
             {
-                this.restTemplate.getForObject(bookMemUrl + "/trans/insert/" + this.titleId + "/" + 1 + "/"
-                        + memberId, String.class);
+                List<Book> checkedIn = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/checkAndId/1/" + this.titleId, Book[].class));
+                if ( checkedIn.isEmpty()){
+                    this.restTemplate.getForObject(bookMemUrl + "/trans/insert/" + this.titleId + "/" + 1 + "/"
+                            + memberId, String.class);
+                    this.restTemplate.getForObject(bookMemUrl + "/books/cho/" + this.titleId + "/" + 1 + "/"
+                            + 0, String.class);
 
-                this.restTemplate.getForObject(bookMemUrl + "/books/cho/" + this.titleId + "/" + 1 + "/"
-                        + 0, String.class);
-
-                getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
+                    getUI().getNavigator().navigateTo(CheckIn.VIEW_NAME);
+                }
+                else{
+                    Notification.show("Book has already been checked in.");
+                    Page.getCurrent().reload();
+                }
             }//end try
 
             catch (ResourceAccessException error)

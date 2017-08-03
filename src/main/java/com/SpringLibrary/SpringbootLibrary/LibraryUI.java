@@ -6,16 +6,15 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.ClientConnector;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Accordion;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.BeanCreationException;
+
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -201,6 +200,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         Admin.addItem("View Users", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME));
         Admin.addItem("Add Book", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AddBooks.VIEW_NAME));
         Admin.addItem("View Books", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
+
         layout.addComponent(menuBar);
     }
 

@@ -43,7 +43,7 @@ public class CheckOut extends VerticalLayout implements View
 
     // Variable containing url to access backing service
     @Value("${my.bookMemUrl}")
-    private String bookUrl;
+    private String bookMemUrl;
 
     /**
      * Initializes the view..
@@ -86,12 +86,19 @@ public class CheckOut extends VerticalLayout implements View
         {
             try
             {
-                this.restTemplate.getForObject(bookUrl + "/trans/insert/" + this.titleId + "/" + 2 + "/"
-                    + memberId, String.class);
-                this.restTemplate.getForObject(bookUrl + "/books/cho/" + this.titleId + "/" + 2 + "/"
-                    + memberId, String.class);
+                List<Book> checkedIn = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/checkAndId/1/" + this.titleId, Book[].class));
+                if (! checkedIn.isEmpty()){
+                    this.restTemplate.getForObject(bookMemUrl + "/trans/insert/" + this.titleId + "/" + 2 + "/"
+                      + memberId, String.class);
+                    this.restTemplate.getForObject(bookMemUrl + "/books/cho/" + this.titleId + "/" + 2 + "/"
+                      + memberId, String.class);
 
-                getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
+                    Page.getCurrent().reload();
+                }
+                else{
+                    Notification.show("Book has already been checked in.");
+                    Page.getCurrent().reload();
+                }
             }
             catch (ResourceAccessException error)
             {
@@ -121,7 +128,7 @@ public class CheckOut extends VerticalLayout implements View
     {
         try
         {
-            List<Member> members = Arrays.asList(restTemplate.getForObject(bookUrl + "/members/all", Member[].class));
+            List<Member> members = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/all", Member[].class));
 
             // Create a grid and adds listener to record selected item.
             memberGrid = new Grid<>();
@@ -166,7 +173,7 @@ public class CheckOut extends VerticalLayout implements View
     {
         try
         {
-            List<Book> books = Arrays.asList(restTemplate.getForObject(bookUrl + "/books/check/1", Book[].class));
+            List<Book> books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/check/1", Book[].class));
             bookGrid = new Grid<>();
             bookGrid.setId("grid_books");
 

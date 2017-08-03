@@ -60,7 +60,6 @@ public class AddUser extends VerticalLayout implements View
         {
             Notification.show("Notify your administrator of a session ID error");
         }
-
         addUser();
     }//end init
 
