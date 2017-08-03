@@ -190,6 +190,10 @@ public class AllBooks extends VerticalLayout implements View
                 Book.getAuthFName() + " " + Book.getAuthLName()).setCaption("Author");
 
             grid.setSizeFull();
+            grid.getColumns().get(0).setResizable(false);
+            grid.getColumns().get(1).setResizable(false);
+            grid.getColumns().get(2).setResizable(false);
+
             // Add the grid to the view.
             addComponent(grid);
         }//try

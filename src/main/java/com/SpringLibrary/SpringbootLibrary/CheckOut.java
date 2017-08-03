@@ -150,6 +150,10 @@ public class CheckOut extends VerticalLayout implements View
             memberGrid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
 
             memberGrid.setSizeFull();
+            memberGrid.getColumns().get(0).setResizable(false);
+            memberGrid.getColumns().get(1).setResizable(false);
+            memberGrid.getColumns().get(2).setResizable(false);
+
             hLayout.addComponent(memberGrid);
 
         }
@@ -194,6 +198,10 @@ public class CheckOut extends VerticalLayout implements View
                     Book.getAuthFName() + " " + Book.getAuthLName()).setCaption("Author");
 
             bookGrid.setSizeFull();
+            bookGrid.getColumns().get(0).setResizable(false);
+            bookGrid.getColumns().get(1).setResizable(false);
+            bookGrid.getColumns().get(2).setResizable(false);
+
             hLayout.addComponent(bookGrid);
         }
         catch (ResourceAccessException error)

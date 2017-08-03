@@ -211,6 +211,10 @@ public class CheckIn extends VerticalLayout implements View
         }//end catch
 
         bookReturnGrid.setSizeFull();
+        bookReturnGrid.getColumns().get(0).setResizable(false);
+        bookReturnGrid.getColumns().get(1).setResizable(false);
+        bookReturnGrid.getColumns().get(2).setResizable(false);
+        bookReturnGrid.getColumns().get(3).setResizable(false);
         addComponent(bookReturnGrid);
 
     }//end setupGrid
