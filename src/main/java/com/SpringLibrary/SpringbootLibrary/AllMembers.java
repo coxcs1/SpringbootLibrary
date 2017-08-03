@@ -34,6 +34,7 @@ public class AllMembers extends VerticalLayout implements View
      * Variable Declarations
      */
     private TextField fNameFilter;   // TextField will be used to filter the results on the grid.
+    private TextField lNameFilter; // TextField will be used to filter the results on the grid.
     private Grid<Member> grid;  // Grid that will display and organize books on the all.java page.
     private String id;  // Id used to determine which item is selected in the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
@@ -186,9 +187,10 @@ public class AllMembers extends VerticalLayout implements View
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
         });
+        fNameFilter.addFocusListener(event -> lNameFilter.setValue(""));
         addComponent(fNameFilter);
 
-        TextField lNameFilter = new TextField();
+        lNameFilter = new TextField();
         lNameFilter.setWidth(100, Unit.PERCENTAGE);
         lNameFilter.setPlaceholder("Last Name...");
         lNameFilter.setId("search_authorLastName");
@@ -207,6 +209,7 @@ public class AllMembers extends VerticalLayout implements View
             }
         }
         );
+        lNameFilter.addFocusListener(event -> fNameFilter.setValue(""));
 
         addComponent(lNameFilter);
     }//end createFilter

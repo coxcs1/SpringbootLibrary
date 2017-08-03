@@ -186,6 +186,7 @@ public class AllBooks extends VerticalLayout implements View
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
         });
+        titleFilter.addFocusListener(event -> authorFilter.setValue(""));
 
         addComponent(titleFilter);
 
@@ -206,6 +207,7 @@ public class AllBooks extends VerticalLayout implements View
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
         });
+        authorFilter.addFocusListener(event -> titleFilter.setValue(""));
         addComponent(authorFilter);
     }//end createFilter
 
