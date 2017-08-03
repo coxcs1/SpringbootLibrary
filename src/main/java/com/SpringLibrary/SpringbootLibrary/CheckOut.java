@@ -96,8 +96,8 @@ public class CheckOut extends VerticalLayout implements View
                     getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
                 }
                 else{
-                    Notification.show("Book has already been checked out.");
                     getUI().getNavigator().navigateTo(CheckOut.VIEW_NAME);
+                    Notification.show("Book has already been checked out.");
                 }
             }
             catch (ResourceAccessException error)
