@@ -40,12 +40,9 @@ public class AllMembers extends VerticalLayout implements View
     private String id;  // Id used to determine which item is selected in the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper(); // Creates instance of LibraryErrorHelper
-    private Button yes = new Button("Yes");
-    private Button no = new Button("No");
-    private Label label = new Label("Are you sure?");
     private HorizontalLayout hLayout = new HorizontalLayout();
     private VerticalLayout popupContent = new VerticalLayout();
-    private PopupView popup = new PopupView(null, popupContent);
+    private PopupView popup;
 
     /**
      * Variable containing url to access backing service
@@ -84,7 +81,11 @@ public class AllMembers extends VerticalLayout implements View
      */
     private void createPopup(){
         try {
-            this.yes.addClickListener(clickEvent -> {
+            Button yes = new Button("Yes");
+            Button no = new Button("No");
+            Label label = new Label("Are you sure?");
+
+            yes.addClickListener(clickEvent -> {
 
                 List<Book> books = Arrays.asList(this.restTemplate.getForObject(bookMemUrl + "/books/mid/" + this.id, Book[].class));
 
@@ -98,7 +99,7 @@ public class AllMembers extends VerticalLayout implements View
             });
 
 
-            this.no.addClickListener(clickEvent -> popup.setPopupVisible(false));
+            no.addClickListener(clickEvent -> popup.setPopupVisible(false));
             popupContent.addComponents(label, yes, no);
 
             // The component itself
