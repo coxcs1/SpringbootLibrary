@@ -83,7 +83,7 @@ public class gridHelperTest
         //Compares expected result with the actual result.
 
         resultString = overdue(date1,date2);
-        
+
         Assert.assertEquals("2017-08-11", resultString);
     }
 
