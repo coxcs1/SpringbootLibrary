@@ -78,14 +78,13 @@ public class gridHelperTest
     {
 
         //Sets the result using getter
-        Date date1 = new Date(2001-01-19);
-        Date date2 = new Date(2000-01-19);
+        Date date1 = new Date(System.currentTimeMillis());
+        Date date2 = new Date(System.currentTimeMillis());
         //Compares expected result with the actual result.
 
         resultString = overdue(date1,date2);
-
-        //System.out.println(resultString);
-        //Assert.assertEquals(false, resultString);
+        
+        Assert.assertEquals("2017-08-11", resultString);
     }
 
 }
