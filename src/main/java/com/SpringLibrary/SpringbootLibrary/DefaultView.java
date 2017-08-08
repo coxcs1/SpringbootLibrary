@@ -16,11 +16,16 @@ import javax.crypto.SecretKey;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.*;
 import com.nimbusds.jwt.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestTemplate;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ricky.clevinger on 7/13/2017.
@@ -32,8 +37,16 @@ import java.util.Date;
 public class DefaultView extends VerticalLayout implements View
 {
     static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
+    private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     JWSSigner signer;
     SignedJWT signedJWT;
+
+
+    /**
+     * Variable containing url to access backing service
+     */
+    @Value("${my.bookMemUrl}")
+    private String bookMemUrl;
 
     /**
      * Re-sizes the panel
@@ -49,7 +62,6 @@ public class DefaultView extends VerticalLayout implements View
     {
         getLibraryViewDisplay().setSizeUndefined();
         setSpacing(true);
-        //HorizontalLayout horizontalLayout = addButtons();
         securityFix();
         VerticalLayout layout = addLogin();
         addComponent(layout);
@@ -58,31 +70,6 @@ public class DefaultView extends VerticalLayout implements View
         Page.getCurrent().setTitle("CGI Library");
 
     }//end init
-
-
-    /**
-     * Creates the button layout
-     * Sets Buttons returned from respective methods
-     * Sets spacing for readability/usability
-     *
-     * @return Horizontal layout containing primary buttons
-     * last modified by coalsonc 7/17/17
-     */
-    private HorizontalLayout addButtons()
-    {
-        //Create layout and buttons
-        HorizontalLayout layout = new HorizontalLayout();
-        Button checkIn = addCheckInButton();
-        Button checkOut = addCheckOutButton();
-
-        //add buttons to layout and adjust spacing
-        layout.addComponent(checkIn);
-        layout.setSpacing(true);
-        layout.addComponent(checkOut);
-
-        return layout;
-
-    }//end HorizontalLayout
 
 
     private VerticalLayout addLogin()
@@ -100,6 +87,9 @@ public class DefaultView extends VerticalLayout implements View
 
         login.addClickListener(event -> {
 
+            List<Member> user = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/login/" + email.getValue() +
+                    "/" + password.getValue(), Member[].class));
+
             menuBar.setVisible(true);
             // Generate 256-bit AES key for HMAC as well as encryption
             KeyGenerator keyGen = null;
@@ -114,7 +104,7 @@ public class DefaultView extends VerticalLayout implements View
 
             // Prepare JWT with claims set
             JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-                    .subject("woot")
+                    .subject("cows")
                     .expirationTime(new Date())
                             .claim("https://c2id.com", true)
                             .build();
@@ -168,29 +158,6 @@ public class DefaultView extends VerticalLayout implements View
     }//end HorizontalLayout
 
 
-    /**
-     * Creates Check In button
-     * Sets button Theme
-     * Adds listener and points it to the Check In View
-     *
-     * @return the completed Check In button
-     * last modified by coalsonc 7/17/17
-     */
-    private Button addCheckInButton()
-    {
-        Button checkIn = new Button("Check In");
-        checkIn.addStyleName(ValoTheme.BUTTON_LARGE);
-        checkIn.setId("button_checkIn");
-
-        checkIn.addClickListener(event ->
-        {
-            getLibraryViewDisplay().setSizeFull();
-            getUI().getNavigator().navigateTo("CheckIn");
-        });
-
-        return checkIn;
-
-    }//end addCheckInButton
 
     private void securityFix()
     {
@@ -216,31 +183,6 @@ public class DefaultView extends VerticalLayout implements View
         }
 
     }//end addCheckInButton
-
-
-    /**
-     * Creates Check Out button
-     * Sets button Theme
-     * Adds listener and points it to the Check Out View
-     *
-     * @return the completed Check Out button
-     * last modified by coalsonc 7/17/17
-     */
-    private Button addCheckOutButton()
-    {
-        Button checkOut = new Button("Check Out");
-        checkOut.setId("button_checkOut");
-        checkOut.addStyleName(ValoTheme.BUTTON_LARGE);
-
-        checkOut.addClickListener(event ->
-        {
-            getLibraryViewDisplay().setSizeFull();
-            getUI().getNavigator().navigateTo("CheckOut");
-        });
-
-        return checkOut;
-
-    }//end addCheckOutButton
 
 
     /**
