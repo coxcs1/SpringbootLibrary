@@ -50,6 +50,7 @@ public class DefaultView extends VerticalLayout implements View
         getLibraryViewDisplay().setSizeUndefined();
         setSpacing(true);
         //HorizontalLayout horizontalLayout = addButtons();
+        securityFix();
         VerticalLayout layout = addLogin();
         addComponent(layout);
         setComponentAlignment(layout, Alignment.MIDDLE_CENTER);
@@ -86,28 +87,6 @@ public class DefaultView extends VerticalLayout implements View
 
     private VerticalLayout addLogin()
     {
-
-        Field field = null;
-        try {
-            field = Class.forName("javax.crypto.JceSecurity").getDeclaredField("isRestricted");
-
-        field.setAccessible(true);
-
-        Field modifiersField = null;
-
-            modifiersField = Field.class.getDeclaredField("modifiers");
-
-        modifiersField.setAccessible(true);
-            modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-            field.set(null, false);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
 
         //Create layout and buttons
         VerticalLayout layout = new VerticalLayout();
@@ -210,6 +189,31 @@ public class DefaultView extends VerticalLayout implements View
         });
 
         return checkIn;
+
+    }//end addCheckInButton
+
+    private void securityFix()
+    {
+        Field field = null;
+        try {
+            field = Class.forName("javax.crypto.JceSecurity").getDeclaredField("isRestricted");
+
+            field.setAccessible(true);
+
+            Field modifiersField = null;
+
+            modifiersField = Field.class.getDeclaredField("modifiers");
+
+            modifiersField.setAccessible(true);
+            modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+            field.set(null, false);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
     }//end addCheckInButton
 
