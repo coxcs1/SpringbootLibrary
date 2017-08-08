@@ -35,6 +35,8 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     private ConnectorTracker tracker; // Connection Tracker
     public static MenuBar menuBar;
     public static Label header;
+    public static String jweString;
+    public static JWEObject jweObject;
 
 
     /**
