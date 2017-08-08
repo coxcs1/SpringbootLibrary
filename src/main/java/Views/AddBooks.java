@@ -1,4 +1,4 @@
-package com.SpringLibrary.SpringbootLibrary;
+package Views;
 
 import Resource.LibraryErrorHelper;
 import com.vaadin.navigator.View;
@@ -22,7 +22,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = AddBooks.VIEW_NAME)
 public class AddBooks extends VerticalLayout implements View
 {
-    static final String VIEW_NAME = "addBooks";
+    public static final String VIEW_NAME = "addBooks";
 
     /**
      * Variable Declaration
