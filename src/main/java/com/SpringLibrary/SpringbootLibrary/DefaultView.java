@@ -9,14 +9,13 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import javax.annotation.PostConstruct;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.menuBar;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.*;
 import com.nimbusds.jwt.*;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.security.NoSuchAlgorithmException;
@@ -122,6 +121,7 @@ public class DefaultView extends VerticalLayout implements View
 
         login.addClickListener(event -> {
 
+            menuBar.setVisible(true);
             // Generate 256-bit AES key for HMAC as well as encryption
             KeyGenerator keyGen = null;
             try {

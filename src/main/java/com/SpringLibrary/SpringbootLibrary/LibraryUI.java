@@ -29,11 +29,12 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     /**
      * Variable Declarations
      */
-    public static JWEObject jweObject;
     private static  Panel LibraryViewDisplay; // Panel used to display the views (pages).
     private VerticalLayout layout = new VerticalLayout(); // Layout to place to the components (Header, Panel, etcetera).
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper(); // Instantiates LibraryErrorHelper
     private ConnectorTracker tracker; // Connection Tracker
+    public static MenuBar menuBar;
+    public static Label header;
 
 
     /**
@@ -93,7 +94,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
                 }
             };
         }
-
         return tracker;
     }
 
@@ -139,9 +139,10 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
      */
     private void addHeader()
     {
-        Label header = new Label ("Welcome to the Library");
+        header = new Label ("Welcome to the Library");
         header.addStyleName(ValoTheme.LABEL_H1);
         header.setSizeUndefined();
+        //header.setVisible(false);
         layout.addComponent(header);
 
     }//end addHeader
@@ -166,7 +167,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     }//end showView
 
     private void addMenu() {
-        MenuBar menuBar = new MenuBar();
+        menuBar = new MenuBar();
         menuBar.setSizeUndefined();
         menuBar.addItem("Home",null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
         menuBar.addItem("Check In",null,(MenuBar.Command) event ->
@@ -200,6 +201,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         Admin.addItem("Add Book", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AddBooks.VIEW_NAME));
         Admin.addItem("View Books", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
 
+        menuBar.setVisible(false);
         layout.addComponent(menuBar);
     }
 

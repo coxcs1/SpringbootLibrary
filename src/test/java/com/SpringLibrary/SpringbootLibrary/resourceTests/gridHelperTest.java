@@ -71,6 +71,6 @@ public class gridHelperTest
 
         Assert.assertEquals(false, resultBoolean);
     }
-    
+
 
 }
