@@ -1,6 +1,7 @@
 package com.SpringLibrary.SpringbootLibrary;
 
 
+import Model.Member;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
@@ -90,66 +91,83 @@ public class DefaultView extends VerticalLayout implements View
             List<Member> user = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/login/" + email.getValue() +
                     "/" + password.getValue(), Member[].class));
 
-            menuBar.setVisible(true);
-            // Generate 256-bit AES key for HMAC as well as encryption
-            KeyGenerator keyGen = null;
-            try {
-                keyGen = KeyGenerator.getInstance("AES");
+            if (! user.isEmpty()){
 
-            keyGen.init(256);
-            SecretKey secretKey = keyGen.generateKey();
+                email.setValue("");
+                password.setValue("");
+                menuBar.setVisible(true);
+                // Generate 256-bit AES key for HMAC as well as encryption
+                KeyGenerator keyGen = null;
+                try {
+                    keyGen = KeyGenerator.getInstance("AES");
 
-            // Create HMAC signer
-            signer = new MACSigner(secretKey.getEncoded());
+                    keyGen.init(256);
+                    SecretKey secretKey = keyGen.generateKey();
 
-            // Prepare JWT with claims set
-            JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-                    .subject("cows")
-                    .expirationTime(new Date())
-                            .claim("https://c2id.com", true)
+                    // Create HMAC signer
+                    signer = new MACSigner(secretKey.getEncoded());
+
+
+                    String role;
+
+                    if (Integer.parseInt(user.get(0).getRole()) == 1){
+                        role = "User";
+                    }
+                    else if (Integer.parseInt(user.get(0).getRole()) == 2){
+                        role = "Librarian";
+                    }
+                    else {
+                        role = "Admin";
+                    }
+
+                    // Prepare JWT with claims set
+                    JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
+                            .subject(role)
+                            .expirationTime(new Date())
+                            .claim("LibraryApp", true)
                             .build();
 
-            signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
+                    signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
 
-            // Apply the HMAC
-            signedJWT.sign(signer);
+                    // Apply the HMAC
+                    signedJWT.sign(signer);
 
 
 
-            // Create JWE object with signed JWT as payload
-            JWEObject jweObject = new JWEObject(
-                    new JWEHeader.Builder(JWEAlgorithm.DIR, EncryptionMethod.A256GCM)
-                            .contentType("JWT") // required to signal nested JWT
-                            .build(),
-                    new Payload(signedJWT));
+                    // Create JWE object with signed JWT as payload
+                    JWEObject jweObject = new JWEObject(
+                            new JWEHeader.Builder(JWEAlgorithm.DIR, EncryptionMethod.A256GCM)
+                                    .contentType("JWT") // required to signal nested JWT
+                                    .build(),
+                            new Payload(signedJWT));
 
-            // Perform encryption
-            jweObject.encrypt(new DirectEncrypter(secretKey.getEncoded()));
+                    // Perform encryption
+                    jweObject.encrypt(new DirectEncrypter(secretKey.getEncoded()));
 
-            // Serialise to JWE compact form
-            String jweString = jweObject.serialize();
+                    // Serialise to JWE compact form
+                    String jweString = jweObject.serialize();
 
-            // Parse the JWE string
-            jweObject = JWEObject.parse(jweString);
+                    // Parse the JWE string
+                    jweObject = JWEObject.parse(jweString);
 
-            // Decrypt with shared key
-            jweObject.decrypt(new DirectDecrypter(secretKey.getEncoded()));
+                    // Decrypt with shared key
+                    jweObject.decrypt(new DirectDecrypter(secretKey.getEncoded()));
 
-            // Extract payload
-            signedJWT = jweObject.getPayload().toSignedJWT();
+                    // Extract payload
+                    signedJWT = jweObject.getPayload().toSignedJWT();
 
-            System.out.println(signedJWT.getJWTClaimsSet().getSubject());
+                    System.out.println(signedJWT.getJWTClaimsSet().getSubject());
 
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (KeyLengthException e) {
-                e.printStackTrace();
-            } catch (JOSEException e) {
-                e.printStackTrace();
-            }
-        });
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (KeyLengthException e) {
+                    e.printStackTrace();
+                } catch (JOSEException e) {
+                    e.printStackTrace();
+                }
+            }});
 
         //add buttons to layout and adjust spacing
         layout.addComponents(email,password,login);
