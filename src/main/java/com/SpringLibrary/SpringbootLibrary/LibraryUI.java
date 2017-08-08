@@ -1,6 +1,7 @@
 package com.SpringLibrary.SpringbootLibrary;
 
 import Resource.LibraryErrorHelper;
+import com.nimbusds.jose.JWEObject;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
@@ -28,6 +29,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     /**
      * Variable Declarations
      */
+    public static JWEObject jweObject;
     private static  Panel LibraryViewDisplay; // Panel used to display the views (pages).
     private VerticalLayout layout = new VerticalLayout(); // Layout to place to the components (Header, Panel, etcetera).
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper(); // Instantiates LibraryErrorHelper
