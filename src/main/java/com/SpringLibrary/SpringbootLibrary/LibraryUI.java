@@ -201,7 +201,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         Admin.addItem("Add Book", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AddBooks.VIEW_NAME));
         Admin.addItem("View Books", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
 
-        menuBar.setVisible(false);
+        //menuBar.setVisible(false);
         layout.addComponent(menuBar);
     }
 
