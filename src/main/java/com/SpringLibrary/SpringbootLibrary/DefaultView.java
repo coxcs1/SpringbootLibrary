@@ -40,9 +40,10 @@ public class DefaultView extends VerticalLayout implements View
     static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     JWSSigner signer;
-    SignedJWT signedJWT;
-    JWEObject jweObject;
-    String jweString;
+    public static SignedJWT signedJWT;
+    public static JWEObject jweObject;
+    public static String jweString;
+    public static SecretKey secretKey;
 
 
     /**
@@ -104,7 +105,7 @@ public class DefaultView extends VerticalLayout implements View
                     keyGen = KeyGenerator.getInstance("AES");
 
                     keyGen.init(256);
-                    SecretKey secretKey = keyGen.generateKey();
+                    secretKey = keyGen.generateKey();
 
                     // Create HMAC signer
                     signer = new MACSigner(secretKey.getEncoded());
