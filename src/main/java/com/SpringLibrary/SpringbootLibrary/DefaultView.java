@@ -41,6 +41,8 @@ public class DefaultView extends VerticalLayout implements View
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     JWSSigner signer;
     SignedJWT signedJWT;
+    JWEObject jweObject;
+    String jweString;
 
 
     /**
@@ -133,9 +135,8 @@ public class DefaultView extends VerticalLayout implements View
                     signedJWT.sign(signer);
 
 
-
                     // Create JWE object with signed JWT as payload
-                    JWEObject jweObject = new JWEObject(
+                    jweObject = new JWEObject(
                             new JWEHeader.Builder(JWEAlgorithm.DIR, EncryptionMethod.A256GCM)
                                     .contentType("JWT") // required to signal nested JWT
                                     .build(),
@@ -145,7 +146,18 @@ public class DefaultView extends VerticalLayout implements View
                     jweObject.encrypt(new DirectEncrypter(secretKey.getEncoded()));
 
                     // Serialise to JWE compact form
-                    String jweString = jweObject.serialize();
+                    jweString = jweObject.serialize();
+
+
+                    if (Integer.parseInt(user.get(0).getRole()) == 1){
+                        getUI().getNavigator().navigateTo(UserHome.VIEW_NAME);
+                    }
+                    else if (Integer.parseInt(user.get(0).getRole()) == 2){
+                        getUI().getNavigator().navigateTo(LibrarianHome.VIEW_NAME);
+                    }
+                    else {
+                        getUI().getNavigator().navigateTo(AdminHome.VIEW_NAME);
+                    }
 
                     // Parse the JWE string
                     jweObject = JWEObject.parse(jweString);
@@ -158,13 +170,7 @@ public class DefaultView extends VerticalLayout implements View
 
                     System.out.println(signedJWT.getJWTClaimsSet().getSubject());
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (KeyLengthException e) {
-                    e.printStackTrace();
-                } catch (JOSEException e) {
+                } catch (ParseException | NoSuchAlgorithmException | JOSEException e) {
                     e.printStackTrace();
                 }
             }});
@@ -192,11 +198,7 @@ public class DefaultView extends VerticalLayout implements View
             modifiersField.setAccessible(true);
             modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
             field.set(null, false);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | ClassNotFoundException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
