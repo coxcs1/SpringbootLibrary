@@ -1,4 +1,4 @@
-package com.SpringLibrary.SpringbootLibrary;
+package Views;
 
 
 import Model.Member;
@@ -37,7 +37,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.*;
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View
 {
-    static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
+    public static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     JWSSigner signer;
     SignedJWT signedJWT;
@@ -144,7 +144,6 @@ public class DefaultView extends VerticalLayout implements View
                     signedJWT.sign(signer);
 
 
-
                     // Create JWE object with signed JWT as payload
                     jweObject = new JWEObject(
                             new JWEHeader.Builder(JWEAlgorithm.DIR, EncryptionMethod.A256GCM)
@@ -175,13 +174,7 @@ public class DefaultView extends VerticalLayout implements View
 
                     System.out.println(signedJWT.getJWTClaimsSet().getSubject());
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (KeyLengthException e) {
-                    e.printStackTrace();
-                } catch (JOSEException e) {
+                } catch (ParseException | NoSuchAlgorithmException | JOSEException e) {
                     e.printStackTrace();
                 }
             }});
@@ -232,11 +225,7 @@ public class DefaultView extends VerticalLayout implements View
             modifiersField.setAccessible(true);
             modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
             field.set(null, false);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | ClassNotFoundException | IllegalAccessException e) {
             e.printStackTrace();
         }
 

@@ -1,6 +1,7 @@
 package com.SpringLibrary.SpringbootLibrary;
 
 import Resource.LibraryErrorHelper;
+import Views.*;
 import com.nimbusds.jose.JWEObject;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
@@ -214,7 +215,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
      *
      * Last modified by ricky.clevinger 7/26/17
      */
-    static Panel getLibraryViewDisplay()
+    public static Panel getLibraryViewDisplay()
     {
         return LibraryViewDisplay;
     }//end getLibraryViewDisplay
