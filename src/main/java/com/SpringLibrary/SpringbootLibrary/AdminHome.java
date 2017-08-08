@@ -1,10 +1,15 @@
 package com.SpringLibrary.SpringbootLibrary;
 
+import com.nimbusds.jose.JOSEException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import javax.annotation.PostConstruct;
+
+import java.text.ParseException;
+
+import static Resource.gridHelper.authenticate;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 /**
@@ -30,11 +35,11 @@ public class AdminHome extends VerticalLayout implements View
      */
     @PostConstruct
     @SuppressWarnings("unused")
-    private void init()
-    {
+    private void init() throws ParseException, JOSEException {
+        if (authenticate("Admin").equals(true)){
         getLibraryViewDisplay().setSizeUndefined();
         getLibraryViewDisplay().setResponsive(true);
-        addAdmin();
+        addAdmin();}
     }//end init
 
     /**
