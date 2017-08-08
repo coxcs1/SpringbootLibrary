@@ -1,6 +1,7 @@
-package Views;
+package com.SpringLibrary.SpringbootLibrary;
 
 import Model.Book;
+import Model.Member;
 import Resource.LibraryErrorHelper;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -16,8 +17,8 @@ import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
-import static Resource.gridHelper.authorFilterGridChange;
-import static Resource.gridHelper.titleFilterGridChange;
+import static Resource.gridHelper.fNameFilterGridChange;
+import static Resource.gridHelper.lNameFilterGridChange;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 /**
@@ -25,20 +26,20 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
  *
  * last modified by ricky.clevinger on 7/26/17
  */
-@SpringView(name = AllBooks.VIEW_NAME)
-public class AllBooks extends VerticalLayout implements View
+@SpringView(name = AllMembers.VIEW_NAME)
+public class AllMembers extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
+    static final String VIEW_NAME = "AllMembers";  // Name of the View, or "Page".
 
     /**
      * Variable Declarations
      */
-    private TextField titleFilter;   // TextField will be used to filter the results on the grid.
-    private TextField authorFilter;   // TextField will be used to filter the results on the grid.
-    private Grid<Book> grid;  // Grid that will display and organize books on the all.java page.
+    private TextField fNameFilter;   // TextField will be used to filter the results on the grid.
+    private TextField lNameFilter; // TextField will be used to filter the results on the grid.
+    private Grid<Member> grid;  // Grid that will display and organize books on the all.java page.
     private String id;  // Id used to determine which item is selected in the grid.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    private LibraryErrorHelper errorHelper = new LibraryErrorHelper(); // Instantiates the LibraryErrorHelper
+    private LibraryErrorHelper errorHelper = new LibraryErrorHelper(); // Creates instance of LibraryErrorHelper
     private HorizontalLayout hLayout = new HorizontalLayout(); // Layout that hold the delete button and the popup
     private VerticalLayout popupContent = new VerticalLayout(); // Layout that hold the popup components
     private PopupView popup; // Popup that appears when delete button is clicked
@@ -46,9 +47,9 @@ public class AllBooks extends VerticalLayout implements View
     /**
      * Variable containing url to access backing service
      */
+
     @Value("${my.bookMemUrl}")
     private String bookMemUrl;
-
 
     /**
      * Initializes the view..
@@ -65,12 +66,53 @@ public class AllBooks extends VerticalLayout implements View
     {
         getLibraryViewDisplay().setSizeFull();
         createFilter();
-        createBookGrid();
+        createMemberGrid();
         createDeleteButton();
         createPopup();
-        Page.getCurrent().setTitle("View All Books");
+        Page.getCurrent().setTitle("View All Members");
+
     }//end init
 
+    /**
+     * Method add popup to view.
+     * On click of delete button, popup appears to ensure user is sure of the delete.
+     *
+     * last modified by ricky.clevinger 8/3/17
+     */
+    private void createPopup(){
+        try {
+            Button yes = new Button("Yes");
+            Button no = new Button("No");
+            Label label = new Label("Are you sure?");
+
+            yes.addClickListener(clickEvent -> {
+
+                List<Book> books = Arrays.asList(this.restTemplate.getForObject(bookMemUrl + "/books/mid/" + this.id, Book[].class));
+
+                if (books.isEmpty()){
+                    this.restTemplate.getForObject(bookMemUrl + "/members/delete/" + this.id, String.class);
+                    getUI().getNavigator().navigateTo(AllMembers.VIEW_NAME);
+                }
+                else {
+                    Notification.show("Member currently has a book checked out");
+                }
+            });
+
+
+            no.addClickListener(clickEvent -> popup.setPopupVisible(false));
+            popupContent.addComponents(label, yes, no);
+
+            // The component itself
+            popup = new PopupView(null, popupContent);
+            popup.setPopupVisible(false);
+            hLayout.addComponent(popup);
+            hLayout.setComponentAlignment(popup, Alignment.TOP_CENTER);
+        }
+        catch (NullPointerException error){
+            errorHelper.genericError(error);
+            Notification.show("No Member Selected");
+        }
+    }
 
     /**
      * Method add delete button to view.
@@ -83,7 +125,8 @@ public class AllBooks extends VerticalLayout implements View
         // Delete button to remove selected item from the grid as well as the micro-service.
         Button delete = new Button("Delete");
         hLayout.addComponent(delete);
-        delete.setId("button_deleteUser");
+        delete.setId("button_deleteMember");
+
         delete.addClickListener(event ->
         {
             try
@@ -100,110 +143,74 @@ public class AllBooks extends VerticalLayout implements View
             catch (HttpClientErrorException error)
             {
                 errorHelper.genericError(error);
-                Notification.show("Please Select a Book to Delete");
+                Notification.show("Please Select a Member Account to Delete");
             }
             catch (NumberFormatException error){
                 errorHelper.genericError(error);
-                Notification.show("No Book Selected");
+                Notification.show("No Member Selected");
             }
-        });
+        });//end click listener
+
         // Add delete button to the view.
         addComponent(hLayout);
+
     }//end createDeleteButton
 
-    /**
-     * Method add popup to view.
-     * On click of delete button, popup appears to ensure user is sure of the delete.
-     *
-     * last modified by ricky.clevinger 8/3/17
-     */
-    private void createPopup(){
-        try {
-            Button yes = new Button("Yes");
-            Button no = new Button("No");
-            Label label = new Label("Are you sure?");
-
-            yes.addClickListener(clickEvent -> {
-                this.restTemplate.getForObject(bookMemUrl + "/books/delete/" + this.id, String.class);
-                getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME);
-            });
-
-            no.addClickListener(clickEvent -> popup.setPopupVisible(false));
-            popupContent.addComponents(label, yes, no);
-
-            // The component itself
-            popup = new PopupView(null, popupContent);
-            popup.setPopupVisible(false);
-            hLayout.addComponent(popup);
-            hLayout.setComponentAlignment(popup, Alignment.TOP_CENTER);
-        }
-        catch (NullPointerException error){
-            errorHelper.genericError(error);
-            Notification.show("No Book Selected");
-        }
-    }
-
 
     /**
-     * Function shall retrieve data from microservice.
+     * Function shall retrieve data from micro-service.
      * Creates and populates the grid.
      * Adds listener to record the user selected item.
      *
      * last modified by ricky.clevinger 7/19/17
      */
-    private void createBookGrid()
+    private void createMemberGrid()
     {
         try
         {
             // Retrieves the data from the book micro-service.
-            List<Book> books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/all", Book[].class));
+            List<Member> members = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/all", Member[].class));
 
-                // Create a grid and adds listener to record selected item.
-                grid = new Grid<>();
-                grid.setId("grid_books");
-                grid.addSelectionListener(event ->
+            // Create a grid and adds listener to record selected item.
+            grid = new Grid<>();
+            grid.setId("grid_member");
+            grid.addSelectionListener(event ->
+            {
+                try
                 {
-                    try
-                    {
-                        if(event.getFirstSelectedItem().isPresent())
-                        {
-                            this.id = event.getFirstSelectedItem().get().getBookId() + "";
-                        }
+                    if(event.getFirstSelectedItem().isPresent()) {
+                        this.id = event.getFirstSelectedItem().get().getId() + "";
                     }
-                    catch(NoSuchElementException error)
-                    {
-                        errorHelper.genericError(error);
-                        Notification.show("Please do not double click the grid");
-                    }
-                });
+                }
+                catch(NoSuchElementException error)
+                {
+                    errorHelper.genericError(error);
+                    Notification.show("Please do not double click the grid");
+                }
+            });
 
             // Sets the width of the grid.
             grid.setWidth(100, Unit.PERCENTAGE);
-
             // Sets list to the grid
-            grid.setItems(books);
+            grid.setItems(members);
 
             //Specifies what parts of the objects in the grid are shown.
-            grid.addColumn(Book::getBookId, new TextRenderer()).setCaption("ID");
-            grid.addColumn(Book::getTitle, new TextRenderer()).setCaption("Title");
-            grid.addColumn(Book ->
-                Book.getAuthFName() + " " + Book.getAuthLName()).setCaption("Author");
+            grid.addColumn(Member::getId, new TextRenderer()).setCaption("ID");
+            grid.addColumn(Member::getFName, new TextRenderer()).setCaption("First Name");
+            grid.addColumn(Member::getLName, new TextRenderer()).setCaption("Last Name");
 
             grid.setSizeFull();
             grid.getColumns().get(0).setResizable(false);
             grid.getColumns().get(1).setResizable(false);
             grid.getColumns().get(2).setResizable(false);
-
             // Add the grid to the view.
             addComponent(grid);
-        }//try
+        }
         catch (ResourceAccessException error)
         {
             errorHelper.genericError(error);
-            Notification.show("The Book Service is currently unavailable. Please try again in a "+"" +
-                    "few minutes");
-        }//catch
-
+            Notification.show("The Book Service is currently unavailable. Please try again in a few minutes");
+        }
     }//end createGrid
 
 
@@ -215,45 +222,49 @@ public class AllBooks extends VerticalLayout implements View
      */
     private void createFilter()
     {
-        titleFilter = new TextField();
-        titleFilter.setWidth(100, Unit.PERCENTAGE);
-        titleFilter.setPlaceholder("Book Title...");
-        titleFilter.setId("search_title");
-        titleFilter.addValueChangeListener(event -> {
-            try
-            {
-                titleFilterGridChange(event, grid);
-            }
-            catch (NullPointerException error)
-            {
-                errorHelper.genericError(error);
-                titleFilter.setValue("");
-                Notification.show("Service unavailable, please try again in a few minutes");
-            }
-        });
-        titleFilter.addFocusListener(event -> authorFilter.setValue(""));
+        fNameFilter = new TextField();
+        fNameFilter.setWidth(100, Unit.PERCENTAGE);
+        fNameFilter.setPlaceholder("First Name...");
+        fNameFilter.setId("search_authorFirstName");
 
-        addComponent(titleFilter);
-
-        authorFilter = new TextField();
-        authorFilter.setWidth(100, Unit.PERCENTAGE);
-        authorFilter.setPlaceholder("Last Name...");
-        authorFilter.setId("search_authorLastName");
-        authorFilter.addValueChangeListener(event ->
+        fNameFilter.addValueChangeListener(event ->
         {
             try
             {
-                authorFilterGridChange(event, grid);
+                fNameFilterGridChange(event, grid);
             }
             catch (NullPointerException error)
             {
                 errorHelper.genericError(error);
-                authorFilter.setValue("");
+                fNameFilter.setValue("");
                 Notification.show("Service unavailable, please try again in a few minutes");
             }
         });
-        authorFilter.addFocusListener(event -> titleFilter.setValue(""));
-        addComponent(authorFilter);
+        fNameFilter.addFocusListener(event -> lNameFilter.setValue(""));
+        addComponent(fNameFilter);
+
+        lNameFilter = new TextField();
+        lNameFilter.setWidth(100, Unit.PERCENTAGE);
+        lNameFilter.setPlaceholder("Last Name...");
+        lNameFilter.setId("search_authorLastName");
+
+        lNameFilter.addValueChangeListener(event ->
+        {
+            try
+            {
+                lNameFilterGridChange(event, grid);
+            }
+            catch (NullPointerException error)
+            {
+                errorHelper.genericError(error);
+                fNameFilter.setValue("");
+                Notification.show("Service unavailable, please try again in a few minutes");
+            }
+        }
+        );
+        lNameFilter.addFocusListener(event -> fNameFilter.setValue(""));
+
+        addComponent(lNameFilter);
     }//end createFilter
 
 

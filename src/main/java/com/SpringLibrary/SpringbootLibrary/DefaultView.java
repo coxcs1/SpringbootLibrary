@@ -1,4 +1,4 @@
-package Views;
+package com.SpringLibrary.SpringbootLibrary;
 
 
 import com.vaadin.navigator.View;
@@ -6,9 +6,11 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import javax.annotation.PostConstruct;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.menuBar;
+
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import com.nimbusds.jose.*;
@@ -29,7 +31,7 @@ import java.util.Date;
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
+    static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
     JWSSigner signer;
     SignedJWT signedJWT;
 
@@ -57,8 +59,35 @@ public class DefaultView extends VerticalLayout implements View
 
     }//end init
 
+
+    /**
+     * Creates the button layout
+     * Sets Buttons returned from respective methods
+     * Sets spacing for readability/usability
+     *
+     * @return Horizontal layout containing primary buttons
+     * last modified by coalsonc 7/17/17
+     */
+    private HorizontalLayout addButtons()
+    {
+        //Create layout and buttons
+        HorizontalLayout layout = new HorizontalLayout();
+        Button checkIn = addCheckInButton();
+        Button checkOut = addCheckOutButton();
+
+        //add buttons to layout and adjust spacing
+        layout.addComponent(checkIn);
+        layout.setSpacing(true);
+        layout.addComponent(checkOut);
+
+        return layout;
+
+    }//end HorizontalLayout
+
+
     private VerticalLayout addLogin()
     {
+
         //Create layout and buttons
         VerticalLayout layout = new VerticalLayout();
         TextField email   = new TextField("Email");
@@ -85,7 +114,7 @@ public class DefaultView extends VerticalLayout implements View
 
             // Prepare JWT with claims set
             JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-                    .subject("mouse")
+                    .subject("woot")
                     .expirationTime(new Date())
                             .claim("https://c2id.com", true)
                             .build();
@@ -139,6 +168,30 @@ public class DefaultView extends VerticalLayout implements View
     }//end HorizontalLayout
 
 
+    /**
+     * Creates Check In button
+     * Sets button Theme
+     * Adds listener and points it to the Check In View
+     *
+     * @return the completed Check In button
+     * last modified by coalsonc 7/17/17
+     */
+    private Button addCheckInButton()
+    {
+        Button checkIn = new Button("Check In");
+        checkIn.addStyleName(ValoTheme.BUTTON_LARGE);
+        checkIn.setId("button_checkIn");
+
+        checkIn.addClickListener(event ->
+        {
+            getLibraryViewDisplay().setSizeFull();
+            getUI().getNavigator().navigateTo("CheckIn");
+        });
+
+        return checkIn;
+
+    }//end addCheckInButton
+
     private void securityFix()
     {
         Field field = null;
@@ -163,6 +216,31 @@ public class DefaultView extends VerticalLayout implements View
         }
 
     }//end addCheckInButton
+
+
+    /**
+     * Creates Check Out button
+     * Sets button Theme
+     * Adds listener and points it to the Check Out View
+     *
+     * @return the completed Check Out button
+     * last modified by coalsonc 7/17/17
+     */
+    private Button addCheckOutButton()
+    {
+        Button checkOut = new Button("Check Out");
+        checkOut.setId("button_checkOut");
+        checkOut.addStyleName(ValoTheme.BUTTON_LARGE);
+
+        checkOut.addClickListener(event ->
+        {
+            getLibraryViewDisplay().setSizeFull();
+            getUI().getNavigator().navigateTo("CheckOut");
+        });
+
+        return checkOut;
+
+    }//end addCheckOutButton
 
 
     /**

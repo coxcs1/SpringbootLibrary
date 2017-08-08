@@ -1,4 +1,4 @@
-package Views;
+package com.SpringLibrary.SpringbootLibrary;
 
 import Model.Book;
 import Model.Member;
@@ -32,7 +32,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = CheckIn.VIEW_NAME)
 public class CheckIn extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "CheckIn";
+    static final String VIEW_NAME = "CheckIn";
 
     /**
      * Variable Declaration

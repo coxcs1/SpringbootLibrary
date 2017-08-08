@@ -1,4 +1,4 @@
-package Views;
+package com.SpringLibrary.SpringbootLibrary;
 
 import Model.Book;
 import Model.Member;
@@ -31,7 +31,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = CheckOut.VIEW_NAME)
 public class CheckOut extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "CheckOut";
+    static final String VIEW_NAME = "CheckOut";
 
     private HorizontalLayout hLayout;
     private String titleId;  // Id used to determine which item is selected in the grid.
