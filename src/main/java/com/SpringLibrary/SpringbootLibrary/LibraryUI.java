@@ -1,7 +1,6 @@
 package com.SpringLibrary.SpringbootLibrary;
 
 import Resource.LibraryErrorHelper;
-import Views.*;
 import com.nimbusds.jose.JWEObject;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
@@ -36,8 +35,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     private ConnectorTracker tracker; // Connection Tracker
     public static MenuBar menuBar;
     public static Label header;
-    public static String jweString;
-    public static JWEObject jweObject;
 
 
     /**
@@ -215,7 +212,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
      *
      * Last modified by ricky.clevinger 7/26/17
      */
-    public static Panel getLibraryViewDisplay()
+    static Panel getLibraryViewDisplay()
     {
         return LibraryViewDisplay;
     }//end getLibraryViewDisplay

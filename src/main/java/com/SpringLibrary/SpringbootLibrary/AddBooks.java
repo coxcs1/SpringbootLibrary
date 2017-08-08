@@ -1,4 +1,4 @@
-package Views;
+package com.SpringLibrary.SpringbootLibrary;
 
 import Resource.LibraryErrorHelper;
 import com.vaadin.navigator.View;
@@ -22,7 +22,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = AddBooks.VIEW_NAME)
 public class AddBooks extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "addBooks";
+    static final String VIEW_NAME = "addBooks";
 
     /**
      * Variable Declaration
@@ -72,9 +72,9 @@ public class AddBooks extends VerticalLayout implements View
      */
     private void addBooks()
     {
-        com.vaadin.ui.TextField title   = new com.vaadin.ui.TextField("Title");
-        com.vaadin.ui.TextField fName   = new com.vaadin.ui.TextField("Author: First Name");
-        com.vaadin.ui.TextField lName   = new com.vaadin.ui.TextField("Author: Last Name");
+        TextField title   = new TextField("Title");
+        TextField fName   = new TextField("Author: First Name");
+        TextField lName   = new TextField("Author: Last Name");
         Button addBook                  = new Button("Submit");
 
         title.setId("search_title");

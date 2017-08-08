@@ -1,7 +1,6 @@
-package Views;
+package com.SpringLibrary.SpringbootLibrary;
 
 
-import Model.Member;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
@@ -9,24 +8,19 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import javax.annotation.PostConstruct;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.menuBar;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.*;
 import com.nimbusds.jwt.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.client.RestTemplate;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-
-import static com.SpringLibrary.SpringbootLibrary.LibraryUI.*;
 
 /**
  * Created by ricky.clevinger on 7/13/2017.
@@ -37,15 +31,9 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.*;
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
-    private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
+    static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
     JWSSigner signer;
     SignedJWT signedJWT;
-
-
-    // Variable containing url to access backing service
-    @Value("${my.bookMemUrl}")
-    private String bookMemUrl;
 
     /**
      * Re-sizes the panel
@@ -102,8 +90,8 @@ public class DefaultView extends VerticalLayout implements View
 
         //Create layout and buttons
         VerticalLayout layout = new VerticalLayout();
-        com.vaadin.ui.TextField email   = new com.vaadin.ui.TextField("Email");
-        com.vaadin.ui.TextField password   = new com.vaadin.ui.TextField("Password");
+        TextField email   = new TextField("Email");
+        TextField password   = new TextField("Password");
         Button login                  = new Button("Login");
 
         email.setId("search_email");
@@ -112,72 +100,66 @@ public class DefaultView extends VerticalLayout implements View
 
         login.addClickListener(event -> {
 
-            List<Member> user = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/login/" + email.getValue() +
-                    "/" + password.getValue(), Member[].class));
+            menuBar.setVisible(true);
+            // Generate 256-bit AES key for HMAC as well as encryption
+            KeyGenerator keyGen = null;
+            try {
+                keyGen = KeyGenerator.getInstance("AES");
 
-            if (! user.isEmpty()){
+            keyGen.init(256);
+            SecretKey secretKey = keyGen.generateKey();
 
-                email.setValue("");
-                password.setValue("");
-                menuBar.setVisible(true);
-                // Generate 256-bit AES key for HMAC as well as encryption
-                KeyGenerator keyGen = null;
-                try {
-                    keyGen = KeyGenerator.getInstance("AES");
+            // Create HMAC signer
+            signer = new MACSigner(secretKey.getEncoded());
 
-                    keyGen.init(256);
-                    SecretKey secretKey = keyGen.generateKey();
-
-                    // Create HMAC signer
-                    signer = new MACSigner(secretKey.getEncoded());
-
-                    // Prepare JWT with claims set
-                    JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-                            .subject("alice")
-                            .expirationTime(new Date())
-                            .claim("LibraryApp", true)
+            // Prepare JWT with claims set
+            JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
+                    .subject("alice")
+                    .expirationTime(new Date())
+                            .claim("https://c2id.com", true)
                             .build();
 
-                    signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
+            signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
 
-                    // Apply the HMAC
-                    signedJWT.sign(signer);
-
-
-                    // Create JWE object with signed JWT as payload
-                    jweObject = new JWEObject(
-                            new JWEHeader.Builder(JWEAlgorithm.DIR, EncryptionMethod.A256GCM)
-                                    .contentType("JWT") // required to signal nested JWT
-                                    .build(),
-                            new Payload(signedJWT));
-
-                    // Perform encryption
-                    jweObject.encrypt(new DirectEncrypter(secretKey.getEncoded()));
-
-                    // Serialise to JWE compact form
-                    jweString = jweObject.serialize();
+            // Apply the HMAC
+            signedJWT.sign(signer);
 
 
 
-                    /////////////////////////////////////////////////////////////////
-                    //The Parsing part. Helper function eventually.
+            // Create JWE object with signed JWT as payload
+            JWEObject jweObject = new JWEObject(
+                    new JWEHeader.Builder(JWEAlgorithm.DIR, EncryptionMethod.A256GCM)
+                            .contentType("JWT") // required to signal nested JWT
+                            .build(),
+                    new Payload(signedJWT));
 
+            // Perform encryption
+            jweObject.encrypt(new DirectEncrypter(secretKey.getEncoded()));
 
-                    // Parse the JWE string
-                    jweObject = JWEObject.parse(jweString);
+            // Serialise to JWE compact form
+            String jweString = jweObject.serialize();
 
-                    // Decrypt with shared key
-                    jweObject.decrypt(new DirectDecrypter(secretKey.getEncoded()));
+            // Parse the JWE string
+            jweObject = JWEObject.parse(jweString);
 
-                    // Extract payload
-                    signedJWT = jweObject.getPayload().toSignedJWT();
+            // Decrypt with shared key
+            jweObject.decrypt(new DirectDecrypter(secretKey.getEncoded()));
 
-                    System.out.println(signedJWT.getJWTClaimsSet().getSubject());
+            // Extract payload
+            signedJWT = jweObject.getPayload().toSignedJWT();
 
-                } catch (ParseException | NoSuchAlgorithmException | JOSEException e) {
-                    e.printStackTrace();
-                }
-            }});
+            System.out.println(signedJWT.getJWTClaimsSet().getSubject());
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (KeyLengthException e) {
+                e.printStackTrace();
+            } catch (JOSEException e) {
+                e.printStackTrace();
+            }
+        });
 
         //add buttons to layout and adjust spacing
         layout.addComponents(email,password,login);
@@ -225,7 +207,11 @@ public class DefaultView extends VerticalLayout implements View
             modifiersField.setAccessible(true);
             modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
             field.set(null, false);
-        } catch (NoSuchFieldException | ClassNotFoundException | IllegalAccessException e) {
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
 
