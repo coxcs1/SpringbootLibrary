@@ -2,12 +2,10 @@ package com.SpringLibrary.SpringbootLibrary;
 
 import Resource.LibraryErrorHelper;
 import com.nimbusds.jose.JOSEException;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
-import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
@@ -20,7 +18,6 @@ import static Resource.gridHelper.authenticate;
 import static Resource.gridHelper.stringClean;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.badPriv;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
-import static com.vaadin.ui.UI.getCurrent;
 
 /**
  * Created by ricky.clevinger on 7/31/2017.
@@ -31,7 +28,7 @@ import static com.vaadin.ui.UI.getCurrent;
 @SpringView(name = AddUser.VIEW_NAME)
 public class AddUser extends VerticalLayout implements View
 {
-    static final String VIEW_NAME = "addUser";
+    public static final String VIEW_NAME = "addUser";
 
     /**
      * Variable Declaration

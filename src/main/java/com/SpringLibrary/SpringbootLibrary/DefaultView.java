@@ -7,11 +7,11 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
+
 import javax.annotation.PostConstruct;
 
 import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.*;
 import com.nimbusds.jwt.*;
@@ -37,7 +37,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.*;
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View
 {
-    static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
+    public static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     JWSSigner signer;
 
