@@ -70,7 +70,7 @@ public class UserHome extends VerticalLayout implements View
     private void changeUserMenuBar()
     {
         menuBar.removeItems();
-        menuBar.addItem("Home", null, (MenuBar.Command) event -> getCurrent().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+        menuBar.addItem("Home", null, (MenuBar.Command) event -> getCurrent().getNavigator().navigateTo(UserHome.VIEW_NAME));
         menuBar.addItem("View Books", null, (MenuBar.Command) event -> getCurrent().getNavigator().navigateTo(AllBooks.VIEW_NAME));
     }//end changeUserMenuBar
 
