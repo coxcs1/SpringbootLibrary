@@ -72,7 +72,7 @@ public class AdminHome extends VerticalLayout implements View
         menuBar.removeItems();
         menuBar.addItem("Add User", null, (MenuBar.Command) event -> getCurrent().getNavigator().navigateTo(AddUser.VIEW_NAME));
         menuBar.addItem("View Users", null, (MenuBar.Command) event -> getCurrent().getNavigator().navigateTo(AllMembers.VIEW_NAME));
-        menuBar.addItem("Home", null, (MenuBar.Command) event -> getCurrent().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+        menuBar.addItem("Home", null, (MenuBar.Command) event -> getCurrent().getNavigator().navigateTo(AdminHome.VIEW_NAME));
         menuBar.addItem("Add Book", null, (MenuBar.Command) event -> getCurrent().getNavigator().navigateTo(AddBooks.VIEW_NAME));
         menuBar.addItem("View Books", null, (MenuBar.Command) event -> getCurrent().getNavigator().navigateTo(AllBooks.VIEW_NAME));
     }//end changeMenuBar
