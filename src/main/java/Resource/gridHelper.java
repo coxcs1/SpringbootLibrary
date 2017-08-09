@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 
 import static com.SpringLibrary.SpringbootLibrary.DefaultView.*;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.*;
 
 public class gridHelper extends VerticalLayout implements View
 {
@@ -153,19 +154,22 @@ public class gridHelper extends VerticalLayout implements View
 
     public static Boolean authenticate(String role) throws ParseException, JOSEException {
         // Parse the JWE string
-        jweObject = JWEObject.parse(jweString);
+        if (!(jweObject == null)) {
+            jweObject = JWEObject.parse(jweString);
 
-        // Decrypt with shared key
-        jweObject.decrypt(new DirectDecrypter(secretKey.getEncoded()));
+            // Decrypt with shared key
+            jweObject.decrypt(new DirectDecrypter(secretKey.getEncoded()));
 
-        // Extract payload
-        signedJWT = jweObject.getPayload().toSignedJWT();
+            // Extract payload
+            signedJWT = jweObject.getPayload().toSignedJWT();
 
-        if (signedJWT.getJWTClaimsSet().getSubject().toString().equals(role)){
-            return true;
-        }
-        else {
+            if (signedJWT.getJWTClaimsSet().getSubject().toString().equals(role)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
             return false;
         }
-    }//end stringClean
+    }
 }

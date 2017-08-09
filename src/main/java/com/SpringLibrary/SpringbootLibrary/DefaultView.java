@@ -9,8 +9,6 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import javax.annotation.PostConstruct;
-import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
-import static com.SpringLibrary.SpringbootLibrary.LibraryUI.menuBar;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -28,6 +26,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.*;
+
 /**
  * Created by ricky.clevinger on 7/13/2017.
  *
@@ -40,10 +40,7 @@ public class DefaultView extends VerticalLayout implements View
     static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     JWSSigner signer;
-    public static SignedJWT signedJWT;
-    public static JWEObject jweObject;
-    public static String jweString;
-    public static SecretKey secretKey;
+
 
 
     /**
@@ -169,7 +166,7 @@ public class DefaultView extends VerticalLayout implements View
                     // Extract payload
                     signedJWT = jweObject.getPayload().toSignedJWT();
 
-                    System.out.println(signedJWT.getJWTClaimsSet().getSubject());
+                    //System.out.println(signedJWT.getJWTClaimsSet().getSubject());
 
                 } catch (ParseException | NoSuchAlgorithmException | JOSEException e) {
                     e.printStackTrace();

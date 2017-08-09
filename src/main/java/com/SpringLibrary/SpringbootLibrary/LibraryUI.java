@@ -2,6 +2,7 @@ package com.SpringLibrary.SpringbootLibrary;
 
 import Resource.LibraryErrorHelper;
 import com.nimbusds.jose.JWEObject;
+import com.nimbusds.jwt.SignedJWT;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
@@ -14,6 +15,8 @@ import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.BeanCreationException;
+
+import javax.crypto.SecretKey;
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -35,6 +38,10 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     private ConnectorTracker tracker; // Connection Tracker
     public static MenuBar menuBar;
     public static Label header;
+    public static SignedJWT signedJWT;
+    public static JWEObject jweObject = null;
+    public static String jweString;
+    public static SecretKey secretKey;
 
 
     /**
@@ -216,6 +223,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     {
         return LibraryViewDisplay;
     }//end getLibraryViewDisplay
+
 
     /**
      * Detects the end of a session or a page close and creates a new session if necessary
