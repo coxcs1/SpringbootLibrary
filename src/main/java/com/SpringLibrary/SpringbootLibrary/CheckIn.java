@@ -4,6 +4,7 @@ import Model.Book;
 import Model.Member;
 import Resource.LibraryErrorHelper;
 import Resource.gridHelper;
+import com.nimbusds.jose.JOSEException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
@@ -18,9 +19,13 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import java.sql.Date;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
+
+import static Resource.gridHelper.authenticate;
 import static Resource.gridHelper.titleFilterGridChange;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.badPriv;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 /**
@@ -62,13 +67,19 @@ public class CheckIn extends VerticalLayout implements View
      */
     @PostConstruct
     @SuppressWarnings("unused")
-    void init()
-    {
+    void init() throws ParseException, JOSEException {
         getLibraryViewDisplay().setSizeFull();
-        addFilters();
-        setupGrid();
-        addCheckInButton();
-        Page.getCurrent().setTitle("Check In");
+
+        if (authenticate("Admin").equals(true) || authenticate("Librarian").equals(true)) {
+            addFilters();
+            setupGrid();
+            addCheckInButton();
+            Page.getCurrent().setTitle("Check In");
+        }
+        else{
+            badPriv(this);
+        }
+
     }//end init
 
 

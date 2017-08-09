@@ -3,6 +3,7 @@ package com.SpringLibrary.SpringbootLibrary;
 import Model.Book;
 import Model.Member;
 import Resource.LibraryErrorHelper;
+import com.nimbusds.jose.JOSEException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
@@ -14,11 +15,15 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import static Resource.gridHelper.authenticate;
 import static Resource.gridHelper.fNameFilterGridChange;
 import static Resource.gridHelper.lNameFilterGridChange;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.badPriv;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 /**
@@ -62,14 +67,19 @@ public class AllMembers extends VerticalLayout implements View
      */
     @PostConstruct
     @SuppressWarnings("unused")
-    void init()
-    {
+    void init() throws ParseException, JOSEException {
         getLibraryViewDisplay().setSizeFull();
-        createFilter();
-        createMemberGrid();
-        createDeleteButton();
-        createPopup();
-        Page.getCurrent().setTitle("View All Members");
+
+        if (authenticate("Admin").equals(true) || authenticate("Librarian").equals(true)) {
+            createFilter();
+            createMemberGrid();
+            createDeleteButton();
+            createPopup();
+            Page.getCurrent().setTitle("View All Members");
+        }
+        else{
+            badPriv(this);
+        }
 
     }//end init
 

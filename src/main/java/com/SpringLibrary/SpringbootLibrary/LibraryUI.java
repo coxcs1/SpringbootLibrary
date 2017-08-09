@@ -224,6 +224,15 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         return LibraryViewDisplay;
     }//end getLibraryViewDisplay
 
+    public static void badPriv(VerticalLayout lay){
+
+        Label label = new Label("Insufficient Privileges");
+        Button home = new Button("Home");
+        home.addClickListener(event -> getCurrent().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+        lay.addComponents(label,home);
+
+    }
+
 
     /**
      * Detects the end of a session or a page close and creates a new session if necessary

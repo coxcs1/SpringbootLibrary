@@ -2,6 +2,7 @@ package com.SpringLibrary.SpringbootLibrary;
 
 import Resource.LibraryErrorHelper;
 import com.nimbusds.jose.JOSEException;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -17,6 +18,7 @@ import java.util.Set;
 
 import static Resource.gridHelper.authenticate;
 import static Resource.gridHelper.stringClean;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.badPriv;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 import static com.vaadin.ui.UI.getCurrent;
 
@@ -58,18 +60,15 @@ public class AddUser extends VerticalLayout implements View
     @SuppressWarnings("unused")
     private void init() throws ParseException, JOSEException {
 
-            if (authenticate("Admin").equals(true) || authenticate("Librarian").equals(true)) {
-                try {
-                    getLibraryViewDisplay().setSizeUndefined();
-                    getLibraryViewDisplay().setResponsive(true);
-                } catch (RuntimeException error) {
-                    Notification.show("Notify your administrator of a session ID error");
-                }
-                addUser();
-            }
-            else{
+        getLibraryViewDisplay().setSizeUndefined();
+        getLibraryViewDisplay().setResponsive(true);
 
-            }
+        if (authenticate("Admin").equals(true) || authenticate("Librarian").equals(true)) {
+            addUser();
+        }
+        else{
+            badPriv(this);
+        }
 
 
     }//end init

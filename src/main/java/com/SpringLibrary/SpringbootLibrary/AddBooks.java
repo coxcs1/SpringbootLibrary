@@ -1,6 +1,7 @@
 package com.SpringLibrary.SpringbootLibrary;
 
 import Resource.LibraryErrorHelper;
+import com.nimbusds.jose.JOSEException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -10,7 +11,12 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
+
+import java.text.ParseException;
+
+import static Resource.gridHelper.authenticate;
 import static Resource.gridHelper.stringClean;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.badPriv;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 /**
@@ -47,19 +53,18 @@ public class AddBooks extends VerticalLayout implements View
      */
     @PostConstruct
     @SuppressWarnings("unused")
-    private void init()
-    {
-        try
-        {
-            getLibraryViewDisplay().setSizeUndefined();
-            getLibraryViewDisplay().setResponsive(true);
+    private void init() throws ParseException, JOSEException {
+
+        getLibraryViewDisplay().setSizeUndefined();
+        getLibraryViewDisplay().setResponsive(true);
+
+        if (authenticate("Admin").equals(true) || authenticate("Librarian").equals(true)) {
+            addBooks();
         }
-        catch(RuntimeException error)
-        {
-            Notification.show("Notify your administrator of a session ID error");
+        else{
+            badPriv(this);
         }
 
-        addBooks();
     }//end init
 
 
