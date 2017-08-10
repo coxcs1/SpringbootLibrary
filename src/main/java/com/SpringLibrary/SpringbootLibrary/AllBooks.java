@@ -47,6 +47,7 @@ public class AllBooks extends VerticalLayout implements View
     private HorizontalLayout hLayout = new HorizontalLayout(); // Layout that hold the delete button and the popup
     private VerticalLayout popupContent = new VerticalLayout(); // Layout that hold the popup components
     private PopupView popup; // Popup that appears when delete button is clicked
+    private Button delete;
 
     /**
      * Variable containing url to access backing service
@@ -75,6 +76,9 @@ public class AllBooks extends VerticalLayout implements View
             createDeleteButton();
             createPopup();
             Page.getCurrent().setTitle("View All Books");
+            if (authenticate("Librarian").equals(true) || authenticate("User").equals(true)){
+                delete.setVisible(false);
+            }
         }
         else{
             badPriv(this);
@@ -92,7 +96,7 @@ public class AllBooks extends VerticalLayout implements View
     private void createDeleteButton()
     {
         // Delete button to remove selected item from the grid as well as the micro-service.
-        Button delete = new Button("Delete");
+        delete = new Button("Delete");
         hLayout.addComponent(delete);
         delete.setId("button_deleteUser");
         delete.addClickListener(event ->

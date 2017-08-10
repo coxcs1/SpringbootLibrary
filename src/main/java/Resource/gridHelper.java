@@ -32,7 +32,6 @@ public class gridHelper extends VerticalLayout implements View
          @SuppressWarnings("unchecked")
          ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
          dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
-
      }//end titleFilterGridChange
 
 
@@ -134,7 +133,6 @@ public class gridHelper extends VerticalLayout implements View
         String  temp = toClean.trim();
         temp = temp.replaceAll("[^a-zA-Z.\\- ]","");
         return temp;
-
     }//end stringClean
 
 

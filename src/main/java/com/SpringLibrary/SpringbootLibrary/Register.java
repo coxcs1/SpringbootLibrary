@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+
 import javax.annotation.PostConstruct;
 import java.text.ParseException;
 import java.util.Set;
@@ -25,19 +26,16 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
  * last modified by ricky.clevinger on 7/31/17
  */
 
-@SpringView(name = AddUser.VIEW_NAME)
-public class AddUser extends VerticalLayout implements View
+@SpringView(name = Register.VIEW_NAME)
+public class Register extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "addUser";
+    public static final String VIEW_NAME = "Register";
 
     /**
      * Variable Declaration
      */
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper();//error printer
-    Set<String> selected;
-    int roleNum = 1;
-    ListSelect<String> roles;
 
     /**
      * Variable containing url to access backing service
@@ -61,16 +59,7 @@ public class AddUser extends VerticalLayout implements View
         getLibraryViewDisplay().setSizeUndefined();
         getLibraryViewDisplay().setResponsive(true);
 
-        if (authenticate("Admin").equals(true) || authenticate("Librarian").equals(true)) {
-            addUser();
-            if (authenticate("Librarian").equals(true)){
-                roles.setVisible(false);
-            }
-        }
-        else{
-            badPriv(this);
-        }
-
+        addUser();
 
     }//end init
 
@@ -83,7 +72,7 @@ public class AddUser extends VerticalLayout implements View
      */
     private void addUser()
     {
-        Button addUser = new Button ("Add User");
+        Button addUser = new Button ("Register");
         addUser.setId("button_addUser");
         TextField fName   = new TextField("First Name");
         fName.setId("search_firstName");
@@ -93,30 +82,6 @@ public class AddUser extends VerticalLayout implements View
         email.setId("search_email");
         TextField password   = new TextField("Password");
         password.setId("search_password");
-
-
-        // Create the selection component
-        roles = new ListSelect<>("Role");
-
-
-// Add some items
-        roles.setItems("User", "Librarian", "Admin");
-
-// Show 5 items and a scrollbar if there are more
-        roles.setRows(3);
-
-        roles.addValueChangeListener(event -> {
-            selected = event.getValue();
-            if (selected.contains("User")){
-                roleNum = 1;
-            }
-            else if (selected.contains("Librarian")){
-                roleNum = 2;
-            }
-            else {
-                roleNum = 3;
-            }
-        });
 
         addUser.addClickListener(event ->
         {
@@ -145,11 +110,9 @@ public class AddUser extends VerticalLayout implements View
                 else
                 {
                     this.restTemplate.getForObject(bookMemUrl + "/members/insert/" + firstName + "/"
-                            + lastName + "/" + emails + "/" + passwords + "/" + roleNum, String.class);
+                            + lastName + "/" + emails + "/" + passwords + "/" + 1, String.class);
                     Notification.show(firstName + " "
                             + lastName + " has been added as a member.");
-                    roleNum = 1;
-                    roles.deselectAll();
                     fName.setValue("");
                     lName.setValue("");
                     email.setValue("");
@@ -174,7 +137,7 @@ public class AddUser extends VerticalLayout implements View
         });//end add click event
 
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        addComponents(fName,lName,email,password,roles, addUser);
+        addComponents(fName,lName,email,password,addUser);
 
     }//end addUser
 

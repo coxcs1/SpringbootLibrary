@@ -54,9 +54,10 @@ public class UserHome extends VerticalLayout implements View
     private void addUser()
     {
         Label label = new Label("Welcome User");
+        Button logOut = new Button("Log Out");
 
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        addComponent(label);
+        addComponents(label, logOut);
 
     }//end addUser
 

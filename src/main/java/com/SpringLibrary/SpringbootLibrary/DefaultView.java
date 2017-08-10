@@ -4,6 +4,7 @@ package com.SpringLibrary.SpringbootLibrary;
 import Model.Member;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
@@ -39,8 +40,8 @@ public class DefaultView extends VerticalLayout implements View
 {
     public static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
     private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    JWSSigner signer;
-
+    private JWSSigner signer;
+    private VerticalLayout layout;
 
 
     /**
@@ -77,7 +78,7 @@ public class DefaultView extends VerticalLayout implements View
     {
 
         //Create layout and buttons
-        VerticalLayout layout = new VerticalLayout();
+        layout = new VerticalLayout();
         TextField email   = new TextField("Email");
         TextField password   = new TextField("Password");
         Button login                  = new Button("Login");
@@ -175,10 +176,10 @@ public class DefaultView extends VerticalLayout implements View
 
         //add buttons to layout and adjust spacing
         layout.addComponents(email,password,login);
+        newUser();
         layout.setSpacing(true);
         return layout;
     }//end HorizontalLayout
-
 
 
     private void securityFix()
@@ -201,6 +202,14 @@ public class DefaultView extends VerticalLayout implements View
         }
 
     }//end addCheckInButton
+
+    private void newUser()
+    {
+        Link link = new Link("New User?",
+                new ExternalResource("#!Register"));
+        layout.addComponent(link);
+
+    }//end newUser
 
 
     /**
