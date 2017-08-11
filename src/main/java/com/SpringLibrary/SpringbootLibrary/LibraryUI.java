@@ -1,8 +1,6 @@
 package com.SpringLibrary.SpringbootLibrary;
 
 import Resource.LibraryErrorHelper;
-import com.nimbusds.jose.JWEObject;
-import com.nimbusds.jwt.SignedJWT;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
@@ -15,8 +13,6 @@ import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.BeanCreationException;
-
-import javax.crypto.SecretKey;
 
 /**
  * Created by ricky.clevinger on 7/12/2017.
@@ -36,12 +32,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     private VerticalLayout layout = new VerticalLayout(); // Layout to place to the components (Header, Panel, etcetera).
     private LibraryErrorHelper errorHelper = new LibraryErrorHelper(); // Instantiates LibraryErrorHelper
     private ConnectorTracker tracker; // Connection Tracker
-    public static MenuBar menuBar;
-    public static Label header;
-    public static SignedJWT signedJWT;
-    public static JWEObject jweObject = null;
-    public static String jweString;
-    public static SecretKey secretKey;
 
 
     /**
@@ -101,6 +91,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
                 }
             };
         }
+
         return tracker;
     }
 
@@ -146,10 +137,9 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
      */
     private void addHeader()
     {
-        header = new Label ("Welcome to the Library");
+        Label header = new Label ("Welcome to the Library");
         header.addStyleName(ValoTheme.LABEL_H1);
         header.setSizeUndefined();
-        //header.setVisible(false);
         layout.addComponent(header);
 
     }//end addHeader
@@ -174,7 +164,7 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
     }//end showView
 
     private void addMenu() {
-        menuBar = new MenuBar();
+        MenuBar menuBar = new MenuBar();
         menuBar.setSizeUndefined();
         menuBar.addItem("Home",null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
         menuBar.addItem("Check In",null,(MenuBar.Command) event ->
@@ -208,7 +198,6 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
         Admin.addItem("Add Book", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AddBooks.VIEW_NAME));
         Admin.addItem("View Books", null, (MenuBar.Command) event -> getUI().getNavigator().navigateTo(AllBooks.VIEW_NAME));
 
-        //menuBar.setVisible(false);
         layout.addComponent(menuBar);
     }
 
@@ -219,20 +208,10 @@ public class LibraryUI extends UI implements ViewDisplay, ClientConnector.Detach
      *
      * Last modified by ricky.clevinger 7/26/17
      */
-    public static Panel getLibraryViewDisplay()
+    static Panel getLibraryViewDisplay()
     {
         return LibraryViewDisplay;
     }//end getLibraryViewDisplay
-
-    public static void badPriv(VerticalLayout lay){
-
-        Label label = new Label("Insufficient Privileges");
-        Button home = new Button("Home");
-        home.addClickListener(event -> getCurrent().getNavigator().navigateTo(DefaultView.VIEW_NAME));
-        lay.addComponents(label,home);
-
-    }
-
 
     /**
      * Detects the end of a session or a page close and creates a new session if necessary

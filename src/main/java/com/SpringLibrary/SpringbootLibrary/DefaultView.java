@@ -1,33 +1,14 @@
 package com.SpringLibrary.SpringbootLibrary;
 
 
-import Model.Member;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
-
+import com.vaadin.ui.themes.ValoTheme;
 import javax.annotation.PostConstruct;
-
-import javax.crypto.KeyGenerator;
-
-import com.nimbusds.jose.*;
-import com.nimbusds.jose.crypto.*;
-import com.nimbusds.jwt.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.client.RestTemplate;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import static com.SpringLibrary.SpringbootLibrary.LibraryUI.*;
+import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 /**
  * Created by ricky.clevinger on 7/13/2017.
@@ -38,17 +19,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.*;
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
-    private RestTemplate restTemplate = new RestTemplate();  // RestTemplate used to make calls to micro-service.
-    private JWSSigner signer;
-    private VerticalLayout layout;
-
-
-    /**
-     * Variable containing url to access backing service
-     */
-    @Value("${my.bookMemUrl}")
-    private String bookMemUrl;
+    static final String VIEW_NAME = ""; // View Name. Default View auto displayed.
 
     /**
      * Re-sizes the panel
@@ -64,152 +35,87 @@ public class DefaultView extends VerticalLayout implements View
     {
         getLibraryViewDisplay().setSizeUndefined();
         setSpacing(true);
-        securityFix();
-        VerticalLayout layout = addLogin();
-        addComponent(layout);
-        setComponentAlignment(layout, Alignment.MIDDLE_CENTER);
-
+        HorizontalLayout horizontalLayout = addButtons();
+        addComponent(horizontalLayout);
+        setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
         Page.getCurrent().setTitle("CGI Library");
 
     }//end init
 
 
-    private VerticalLayout addLogin()
+    /**
+     * Creates the button layout
+     * Sets Buttons returned from respective methods
+     * Sets spacing for readability/usability
+     *
+     * @return Horizontal layout containing primary buttons
+     * last modified by coalsonc 7/17/17
+     */
+    private HorizontalLayout addButtons()
     {
-
         //Create layout and buttons
-        layout = new VerticalLayout();
-        TextField email   = new TextField("Email");
-        TextField password   = new TextField("Password");
-        Button login                  = new Button("Login");
-
-        email.setId("search_email");
-        password.setId("search_password");
-        login.setId("button_login");
-
-        login.addClickListener(event -> {
-
-            List<Member> user = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/login/" + email.getValue() +
-                    "/" + password.getValue(), Member[].class));
-
-            if (! user.isEmpty()){
-
-                email.setValue("");
-                password.setValue("");
-                menuBar.setVisible(true);
-                // Generate 256-bit AES key for HMAC as well as encryption
-                KeyGenerator keyGen = null;
-                try {
-                    keyGen = KeyGenerator.getInstance("AES");
-
-                    keyGen.init(256);
-                    secretKey = keyGen.generateKey();
-
-                    // Create HMAC signer
-                    signer = new MACSigner(secretKey.getEncoded());
-
-
-                    String role;
-
-                    if (Integer.parseInt(user.get(0).getRole()) == 1){
-                        role = "User";
-                    }
-                    else if (Integer.parseInt(user.get(0).getRole()) == 2){
-                        role = "Librarian";
-                    }
-                    else {
-                        role = "Admin";
-                    }
-
-                    // Prepare JWT with claims set
-                    JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-                            .subject(role)
-                            .expirationTime(new Date())
-                            .claim("LibraryApp", true)
-                            .build();
-
-                    signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
-
-                    // Apply the HMAC
-                    signedJWT.sign(signer);
-
-
-                    // Create JWE object with signed JWT as payload
-                    jweObject = new JWEObject(
-                            new JWEHeader.Builder(JWEAlgorithm.DIR, EncryptionMethod.A256GCM)
-                                    .contentType("JWT") // required to signal nested JWT
-                                    .build(),
-                            new Payload(signedJWT));
-
-                    // Perform encryption
-                    jweObject.encrypt(new DirectEncrypter(secretKey.getEncoded()));
-
-                    // Serialise to JWE compact form
-                    jweString = jweObject.serialize();
-
-
-                    if (Integer.parseInt(user.get(0).getRole()) == 1){
-                        getUI().getNavigator().navigateTo(UserHome.VIEW_NAME);
-                    }
-                    else if (Integer.parseInt(user.get(0).getRole()) == 2){
-                        getUI().getNavigator().navigateTo(LibrarianHome.VIEW_NAME);
-                    }
-                    else {
-                        getUI().getNavigator().navigateTo(AdminHome.VIEW_NAME);
-                    }
-
-                    // Parse the JWE string
-                    jweObject = JWEObject.parse(jweString);
-
-                    // Decrypt with shared key
-                    jweObject.decrypt(new DirectDecrypter(secretKey.getEncoded()));
-
-                    // Extract payload
-                    signedJWT = jweObject.getPayload().toSignedJWT();
-
-                    //System.out.println(signedJWT.getJWTClaimsSet().getSubject());
-
-                } catch (ParseException | NoSuchAlgorithmException | JOSEException e) {
-                    e.printStackTrace();
-                }
-            }});
+        HorizontalLayout layout = new HorizontalLayout();
+        Button checkIn = addCheckInButton();
+        Button checkOut = addCheckOutButton();
 
         //add buttons to layout and adjust spacing
-        layout.addComponents(email,password,login);
-        newUser();
+        layout.addComponent(checkIn);
         layout.setSpacing(true);
+        layout.addComponent(checkOut);
+
         return layout;
+
     }//end HorizontalLayout
 
 
-    private void securityFix()
+    /**
+     * Creates Check In button
+     * Sets button Theme
+     * Adds listener and points it to the Check In View
+     *
+     * @return the completed Check In button
+     * last modified by coalsonc 7/17/17
+     */
+    private Button addCheckInButton()
     {
-        Field field = null;
-        try {
-            field = Class.forName("javax.crypto.JceSecurity").getDeclaredField("isRestricted");
+        Button checkIn = new Button("Check In");
+        checkIn.addStyleName(ValoTheme.BUTTON_LARGE);
+        checkIn.setId("button_checkIn");
 
-            field.setAccessible(true);
+        checkIn.addClickListener(event ->
+        {
+            getLibraryViewDisplay().setSizeFull();
+            getUI().getNavigator().navigateTo("CheckIn");
+        });
 
-            Field modifiersField = null;
-
-            modifiersField = Field.class.getDeclaredField("modifiers");
-
-            modifiersField.setAccessible(true);
-            modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-            field.set(null, false);
-        } catch (NoSuchFieldException | ClassNotFoundException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        return checkIn;
 
     }//end addCheckInButton
 
-    private void newUser()
-    {
-        Link link = new Link("New User?",
-                new ExternalResource("#!Register"));
-        layout.addComponent(link);
 
-    }//end newUser
+    /**
+     * Creates Check Out button
+     * Sets button Theme
+     * Adds listener and points it to the Check Out View
+     *
+     * @return the completed Check Out button
+     * last modified by coalsonc 7/17/17
+     */
+    private Button addCheckOutButton()
+    {
+        Button checkOut = new Button("Check Out");
+        checkOut.setId("button_checkOut");
+        checkOut.addStyleName(ValoTheme.BUTTON_LARGE);
+
+        checkOut.addClickListener(event ->
+        {
+            getLibraryViewDisplay().setSizeFull();
+            getUI().getNavigator().navigateTo("CheckOut");
+        });
+
+        return checkOut;
+
+    }//end addCheckOutButton
 
 
     /**

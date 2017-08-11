@@ -2,7 +2,6 @@ package com.SpringLibrary.SpringbootLibrary;
 
 import Model.Book;
 import Resource.LibraryErrorHelper;
-import com.nimbusds.jose.JOSEException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
@@ -14,15 +13,11 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import static Resource.gridHelper.authenticate;
 import static Resource.gridHelper.authorFilterGridChange;
 import static Resource.gridHelper.titleFilterGridChange;
-import static com.SpringLibrary.SpringbootLibrary.LibraryUI.badPriv;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 /**
@@ -33,7 +28,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = AllBooks.VIEW_NAME)
 public class AllBooks extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
+    static final String VIEW_NAME = "AllBooks";  // Name of the View, or "Page".
 
     /**
      * Variable Declarations
@@ -47,7 +42,6 @@ public class AllBooks extends VerticalLayout implements View
     private HorizontalLayout hLayout = new HorizontalLayout(); // Layout that hold the delete button and the popup
     private VerticalLayout popupContent = new VerticalLayout(); // Layout that hold the popup components
     private PopupView popup; // Popup that appears when delete button is clicked
-    private Button delete;
 
     /**
      * Variable containing url to access backing service
@@ -67,23 +61,14 @@ public class AllBooks extends VerticalLayout implements View
      */
     @PostConstruct
     @SuppressWarnings("unused")
-    void init() throws ParseException, JOSEException {
+    void init()
+    {
         getLibraryViewDisplay().setSizeFull();
-
-        if (authenticate("Admin").equals(true) || authenticate("Librarian").equals(true) || authenticate("User").equals(true)) {
-            createFilter();
-            createBookGrid();
-            createDeleteButton();
-            createPopup();
-            Page.getCurrent().setTitle("View All Books");
-            if (authenticate("Librarian").equals(true) || authenticate("User").equals(true)){
-                delete.setVisible(false);
-            }
-        }
-        else{
-            badPriv(this);
-        }
-
+        createFilter();
+        createBookGrid();
+        createDeleteButton();
+        createPopup();
+        Page.getCurrent().setTitle("View All Books");
     }//end init
 
 
@@ -96,7 +81,7 @@ public class AllBooks extends VerticalLayout implements View
     private void createDeleteButton()
     {
         // Delete button to remove selected item from the grid as well as the micro-service.
-        delete = new Button("Delete");
+        Button delete = new Button("Delete");
         hLayout.addComponent(delete);
         delete.setId("button_deleteUser");
         delete.addClickListener(event ->

@@ -3,7 +3,6 @@ package com.SpringLibrary.SpringbootLibrary;
 import Model.Book;
 import Model.Member;
 import Resource.LibraryErrorHelper;
-import com.nimbusds.jose.JOSEException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
@@ -17,14 +16,10 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
-
-import static Resource.gridHelper.authenticate;
 import static Resource.gridHelper.lNameFilterGridChange;
 import static Resource.gridHelper.titleFilterGridChange;
-import static com.SpringLibrary.SpringbootLibrary.LibraryUI.badPriv;
 import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDisplay;
 
 /**
@@ -36,7 +31,7 @@ import static com.SpringLibrary.SpringbootLibrary.LibraryUI.getLibraryViewDispla
 @SpringView(name = CheckOut.VIEW_NAME)
 public class CheckOut extends VerticalLayout implements View
 {
-    public static final String VIEW_NAME = "CheckOut";
+    static final String VIEW_NAME = "CheckOut";
 
     private HorizontalLayout hLayout;
     private String titleId;  // Id used to determine which item is selected in the grid.
@@ -64,21 +59,15 @@ public class CheckOut extends VerticalLayout implements View
      */
     @PostConstruct
     @SuppressWarnings("unused")
-    void init() throws ParseException, JOSEException {
+    void init()
+    {
         getLibraryViewDisplay().setSizeFull();
-
-        if (authenticate("Admin").equals(true) || authenticate("Librarian").equals(true)) {
-            createFilter();
-            createLayout();
-            createBookGrid();
-            createMemberGrid();
-            addCheckOutButton();
-            Page.getCurrent().setTitle("Check Out");
-        }
-        else{
-            badPriv(this);
-        }
-
+        createFilter();
+        createLayout();
+        createBookGrid();
+        createMemberGrid();
+        addCheckOutButton();
+        Page.getCurrent().setTitle("Check Out");
     }//end init
 
 

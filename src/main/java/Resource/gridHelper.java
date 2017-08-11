@@ -2,21 +2,14 @@ package Resource;
 
 import Model.Member;
 import Model.Book;
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWEObject;
-import com.nimbusds.jose.crypto.DirectDecrypter;
 import com.vaadin.data.HasValue;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
-
 import java.sql.Date;
-import java.text.ParseException;
 import java.util.Calendar;
-
-import static com.SpringLibrary.SpringbootLibrary.LibraryUI.*;
 
 public class gridHelper extends VerticalLayout implements View
 {
@@ -32,6 +25,7 @@ public class gridHelper extends VerticalLayout implements View
          @SuppressWarnings("unchecked")
          ListDataProvider<Book> dataProvider = (ListDataProvider<Book>) grid.getDataProvider();
          dataProvider.setFilter(Book::getTitle, s -> caseInsensitiveContains(s, event.getValue()));
+
      }//end titleFilterGridChange
 
 
@@ -133,6 +127,7 @@ public class gridHelper extends VerticalLayout implements View
         String  temp = toClean.trim();
         temp = temp.replaceAll("[^a-zA-Z.\\- ]","");
         return temp;
+
     }//end stringClean
 
 
@@ -145,27 +140,4 @@ public class gridHelper extends VerticalLayout implements View
     {
 
     }
-
-
-    public static Boolean authenticate(String role) throws ParseException, JOSEException {
-        // Parse the JWE string
-        if (!(jweObject == null)) {
-            jweObject = JWEObject.parse(jweString);
-
-            // Decrypt with shared key
-            jweObject.decrypt(new DirectDecrypter(secretKey.getEncoded()));
-
-            // Extract payload
-            signedJWT = jweObject.getPayload().toSignedJWT();
-
-            if (signedJWT.getJWTClaimsSet().getSubject().toString().equals(role)) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
 }
