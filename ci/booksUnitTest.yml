@@ -1,0 +1,19 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: maven
+    tag: "latest"
+
+inputs:
+- name: 12FactorSpringBootBooks
+
+run:
+  path: sh
+  args:
+    - -exc
+    - |
+      cd 12FactorSpringBootBooks
+      mvn test
