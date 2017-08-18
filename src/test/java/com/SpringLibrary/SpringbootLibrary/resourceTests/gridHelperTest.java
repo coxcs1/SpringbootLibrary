@@ -71,20 +71,4 @@ public class gridHelperTest
 
         Assert.assertEquals(false, resultBoolean);
     }
-
-
-    @Test
-    public void overdueTest() throws Exception
-    {
-
-        //Sets the result using getter
-        Date date1 = new Date(System.currentTimeMillis());
-        Date date2 = new Date(System.currentTimeMillis());
-        //Compares expected result with the actual result.
-
-        resultString = overdue(date1,date2);
-
-        Assert.assertEquals("2017-08-11", resultString);
-    }
-
 }
