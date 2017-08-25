@@ -16,4 +16,4 @@ run:
     - -exc
     - |
       cd 12FactorSpringBootLibrary
-      #mvn test
+      mvn test
