@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CGI Library </title>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form th:action="@{/checkout}">
+                <fieldset>
+                    <div class="starter-template">
+                        <h1 align="center">All Books</h1>
+                        <!--  Book attributes to display...
+                            private String bookId;
+                            private String title;
+                            private String authFName;
+                            private String authLName;
+                            private String libId;
+                            private String check;
+                            private String mid;
+                            private Date outDate;   -->
+                        <table id="example" class="display" cellspacing="0" align="center" width="100%">
+                            <tr>
+                                <th>Id</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Library ID</th>
+                                <th>Checked Out</th>
+                            </tr>
+                            <tr th:each="books:${books}">
+                                <td th:text="${books.bookId}">book id</td>
+                                <td th:text="${books.title}">title</td>
+                                <td th:text="${books.authFName}+' '+${books.authLName}">author name</td>
+                                <td th:text="${books.libId}">library id</td>
+                                <td th:text="${books.check}">checked out</td>
+                            </tr>
+                        </table>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

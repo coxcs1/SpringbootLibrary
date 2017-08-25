@@ -1,12 +1,12 @@
 package com.SpringLibrary.SpringbootLibrary.modelTests;
 
-import Model.Member;
+import Model.User;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class MemberTest {
 
-    private Member mockMem = new Member();
+    private User mockMem = new User();
 
     @Test
     public void getSetIdTest() throws Exception {
