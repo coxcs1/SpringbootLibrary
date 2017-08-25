@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Member {
+public class User {
     private String id;
     private String FName;
     private String LName;
