@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>CGI Library </title>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form th:action="@{/library}">
+
+                        <h2 align="center">Hello, Admin!</h2>
+                        <!--  Book attributes to display...
+                            private String bookId;
+                            private String title;
+                            private String authFName;
+                            private String authLName;
+                            private String libId;
+                            private String check;
+                            private String mid;
+                            private Date outDate;   -->
+                        <table id="example" class="display" cellspacing="0" align="center" width="100%">
+                            <tr>
+                                <th align="center" width="30px">ID</th>
+                                <th align="center">Title</th>
+                                <th align="center">Author</th>
+                                <th align="center" width="100px">Library ID</th>
+                                <th align="center" width="100px">Checked Out</th>
+                                <th> </th>
+                                <th> </th>
+                            </tr>
+                            <tr th:each="books:${books}">
+                                <td th:text="'  '+${books.bookId}">book id</td>
+                                <td align="center" th:text="'  '+${books.title}">title</td>
+                                <td align="center" th:text="${books.authFName}+' '+${books.authLName}">author name</td>
+                                <td align="center" th:text="'  '+${books.libId}">library id</td>
+                                <td align="center" th:text="'  '+${books.check}">checked out</td>
+                                <td align="center"><a  class="btn btn-info">Edit</a></td>
+                                <td align="center"><a  class="btn btn-danger">Delete</a></td>
+                            </tr>
+
+                        </table>
+                        <div align="center"><tr align="center">
+                            <a class="btn btn-success" > + Add Book</a>
+                        </tr></div>
+                    <h1> </h1>
+                    <table id="example1" class="display" cellspacing="0" align="center" width="100%">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th> </th>
+                        </tr>
+                        <tr th:each="users:${users}">
+                            <td th:text="${users.id}">user id</td>
+                            <td th:text="${users.FName}+' '+${users.LName}">name</td>
+                            <td><div align="right"><a  class="btn btn-info">Edit</a>
+                                <a  class="btn btn-danger">Delete</a></div></td>
+                        </tr>
+
+                    </table>
+                    <div align="center"><tr align="center">
+                        <a class="btn btn-success" > + Add User</a>
+                    </tr></div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

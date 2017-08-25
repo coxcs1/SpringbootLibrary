@@ -1,10 +1,12 @@
 package com.SpringLibrary.SpringbootLibrary.Controllers;
 import Model.Book;
+import Model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,7 +28,7 @@ public class library_controller {
     @Value("${my.bookMemUrl}")
     private String bookMemUrl;
     private List<Book> books;
-    private List<Book> checkedIn;
+    private List<User> users;
     private String memberId;
     private String titleId;
     @GetMapping("/")
@@ -37,11 +39,13 @@ public class library_controller {
     public String home() {
         return "/home";
     }
-    @GetMapping("/checkout")
-    public String checkout(Model checkoutModel) {
+    @GetMapping("/library")
+    public String library(Model model) {
         books = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/all/", Book[].class));
+        users = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/members/all/", User[].class));
         //checkedIn = Arrays.asList(restTemplate.getForObject(bookMemUrl + "/books/checkAndId/1/" + this.titleId, Book[].class));
-        checkoutModel.addAttribute("books", books);
+        model.addAttribute("books", books);
+        model.addAttribute("users", users);
         /*
        checkoutModel.addAttribute("checkedIn", checkedIn);
        if (! checkedIn.isEmpty()){
@@ -58,9 +62,14 @@ public class library_controller {
        checkoutModel.addAttribute("books",books);
        */
 
+        return "/library";
+    }
+    @RequestMapping(value = "http://localhost:8060/delete", method = RequestMethod.POST)
+    public String handleDeleteBook(@RequestParam(name="bookId")String bookId) {
+        System.out.println(bookId);
+        System.out.println("test");
         return "/checkout";
     }
-
     @GetMapping("/about")
     public String about() {
         return "/about";
