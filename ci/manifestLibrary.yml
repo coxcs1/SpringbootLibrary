@@ -2,7 +2,8 @@ applications:
 - name: springboot-library
   memory: 1024M
   instances: 1
-  random-route: true
+  routes:
+  - route:springbootlibrary.cfapps.io
   timeout: 180
   env:
     JAVA_OPTS: -Djava.security.egd=file:///dev/urando
